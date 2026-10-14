@@ -1,1 +1,1295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Аудио-плеер для произношения всех 493 слов учебника Get Ready for Flyers (стр. 112–117) с переводом. Web Speech API, работает офлайн.">
+<title>Audio Player · Get Ready for Flyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0; --c-card: #ffffff; --c-section: #fdeadf; --c-card-bg: #fbeee4;
+    --c-table-stripe: #fdf0e7; --c-header: #d26b4d; --c-header-2: #bd5c42;
+    --c-border: #f0d5c6; --c-accent: #b8432c; --c-accent-2: #dd714f;
+    --c-text: #2e2320; --c-text-muted: #93796c;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px; --radius-sm: 4px; --container: 860px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; padding: 0; background: var(--c-bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.65; color: var(--c-text); -webkit-font-smoothing: antialiased; }
 
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .toolbar-brand { font-weight: 600; font-size: 14px; }
+  .toolbar-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .toolbar-actions { display: flex; gap: 8px; }
+  .toolbar-actions a { background: rgba(255,255,255,0.18); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .toolbar-actions a:hover { background: rgba(255,255,255,0.3); }
+
+  .hw-header { background: linear-gradient(160deg, #dd7b5e 0%, #d26b4d 55%, #bd5c42 100%); color: #fff; padding: 36px 24px 30px; }
+  .hw-header-inner { max-width: var(--container); margin: 0 auto; }
+  .hw-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin: 0 0 12px; }
+  .hw-title { font-family: 'Noto Serif', Georgia, serif; font-size: 32px; font-weight: 700; margin: 0 0 10px; line-height: 1.2; }
+  .hw-title .accent { color: #ffd9c4; }
+  .hw-subtitle { font-size: 15px; color: rgba(255,255,255,0.9); margin: 0; }
+  .hw-meta { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; max-width: 640px; }
+  .hw-meta-item { border-left: 2px solid rgba(255,255,255,0.3); padding-left: 12px; }
+  .hw-meta-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+  .hw-meta-value { font-size: 14px; font-weight: 500; }
+
+  .container { max-width: var(--container); margin: 0 auto; padding: 32px 24px 60px; }
+
+  .callout { background: #fff; border-left: 4px solid var(--c-accent); padding: 12px 16px; margin: 14px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13.5px; color: var(--c-text-muted); }
+  .callout strong { color: var(--c-text); }
+
+  .audio-controls {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--c-card); border: 1px solid var(--c-border);
+    border-radius: var(--radius); padding: 16px 20px; margin-bottom: 18px;
+    box-shadow: 0 2px 6px var(--c-shadow); flex-wrap: wrap;
+  }
+  .audio-controls label { font-size: 14px; color: var(--c-text-muted); }
+  .audio-controls select {
+    padding: 8px 12px; border: 2px solid var(--c-border); border-radius: var(--radius-sm);
+    background: #fff; font-family: inherit; font-size: 14px; cursor: pointer; max-width: 320px;
+  }
+  .audio-controls select:focus { outline: none; border-color: var(--c-accent); }
+  .audio-controls input[type="range"] { width: 120px; }
+  .audio-value { font-size: 13px; color: var(--c-text-muted); min-width: 40px; }
+  .voice-test {
+    margin-left: auto; padding: 8px 14px; background: var(--c-section); color: var(--c-accent);
+    border: 1.5px solid var(--c-border); border-radius: var(--radius-sm); cursor: pointer;
+    font-family: inherit; font-size: 13px; font-weight: 500;
+  }
+  .voice-test:hover { background: var(--c-card-bg); }
+
+  .global-actions { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .global-action-btn {
+    padding: 10px 18px; background: var(--c-accent); color: #fff; border: none;
+    border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 500; font-family: inherit;
+  }
+  .global-action-btn:hover { background: var(--c-header); }
+  .global-action-btn.secondary { background: var(--c-card); color: var(--c-text); border: 1.5px solid var(--c-border); }
+
+  .unit-acc {
+    background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius);
+    margin: 16px 0; box-shadow: 0 1px 4px var(--c-shadow); overflow: hidden;
+  }
+  .unit-acc-header {
+    display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+    background: var(--c-section); cursor: pointer; user-select: none; transition: background 0.15s;
+  }
+  .unit-acc-header:hover { background: var(--c-card-bg); }
+  .unit-acc.open .unit-acc-header { border-bottom: 1px solid var(--c-border); }
+  .unit-acc-num { font-family: 'Noto Serif', serif; font-weight: 700; font-size: 18px; color: var(--c-accent); min-width: 40px; }
+  .unit-acc-title { font-family: 'Noto Serif', serif; font-size: 16px; font-weight: 600; color: var(--c-header); margin: 0; flex: 1; }
+  .unit-acc-title .acc-ru { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 13px; color: var(--c-text-muted); }
+  .unit-acc-count { font-size: 12px; color: var(--c-text-muted); background: var(--c-card); padding: 4px 10px; border-radius: 12px; }
+  .unit-acc-arrow { color: var(--c-text-muted); transition: transform 0.2s; font-size: 18px; }
+  .unit-acc.open .unit-acc-arrow { transform: rotate(90deg); }
+  .unit-acc-body { display: none; padding: 16px 18px; }
+  .unit-acc.open .unit-acc-body { display: block; }
+
+  .cat-group { margin-bottom: 18px; }
+  .cat-group:last-child { margin-bottom: 0; }
+  .cat-name { font-weight: 600; color: var(--c-header); font-size: 14px; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px dashed var(--c-border); }
+
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+  .word-btn {
+    display: flex; align-items: center; gap: 8px; padding: 7px 11px;
+    background: #fff; border: 1.5px solid var(--c-border); border-radius: var(--radius-sm);
+    cursor: pointer; text-align: left; transition: all 0.15s;
+  }
+  .word-btn:hover { border-color: var(--c-accent-2); background: var(--c-section); transform: translateY(-1px); }
+  .word-btn.playing { background: var(--c-accent-2); border-color: var(--c-accent-2); }
+  .word-btn.playing .w-en, .word-btn.playing .w-ru, .word-btn.playing .play-icon { color: #fff; }
+  .word-btn .w-en { font-family: 'Noto Serif', serif; font-size: 14px; font-weight: 600; color: var(--c-accent); flex: 1; }
+  .word-btn .w-en .star { color: #e2a23c; font-size: 11px; margin-left: 2px; }
+  .word-btn .w-ru { font-size: 11.5px; color: var(--c-text-muted); line-height: 1.3; max-width: 45%; }
+  .word-btn .play-icon { font-size: 10px; opacity: 0.55; color: var(--c-text-muted); }
+  .word-btn.playing .play-icon { opacity: 1; }
+
+  .unit-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .unit-action-btn {
+    padding: 6px 12px; background: var(--c-accent); color: #fff; border: none;
+    border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; font-family: inherit;
+  }
+  .unit-action-btn:hover { background: var(--c-header); }
+  .unit-action-btn.secondary { background: var(--c-section); color: var(--c-text); border: 1px solid var(--c-border); }
+
+  .now-playing {
+    position: sticky; bottom: 20px; background: var(--c-header); color: #fff;
+    padding: 12px 20px; border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    display: none; align-items: center; gap: 12px; z-index: 50; max-width: var(--container); margin: 0 auto;
+  }
+  .now-playing.show { display: flex; }
+  .now-playing .np-icon { font-size: 20px; }
+  .now-playing .np-word { font-family: 'Noto Serif', serif; font-size: 16px; font-weight: 600; flex: 1; }
+  .now-playing .np-word .np-ru { font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 400; opacity: 0.85; margin-left: 8px; }
+  .now-playing .np-stop { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 6px 14px; border-radius: var(--radius-sm); cursor: pointer; font-family: inherit; font-size: 13px; }
+
+  .footer { background: var(--c-header); color: rgba(255,255,255,0.9); padding: 24px; text-align: center; font-size: 13px; margin-top: 40px; }
+  .footer a { color: #ffd9c4; text-decoration: none; }
+
+  @media print {
+    .toolbar, .footer, .audio-controls, .global-actions, .unit-actions, .now-playing, .play-icon { display: none !important; }
+    .unit-acc-body { display: block !important; }
+    .unit-acc { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+  }
+  @media (max-width: 600px) { .container { padding: 24px 16px 40px; } .word-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand"><span class="dot"></span>Audio Player · Get Ready for Flyers</div>
+    <div class="toolbar-actions">
+      <a href="../index.html" class="secondary">← К плану</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hw-header">
+  <div class="hw-header-inner">
+    <p class="hw-kicker">Reference · Get Ready for Flyers · Audio Vocabulary</p>
+    <h1 class="hw-title">Audio <span class="accent">Player</span></h1>
+    <p class="hw-subtitle">Произношение всех слов учебника с переводом — нажми на слово, чтобы услышать</p>
+    <div class="hw-meta">
+      <div class="hw-meta-item">
+        <div class="hw-meta-label">Всего слов</div>
+        <div class="hw-meta-value" id="totalWords">493</div>
+      </div>
+      <div class="hw-meta-item">
+        <div class="hw-meta-label">Юнитов</div>
+        <div class="hw-meta-value">16</div>
+      </div>
+      <div class="hw-meta-item">
+        <div class="hw-meta-label">Технология</div>
+        <div class="hw-meta-value">Web Speech API (TTS)</div>
+      </div>
+      <div class="hw-meta-item">
+        <div class="hw-meta-label">Офлайн</div>
+        <div class="hw-meta-value">✓ Да</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="callout">
+    <strong>Как пользоваться:</strong> нажми на любое слово, чтобы услышать его произношение (там же виден перевод). Используется встроенный в браузер синтезатор речи (Web Speech API) — никаких внешних сервисов, всё работает офлайн. Кнопка «Играть все слова юнита» проговаривает раздел подряд — удобно повторять наизусть.
+  </div>
+
+  <div class="callout">
+    <strong>Совет:</strong> лучший звук — в браузерах Chrome и Edge (голос «Google UK English Male» или «Microsoft George»). Если голос звучит «робо-подобно», выбери другой голос в списке ниже и нажми «Тест голоса». Звук заблокирован? Щёлкни по странице ещё раз.
+  </div>
+
+  <div class="audio-controls">
+    <label>🔊 Голос:</label>
+    <select id="voiceSelect"></select>
+
+    <label>🐢 Скорость:</label>
+    <input type="range" id="speedRange" min="0.5" max="1.5" step="0.1" value="0.8">
+    <span class="audio-value" id="speedValue">0.8x</span>
+
+    <button class="voice-test" onclick="speakText('Hello! I am your English voice. Let us learn new words together!', null, false)">Тест голоса</button>
+  </div>
+
+  <div class="global-actions">
+    <button class="global-action-btn" onclick="expandAll()">📂 Открыть все юниты</button>
+    <button class="global-action-btn secondary" onclick="collapseAll()">📁 Свернуть все</button>
+    <button class="global-action-btn secondary" onclick="playAll()">▶ Играть всё подряд</button>
+    <button class="global-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+  </div>
+
+  <!-- ── H: Hello! · Family, months, numbers ── -->
+  <div class="unit-acc" id="unit_hello">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">H</div>
+      <h3 class="unit-acc-title">Hello! · Family, months, numbers <span class="acc-ru">· Семья, месяцы, числа</span></h3>
+      <span class="unit-acc-count">29 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 29 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="April" onclick="speak(this)"><span class="w-en">April</span><span class="w-ru">апрель</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="March" onclick="speak(this)"><span class="w-en">March</span><span class="w-ru">март</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="August" onclick="speak(this)"><span class="w-en">August</span><span class="w-ru">август</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="May" onclick="speak(this)"><span class="w-en">May</span><span class="w-ru">май</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="aunt" onclick="speak(this)"><span class="w-en">aunt<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">тётя</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="month" onclick="speak(this)"><span class="w-en">month<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">месяц</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="brother" onclick="speak(this)"><span class="w-en">brother</span><span class="w-ru">брат</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="mum" onclick="speak(this)"><span class="w-en">mum</span><span class="w-ru">мама</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cousin" onclick="speak(this)"><span class="w-en">cousin<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">двоюродный брат / сестра</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="November" onclick="speak(this)"><span class="w-en">November</span><span class="w-ru">ноябрь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dad" onclick="speak(this)"><span class="w-en">dad</span><span class="w-ru">папа</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="October" onclick="speak(this)"><span class="w-en">October</span><span class="w-ru">октябрь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="December" onclick="speak(this)"><span class="w-en">December</span><span class="w-ru">декабрь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="September" onclick="speak(this)"><span class="w-en">September</span><span class="w-ru">сентябрь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="family tree" onclick="speak(this)"><span class="w-en">family tree<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">генеалогическое древо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sister" onclick="speak(this)"><span class="w-en">sister</span><span class="w-ru">сестра</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="February" onclick="speak(this)"><span class="w-en">February</span><span class="w-ru">февраль</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="surname" onclick="speak(this)"><span class="w-en">surname<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">фамилия</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="grandma" onclick="speak(this)"><span class="w-en">grandma<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">бабушка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="thousand" onclick="speak(this)"><span class="w-en">thousand<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">тысяча</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="grandpa" onclick="speak(this)"><span class="w-en">grandpa<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">дедушка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="twins" onclick="speak(this)"><span class="w-en">twins<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">близнецы</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="husband" onclick="speak(this)"><span class="w-en">husband<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">муж</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="uncle" onclick="speak(this)"><span class="w-en">uncle<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">дядя</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="January" onclick="speak(this)"><span class="w-en">January</span><span class="w-ru">январь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="way" onclick="speak(this)"><span class="w-en">way</span><span class="w-ru">путь, дорога</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="July" onclick="speak(this)"><span class="w-en">July</span><span class="w-ru">июль</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wife" onclick="speak(this)"><span class="w-en">wife<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">жена</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="June" onclick="speak(this)"><span class="w-en">June</span><span class="w-ru">июнь</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_hello')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U1: Our home ── -->
+  <div class="unit-acc" id="unit_u1">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U1</div>
+      <h3 class="unit-acc-title">Our home <span class="acc-ru">· Дом</span></h3>
+      <span class="unit-acc-count">79 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 79 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="after" onclick="speak(this)"><span class="w-en">after</span><span class="w-ru">после, затем</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="late" onclick="speak(this)"><span class="w-en">late</span><span class="w-ru">поздний; поздно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="anyone" onclick="speak(this)"><span class="w-en">anyone<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">кто-нибудь, любой</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="letter" onclick="speak(this)"><span class="w-en">letter</span><span class="w-ru">письмо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="anything" onclick="speak(this)"><span class="w-en">anything</span><span class="w-ru">что-нибудь, что угодно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="little" onclick="speak(this)"><span class="w-en">little</span><span class="w-ru">маленький</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="anywhere" onclick="speak(this)"><span class="w-en">anywhere</span><span class="w-ru">где-нибудь, куда-нибудь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="lucky" onclick="speak(this)"><span class="w-en">lucky</span><span class="w-ru">удачливый, везучий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="arrive" onclick="speak(this)"><span class="w-en">arrive</span><span class="w-ru">прибывать, приезжать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="meal" onclick="speak(this)"><span class="w-en">meal</span><span class="w-ru">блюдо; приём пищи</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="away" onclick="speak(this)"><span class="w-en">away</span><span class="w-ru">прочь; не дома</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="much" onclick="speak(this)"><span class="w-en">much</span><span class="w-ru">много</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="before" onclick="speak(this)"><span class="w-en">before</span><span class="w-ru">до, перед</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="necklace" onclick="speak(this)"><span class="w-en">necklace</span><span class="w-ru">ожерелье</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bin" onclick="speak(this)"><span class="w-en">bin</span><span class="w-ru">мусорное ведро, бак</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="news" onclick="speak(this)"><span class="w-en">news</span><span class="w-ru">новости</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bit" onclick="speak(this)"><span class="w-en">bit</span><span class="w-ru">кусочек; немного</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="noisy" onclick="speak(this)"><span class="w-en">noisy<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">шумный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bored" onclick="speak(this)"><span class="w-en">bored</span><span class="w-ru">которому скучно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="no-one" data-say="no one" onclick="speak(this)"><span class="w-en">no-one</span><span class="w-ru">никто</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="borrow" onclick="speak(this)"><span class="w-en">borrow</span><span class="w-ru">брать (на время), занимать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="of course" onclick="speak(this)"><span class="w-en">of course</span><span class="w-ru">конечно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="broken" onclick="speak(this)"><span class="w-en">broken<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">сломанный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="oven" onclick="speak(this)"><span class="w-en">oven<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">духовка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="brush" onclick="speak(this)"><span class="w-en">brush<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">щётка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="paper" onclick="speak(this)"><span class="w-en">paper</span><span class="w-ru">бумага</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="channel" onclick="speak(this)"><span class="w-en">channel</span><span class="w-ru">телеканал</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="popular" onclick="speak(this)"><span class="w-en">popular</span><span class="w-ru">популярный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="chat" onclick="speak(this)"><span class="w-en">chat</span><span class="w-ru">болтать; беседа</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="post" onclick="speak(this)"><span class="w-en">post</span><span class="w-ru">отправлять почтой</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="chess" onclick="speak(this)"><span class="w-en">chess</span><span class="w-ru">шахматы</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="postcard" onclick="speak(this)"><span class="w-en">postcard</span><span class="w-ru">открытка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="college" onclick="speak(this)"><span class="w-en">college</span><span class="w-ru">колледж</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="programme" onclick="speak(this)"><span class="w-en">programme</span><span class="w-ru">программа (ТВ)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="comb" onclick="speak(this)"><span class="w-en">comb<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">расчёска</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="quiet" onclick="speak(this)"><span class="w-en">quiet<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">тихий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cooker" onclick="speak(this)"><span class="w-en">cooker<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">плита</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="rucksack" onclick="speak(this)"><span class="w-en">rucksack</span><span class="w-ru">рюкзак</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cushion" onclick="speak(this)"><span class="w-en">cushion<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">диванная подушка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="search" onclick="speak(this)"><span class="w-en">search</span><span class="w-ru">искать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cycle" onclick="speak(this)"><span class="w-en">cycle</span><span class="w-ru">ездить на велосипеде</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="shampoo" onclick="speak(this)"><span class="w-en">shampoo<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">шампунь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dear" onclick="speak(this)"><span class="w-en">dear</span><span class="w-ru">дорогой (обращение в письме)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="shelf" onclick="speak(this)"><span class="w-en">shelf<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">полка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="diary" onclick="speak(this)"><span class="w-en">diary</span><span class="w-ru">дневник</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="soap" onclick="speak(this)"><span class="w-en">soap<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">мыло</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="drums" onclick="speak(this)"><span class="w-en">drums</span><span class="w-ru">барабаны</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="somewhere" onclick="speak(this)"><span class="w-en">somewhere</span><span class="w-ru">где-то, куда-то</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="empty" onclick="speak(this)"><span class="w-en">empty<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пустой</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="stamps" onclick="speak(this)"><span class="w-en">stamps</span><span class="w-ru">марки</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="envelope" onclick="speak(this)"><span class="w-en">envelope</span><span class="w-ru">конверт</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="take" onclick="speak(this)"><span class="w-en">take</span><span class="w-ru">брать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="everyone" onclick="speak(this)"><span class="w-en">everyone<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">все, каждый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="teach" onclick="speak(this)"><span class="w-en">teach</span><span class="w-ru">учить, обучать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="everything" onclick="speak(this)"><span class="w-en">everything</span><span class="w-ru">всё</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tidy" onclick="speak(this)"><span class="w-en">tidy<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">аккуратный; убирать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="everywhere" onclick="speak(this)"><span class="w-en">everywhere</span><span class="w-ru">везде, повсюду</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="time" onclick="speak(this)"><span class="w-en">time</span><span class="w-ru">время</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="file" onclick="speak(this)"><span class="w-en">file</span><span class="w-ru">папка (для бумаг)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="toothpaste" onclick="speak(this)"><span class="w-en">toothpaste<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">зубная паста</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fridge" onclick="speak(this)"><span class="w-en">fridge<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">холодильник</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="unfriendly" onclick="speak(this)"><span class="w-en">unfriendly</span><span class="w-ru">недружелюбный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="friendly" onclick="speak(this)"><span class="w-en">friendly<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">дружелюбный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="unhappy" onclick="speak(this)"><span class="w-en">unhappy</span><span class="w-ru">несчастный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="full" onclick="speak(this)"><span class="w-en">full<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">полный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="unkind" onclick="speak(this)"><span class="w-en">unkind</span><span class="w-ru">недобрый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fun" onclick="speak(this)"><span class="w-en">fun</span><span class="w-ru">веселье, забава</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="untidy" onclick="speak(this)"><span class="w-en">untidy<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">неубранный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="go out" onclick="speak(this)"><span class="w-en">go out</span><span class="w-ru">выходить (из дома)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="usually" onclick="speak(this)"><span class="w-en">usually</span><span class="w-ru">обычно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="important" onclick="speak(this)"><span class="w-en">important</span><span class="w-ru">важный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="violin" onclick="speak(this)"><span class="w-en">violin</span><span class="w-ru">скрипка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="interesting" onclick="speak(this)"><span class="w-en">interesting</span><span class="w-ru">интересный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="warm" onclick="speak(this)"><span class="w-en">warm</span><span class="w-ru">тёплый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="keep" onclick="speak(this)"><span class="w-en">keep</span><span class="w-ru">хранить, держать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wheel" onclick="speak(this)"><span class="w-en">wheel</span><span class="w-ru">колесо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="key" onclick="speak(this)"><span class="w-en">key</span><span class="w-ru">ключ</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wifi" data-say="wi-fi" onclick="speak(this)"><span class="w-en">wifi</span><span class="w-ru">вай-фай, беспроводной интернет</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="kind" onclick="speak(this)"><span class="w-en">kind</span><span class="w-ru">добрый</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u1')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U2: Going to town ── -->
+  <div class="unit-acc" id="unit_u2">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U2</div>
+      <h3 class="unit-acc-title">Going to town <span class="acc-ru">· Город</span></h3>
+      <span class="unit-acc-count">47 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 47 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="across" onclick="speak(this)"><span class="w-en">across</span><span class="w-ru">через, поперёк</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="motorway" onclick="speak(this)"><span class="w-en">motorway</span><span class="w-ru">автомагистраль</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="airport" onclick="speak(this)"><span class="w-en">airport</span><span class="w-ru">аэропорт</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="museum" onclick="speak(this)"><span class="w-en">museum</span><span class="w-ru">музей</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ambulance" onclick="speak(this)"><span class="w-en">ambulance<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">скорая помощь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="next" onclick="speak(this)"><span class="w-en">next</span><span class="w-ru">следующий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bank" onclick="speak(this)"><span class="w-en">bank<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">банк</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="other" onclick="speak(this)"><span class="w-en">other</span><span class="w-ru">другой</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bicycle" onclick="speak(this)"><span class="w-en">bicycle</span><span class="w-ru">велосипед</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="over" onclick="speak(this)"><span class="w-en">over</span><span class="w-ru">над; через</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bridge" onclick="speak(this)"><span class="w-en">bridge</span><span class="w-ru">мост</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="past" onclick="speak(this)"><span class="w-en">past</span><span class="w-ru">мимо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="castle" onclick="speak(this)"><span class="w-en">castle<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">замок</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="police station" onclick="speak(this)"><span class="w-en">police station<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">полицейский участок</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="chemist&#x27;s" onclick="speak(this)"><span class="w-en">chemist&#x27;s<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">аптека</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="post office" onclick="speak(this)"><span class="w-en">post office<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">почта</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="corner" onclick="speak(this)"><span class="w-en">corner<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">угол</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pyjamas" onclick="speak(this)"><span class="w-en">pyjamas</span><span class="w-ru">пижама</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="expensive" onclick="speak(this)"><span class="w-en">expensive</span><span class="w-ru">дорогой (по цене)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="railway station" onclick="speak(this)"><span class="w-en">railway station<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">железнодорожный вокзал</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="factory" onclick="speak(this)"><span class="w-en">factory<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">фабрика, завод</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="remember" onclick="speak(this)"><span class="w-en">remember<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">помнить, вспомнить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fetch" onclick="speak(this)"><span class="w-en">fetch<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">принести, сходить за</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="restaurant" onclick="speak(this)"><span class="w-en">restaurant</span><span class="w-ru">ресторан</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fire engine" onclick="speak(this)"><span class="w-en">fire engine<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пожарная машина</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="right" onclick="speak(this)"><span class="w-en">right</span><span class="w-ru">правый; направо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fire station" onclick="speak(this)"><span class="w-en">fire station<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пожарная часть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="shorts" onclick="speak(this)"><span class="w-en">shorts</span><span class="w-ru">шорты</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="forget" onclick="speak(this)"><span class="w-en">forget<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">забыть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sky" onclick="speak(this)"><span class="w-en">sky</span><span class="w-ru">небо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="front" onclick="speak(this)"><span class="w-en">front</span><span class="w-ru">передняя часть, фасад</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="skyscraper" onclick="speak(this)"><span class="w-en">skyscraper<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">небоскрёб</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="get to" onclick="speak(this)"><span class="w-en">get to<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">добираться до</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="stadium" onclick="speak(this)"><span class="w-en">stadium<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">стадион</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hill" onclick="speak(this)"><span class="w-en">hill</span><span class="w-ru">холм</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="taxi" onclick="speak(this)"><span class="w-en">taxi</span><span class="w-ru">такси</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hotel" onclick="speak(this)"><span class="w-en">hotel</span><span class="w-ru">гостиница</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="through" onclick="speak(this)"><span class="w-en">through</span><span class="w-ru">сквозь, через</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="How long" onclick="speak(this)"><span class="w-en">How long</span><span class="w-ru">как долго</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="traffic" onclick="speak(this)"><span class="w-en">traffic<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">дорожное движение</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="later" onclick="speak(this)"><span class="w-en">later</span><span class="w-ru">позже</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="university" onclick="speak(this)"><span class="w-en">university</span><span class="w-ru">университет</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="left" onclick="speak(this)"><span class="w-en">left</span><span class="w-ru">левый; налево</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="will" onclick="speak(this)"><span class="w-en">will</span><span class="w-ru">вспом. глагол будущего времени; вежливая просьба</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="middle" onclick="speak(this)"><span class="w-en">middle</span><span class="w-ru">середина</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wood" onclick="speak(this)"><span class="w-en">wood</span><span class="w-ru">лес</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="money" onclick="speak(this)"><span class="w-en">money</span><span class="w-ru">деньги</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u2')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U3: Eating out ── -->
+  <div class="unit-acc" id="unit_u3">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U3</div>
+      <h3 class="unit-acc-title">Eating out <span class="acc-ru">· Еда</span></h3>
+      <span class="unit-acc-count">42 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 42 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="amazing" onclick="speak(this)"><span class="w-en">amazing</span><span class="w-ru">изумительный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="lovely" onclick="speak(this)"><span class="w-en">lovely</span><span class="w-ru">милый, прекрасный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="biscuit" onclick="speak(this)"><span class="w-en">biscuit<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">печенье</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="medicine" onclick="speak(this)"><span class="w-en">medicine<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">лекарство</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bracelet" onclick="speak(this)"><span class="w-en">bracelet</span><span class="w-ru">браслет</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="mind" onclick="speak(this)"><span class="w-en">mind</span><span class="w-ru">возражать; разум</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="butter" onclick="speak(this)"><span class="w-en">butter<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">сливочное масло</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="olives" onclick="speak(this)"><span class="w-en">olives<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">оливки</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="chopsticks" onclick="speak(this)"><span class="w-en">chopsticks<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">палочки для еды</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pepper" onclick="speak(this)"><span class="w-en">pepper<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">перец</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dangerous" onclick="speak(this)"><span class="w-en">dangerous</span><span class="w-ru">опасный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="piece" onclick="speak(this)"><span class="w-en">piece</span><span class="w-ru">кусок, кусочек</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="delicious" onclick="speak(this)"><span class="w-en">delicious<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">очень вкусный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pizza" onclick="speak(this)"><span class="w-en">pizza</span><span class="w-ru">пицца</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="excited" onclick="speak(this)"><span class="w-en">excited<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">взволнованный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="salt" onclick="speak(this)"><span class="w-en">salt<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">соль</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="feel" onclick="speak(this)"><span class="w-en">feel</span><span class="w-ru">чувствовать(ся)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="smell" onclick="speak(this)"><span class="w-en">smell</span><span class="w-ru">пахнуть; запах</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="finish" onclick="speak(this)"><span class="w-en">finish</span><span class="w-ru">заканчивать(ся)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="soft" onclick="speak(this)"><span class="w-en">soft</span><span class="w-ru">мягкий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="flour" onclick="speak(this)"><span class="w-en">flour<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">мука</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sound" onclick="speak(this)"><span class="w-en">sound</span><span class="w-ru">звучать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fork" onclick="speak(this)"><span class="w-en">fork<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">вилка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="spend" onclick="speak(this)"><span class="w-en">spend</span><span class="w-ru">проводить (время); тратить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="frightened" onclick="speak(this)"><span class="w-en">frightened<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">испуганный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="spoon" onclick="speak(this)"><span class="w-en">spoon<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">ложка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="group" onclick="speak(this)"><span class="w-en">group</span><span class="w-ru">группа</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="strawberry" onclick="speak(this)"><span class="w-en">strawberry<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">клубника</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hard" onclick="speak(this)"><span class="w-en">hard</span><span class="w-ru">твёрдый; трудный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sugar" onclick="speak(this)"><span class="w-en">sugar<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">сахар</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hear" onclick="speak(this)"><span class="w-en">hear</span><span class="w-ru">слышать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="surprise" onclick="speak(this)"><span class="w-en">surprise<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">сюрприз</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="honey" onclick="speak(this)"><span class="w-en">honey<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">мёд</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tastes" onclick="speak(this)"><span class="w-en">tastes</span><span class="w-ru">имеет вкус (глагол taste)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ill" onclick="speak(this)"><span class="w-en">ill<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">больной</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tortoise" onclick="speak(this)"><span class="w-en">tortoise</span><span class="w-ru">черепаха</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="jam" onclick="speak(this)"><span class="w-en">jam<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">джем, варенье</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="visit" onclick="speak(this)"><span class="w-en">visit</span><span class="w-ru">посещать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="knife" onclick="speak(this)"><span class="w-en">knife<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">нож</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wool" onclick="speak(this)"><span class="w-en">wool<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">шерсть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="look like" onclick="speak(this)"><span class="w-en">look like</span><span class="w-ru">выглядеть как, быть похожим на</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="yoghurt" onclick="speak(this)"><span class="w-en">yoghurt<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">йогурт</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u3')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U4: At school ── -->
+  <div class="unit-acc" id="unit_u4">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U4</div>
+      <h3 class="unit-acc-title">At school <span class="acc-ru">· Школа</span></h3>
+      <span class="unit-acc-count">42 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 42 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="a.m." data-say="a m" onclick="speak(this)"><span class="w-en">a.m.</span><span class="w-ru">до полудня (утра)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="language" onclick="speak(this)"><span class="w-en">language</span><span class="w-ru">язык</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="actually" onclick="speak(this)"><span class="w-en">actually</span><span class="w-ru">на самом деле, вообще-то</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="maths" onclick="speak(this)"><span class="w-en">maths<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">математика</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="agree" onclick="speak(this)"><span class="w-en">agree</span><span class="w-ru">соглашаться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="metal" onclick="speak(this)"><span class="w-en">metal</span><span class="w-ru">металл</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="art" onclick="speak(this)"><span class="w-en">art<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">изобразительное искусство (ИЗО)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="midday" onclick="speak(this)"><span class="w-en">midday<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">полдень</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="beetle" onclick="speak(this)"><span class="w-en">beetle</span><span class="w-ru">жук</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="midnight" onclick="speak(this)"><span class="w-en">midnight<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">полночь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="card" onclick="speak(this)"><span class="w-en">card</span><span class="w-ru">карточка; открытка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="music" onclick="speak(this)"><span class="w-en">music</span><span class="w-ru">музыка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="club" onclick="speak(this)"><span class="w-en">club<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">кружок, клуб</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="o&#x27;clock" onclick="speak(this)"><span class="w-en">o&#x27;clock</span><span class="w-ru">ровно (о времени)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cut" onclick="speak(this)"><span class="w-en">cut</span><span class="w-ru">резать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="p.m." data-say="p m" onclick="speak(this)"><span class="w-en">p.m.</span><span class="w-ru">после полудня (дня)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dictionary" onclick="speak(this)"><span class="w-en">dictionary<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">словарь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="plastic" onclick="speak(this)"><span class="w-en">plastic</span><span class="w-ru">пластик, пластиковый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="disappear" onclick="speak(this)"><span class="w-en">disappear</span><span class="w-ru">исчезать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="platform" onclick="speak(this)"><span class="w-en">platform</span><span class="w-ru">платформа, перрон</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="during" onclick="speak(this)"><span class="w-en">during</span><span class="w-ru">во время</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="program" onclick="speak(this)"><span class="w-en">program</span><span class="w-ru">программа (амер. написание)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="enormous" onclick="speak(this)"><span class="w-en">enormous<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">огромный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="quarter" onclick="speak(this)"><span class="w-en">quarter<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">четверть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="excellent" onclick="speak(this)"><span class="w-en">excellent<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">отличный, превосходный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="repeat" onclick="speak(this)"><span class="w-en">repeat</span><span class="w-ru">повторять</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="geography" onclick="speak(this)"><span class="w-en">geography<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">география</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="same" onclick="speak(this)"><span class="w-en">same</span><span class="w-ru">тот же, такой же</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="half" onclick="speak(this)"><span class="w-en">half<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">половина</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="save" onclick="speak(this)"><span class="w-en">save</span><span class="w-ru">спасать; копить, экономить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="history" onclick="speak(this)"><span class="w-en">history<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">история</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="science" onclick="speak(this)"><span class="w-en">science<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">естествознание, наука</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="improve" onclick="speak(this)"><span class="w-en">improve<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">улучшать(ся)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="study" onclick="speak(this)"><span class="w-en">study</span><span class="w-ru">учиться, изучать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="information" onclick="speak(this)"><span class="w-en">information</span><span class="w-ru">информация</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="subject" onclick="speak(this)"><span class="w-en">subject<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">школьный предмет</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="invitation" onclick="speak(this)"><span class="w-en">invitation</span><span class="w-ru">приглашение</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sure" onclick="speak(this)"><span class="w-en">sure</span><span class="w-ru">уверенный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="IT" onclick="speak(this)"><span class="w-en">IT<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">информатика</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="timetable" onclick="speak(this)"><span class="w-en">timetable<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">расписание</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="join" onclick="speak(this)"><span class="w-en">join</span><span class="w-ru">присоединяться, вступать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="quiz" onclick="speak(this)"><span class="w-en">quiz<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">викторина</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u4')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── R1: Revision 1 ── -->
+  <div class="unit-acc" id="unit_rev1">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">R1</div>
+      <h3 class="unit-acc-title">Revision 1 <span class="acc-ru">· Повторение 1–4</span></h3>
+      <span class="unit-acc-count">6 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 6 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="believe" onclick="speak(this)"><span class="w-en">believe</span><span class="w-ru">верить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="turn on" onclick="speak(this)"><span class="w-en">turn on</span><span class="w-ru">включать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="minute" onclick="speak(this)"><span class="w-en">minute</span><span class="w-ru">минута</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="until" onclick="speak(this)"><span class="w-en">until</span><span class="w-ru">до (какого-то момента)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="mix" onclick="speak(this)"><span class="w-en">mix</span><span class="w-ru">смешивать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="without" onclick="speak(this)"><span class="w-en">without</span><span class="w-ru">без</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_rev1')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U5: A day out ── -->
+  <div class="unit-acc" id="unit_u5">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U5</div>
+      <h3 class="unit-acc-title">A day out <span class="acc-ru">· Выходной</span></h3>
+      <span class="unit-acc-count">42 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 42 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="act" onclick="speak(this)"><span class="w-en">act</span><span class="w-ru">играть (в спектакле)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hour" onclick="speak(this)"><span class="w-en">hour</span><span class="w-ru">час</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="actor" onclick="speak(this)"><span class="w-en">actor</span><span class="w-ru">актёр</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="million" onclick="speak(this)"><span class="w-en">million</span><span class="w-ru">миллион</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ago" onclick="speak(this)"><span class="w-en">ago</span><span class="w-ru">тому назад</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="museum" onclick="speak(this)"><span class="w-en">museum</span><span class="w-ru">музей</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="air" onclick="speak(this)"><span class="w-en">air</span><span class="w-ru">воздух</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ocean" onclick="speak(this)"><span class="w-en">ocean</span><span class="w-ru">океан</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="also" onclick="speak(this)"><span class="w-en">also</span><span class="w-ru">тоже, также</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pleased" onclick="speak(this)"><span class="w-en">pleased</span><span class="w-ru">довольный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="brave" onclick="speak(this)"><span class="w-en">brave</span><span class="w-ru">смелый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="project" onclick="speak(this)"><span class="w-en">project</span><span class="w-ru">проект</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cage" onclick="speak(this)"><span class="w-en">cage<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">клетка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pyramids" onclick="speak(this)"><span class="w-en">pyramids</span><span class="w-ru">пирамиды</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cartoon" onclick="speak(this)"><span class="w-en">cartoon</span><span class="w-ru">мультфильм</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="screen" onclick="speak(this)"><span class="w-en">screen</span><span class="w-ru">экран</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cereal" onclick="speak(this)"><span class="w-en">cereal</span><span class="w-ru">хлопья (с молоком)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="seat" onclick="speak(this)"><span class="w-en">seat</span><span class="w-ru">место (сиденье)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cheap" onclick="speak(this)"><span class="w-en">cheap</span><span class="w-ru">дешёвый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sell" onclick="speak(this)"><span class="w-en">sell</span><span class="w-ru">продавать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cinema" onclick="speak(this)"><span class="w-en">cinema<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">кинотеатр</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="several" onclick="speak(this)"><span class="w-en">several</span><span class="w-ru">несколько</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="circus" onclick="speak(this)"><span class="w-en">circus<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">цирк</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="special" onclick="speak(this)"><span class="w-en">special</span><span class="w-ru">особенный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="clown" onclick="speak(this)"><span class="w-en">clown<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">клоун</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="stage" onclick="speak(this)"><span class="w-en">stage<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">сцена</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dinosaurs" onclick="speak(this)"><span class="w-en">dinosaurs<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">динозавры</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="stay" onclick="speak(this)"><span class="w-en">stay</span><span class="w-ru">оставаться; останавливаться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="extinct" onclick="speak(this)"><span class="w-en">extinct<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">вымерший</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="swing" onclick="speak(this)"><span class="w-en">swing</span><span class="w-ru">качели; качаться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="find out" onclick="speak(this)"><span class="w-en">find out</span><span class="w-ru">выяснять, узнавать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="telephone" onclick="speak(this)"><span class="w-en">telephone</span><span class="w-ru">телефон</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="frightening" onclick="speak(this)"><span class="w-en">frightening</span><span class="w-ru">пугающий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="theatre" onclick="speak(this)"><span class="w-en">theatre<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">театр</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="gym" onclick="speak(this)"><span class="w-en">gym</span><span class="w-ru">спортивный зал</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tomorrow" onclick="speak(this)"><span class="w-en">tomorrow</span><span class="w-ru">завтра</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hate" onclick="speak(this)"><span class="w-en">hate</span><span class="w-ru">ненавидеть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tune" onclick="speak(this)"><span class="w-en">tune</span><span class="w-ru">мелодия</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="high" onclick="speak(this)"><span class="w-en">high</span><span class="w-ru">высокий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wild" onclick="speak(this)"><span class="w-en">wild</span><span class="w-ru">дикий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hole" onclick="speak(this)"><span class="w-en">hole</span><span class="w-ru">дыра, нора</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="zoo" onclick="speak(this)"><span class="w-en">zoo</span><span class="w-ru">зоопарк</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u5')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U6: Dream jobs ── -->
+  <div class="unit-acc" id="unit_u6">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U6</div>
+      <h3 class="unit-acc-title">Dream jobs <span class="acc-ru">· Профессии</span></h3>
+      <span class="unit-acc-count">35 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 35 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="artist" onclick="speak(this)"><span class="w-en">artist</span><span class="w-ru">художник</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="look after" onclick="speak(this)"><span class="w-en">look after</span><span class="w-ru">заботиться (о ком-то)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="astronaut" onclick="speak(this)"><span class="w-en">astronaut</span><span class="w-ru">космонавт</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="manager" onclick="speak(this)"><span class="w-en">manager</span><span class="w-ru">менеджер, управляющий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bandage" onclick="speak(this)"><span class="w-en">bandage</span><span class="w-ru">бинт, повязка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="mechanic" onclick="speak(this)"><span class="w-en">mechanic<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">механик</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="begin" onclick="speak(this)"><span class="w-en">begin</span><span class="w-ru">начинать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="meeting" onclick="speak(this)"><span class="w-en">meeting</span><span class="w-ru">встреча; собрание</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="businessman/woman" data-say="businessman businesswoman" onclick="speak(this)"><span class="w-en">businessman/woman</span><span class="w-ru">бизнесмен / деловая женщина</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="nowhere" onclick="speak(this)"><span class="w-en">nowhere</span><span class="w-ru">нигде, никуда</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cook" onclick="speak(this)"><span class="w-en">cook</span><span class="w-ru">повар; готовить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="nurse" onclick="speak(this)"><span class="w-en">nurse</span><span class="w-ru">медсестра</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dentist" onclick="speak(this)"><span class="w-en">dentist<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">стоматолог</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="office" onclick="speak(this)"><span class="w-en">office</span><span class="w-ru">офис</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="designer" onclick="speak(this)"><span class="w-en">designer</span><span class="w-ru">дизайнер</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="perhaps" onclick="speak(this)"><span class="w-en">perhaps</span><span class="w-ru">может быть, возможно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="doctor" onclick="speak(this)"><span class="w-en">doctor</span><span class="w-ru">врач</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="photographer" onclick="speak(this)"><span class="w-en">photographer<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">фотограф</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="each" onclick="speak(this)"><span class="w-en">each</span><span class="w-ru">каждый (по отдельности)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pilot" onclick="speak(this)"><span class="w-en">pilot<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пилот</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="early" onclick="speak(this)"><span class="w-en">early</span><span class="w-ru">ранний; рано</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="police officer" onclick="speak(this)"><span class="w-en">police officer</span><span class="w-ru">полицейский</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="engineer" onclick="speak(this)"><span class="w-en">engineer<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">инженер</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="poor" onclick="speak(this)"><span class="w-en">poor</span><span class="w-ru">бедный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fast" onclick="speak(this)"><span class="w-en">fast</span><span class="w-ru">быстрый; быстро</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="rich" onclick="speak(this)"><span class="w-en">rich</span><span class="w-ru">богатый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fire fighter" onclick="speak(this)"><span class="w-en">fire fighter<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пожарный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="singer" onclick="speak(this)"><span class="w-en">singer</span><span class="w-ru">певец, певица</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="happen" onclick="speak(this)"><span class="w-en">happen</span><span class="w-ru">случаться, происходить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="teacher" onclick="speak(this)"><span class="w-en">teacher</span><span class="w-ru">учитель</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="job" onclick="speak(this)"><span class="w-en">job</span><span class="w-ru">работа</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tennis player" onclick="speak(this)"><span class="w-en">tennis player</span><span class="w-ru">теннисист</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="journalist" onclick="speak(this)"><span class="w-en">journalist<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">журналист</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="waiter" onclick="speak(this)"><span class="w-en">waiter<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">официант</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="lazy" onclick="speak(this)"><span class="w-en">lazy</span><span class="w-ru">ленивый</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u6')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U7: At the castle ── -->
+  <div class="unit-acc" id="unit_u7">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U7</div>
+      <h3 class="unit-acc-title">At the castle <span class="acc-ru">· Замок</span></h3>
+      <span class="unit-acc-count">46 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 46 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="appear" onclick="speak(this)"><span class="w-en">appear</span><span class="w-ru">появляться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="journey" onclick="speak(this)"><span class="w-en">journey</span><span class="w-ru">путешествие, поездка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="bridge" onclick="speak(this)"><span class="w-en">bridge</span><span class="w-ru">мост</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="king" onclick="speak(this)"><span class="w-en">king<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">король</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="building" onclick="speak(this)"><span class="w-en">building</span><span class="w-ru">здание</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="leave" onclick="speak(this)"><span class="w-en">leave</span><span class="w-ru">покидать, оставлять</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="butterfly" onclick="speak(this)"><span class="w-en">butterfly</span><span class="w-ru">бабочка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="make sure" onclick="speak(this)"><span class="w-en">make sure</span><span class="w-ru">убедиться, проверить</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="century" onclick="speak(this)"><span class="w-en">century</span><span class="w-ru">век, столетие</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="might" onclick="speak(this)"><span class="w-en">might</span><span class="w-ru">может быть (о вероятности)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="conversation" onclick="speak(this)"><span class="w-en">conversation</span><span class="w-ru">разговор, беседа</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="north" onclick="speak(this)"><span class="w-en">north</span><span class="w-ru">север</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="costume" onclick="speak(this)"><span class="w-en">costume</span><span class="w-ru">костюм</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="postcard" onclick="speak(this)"><span class="w-en">postcard</span><span class="w-ru">открытка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="creature" onclick="speak(this)"><span class="w-en">creature</span><span class="w-ru">существо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="queen" onclick="speak(this)"><span class="w-en">queen<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">королева</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="crown" onclick="speak(this)"><span class="w-en">crown<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">корона</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ring" onclick="speak(this)"><span class="w-en">ring</span><span class="w-ru">кольцо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="date" onclick="speak(this)"><span class="w-en">date</span><span class="w-ru">дата</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="send" onclick="speak(this)"><span class="w-en">send</span><span class="w-ru">отправлять</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="design" onclick="speak(this)"><span class="w-en">design</span><span class="w-ru">дизайн; проектировать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="silver" onclick="speak(this)"><span class="w-en">silver<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">серебро</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="east" onclick="speak(this)"><span class="w-en">east</span><span class="w-ru">восток</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="south" onclick="speak(this)"><span class="w-en">south</span><span class="w-ru">юг</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="entrance" onclick="speak(this)"><span class="w-en">entrance<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">вход</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="steps" onclick="speak(this)"><span class="w-en">steps</span><span class="w-ru">ступеньки; крыльцо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="exit" onclick="speak(this)"><span class="w-en">exit</span><span class="w-ru">выход</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="still" onclick="speak(this)"><span class="w-en">still</span><span class="w-ru">всё ещё</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="festival" onclick="speak(this)"><span class="w-en">festival</span><span class="w-ru">фестиваль</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="swan" onclick="speak(this)"><span class="w-en">swan<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">лебедь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="finger" onclick="speak(this)"><span class="w-en">finger</span><span class="w-ru">палец (на руке)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="swing" onclick="speak(this)"><span class="w-en">swing</span><span class="w-ru">качели; качаться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="flag" onclick="speak(this)"><span class="w-en">flag</span><span class="w-ru">флаг</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="touch" onclick="speak(this)"><span class="w-en">touch</span><span class="w-ru">трогать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="follow" onclick="speak(this)"><span class="w-en">follow</span><span class="w-ru">следовать (за)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tour" onclick="speak(this)"><span class="w-en">tour</span><span class="w-ru">экскурсия; тур</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="gate" onclick="speak(this)"><span class="w-en">gate<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">ворота, калитка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="unusual" onclick="speak(this)"><span class="w-en">unusual</span><span class="w-ru">необычный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="glass" onclick="speak(this)"><span class="w-en">glass</span><span class="w-ru">стекло; стакан</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="view" onclick="speak(this)"><span class="w-en">view</span><span class="w-ru">вид (из окна)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="gold" onclick="speak(this)"><span class="w-en">gold<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">золото</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="west" onclick="speak(this)"><span class="w-en">west</span><span class="w-ru">запад</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="insect" onclick="speak(this)"><span class="w-en">insect</span><span class="w-ru">насекомое</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wild" onclick="speak(this)"><span class="w-en">wild</span><span class="w-ru">дикий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="interested" onclick="speak(this)"><span class="w-en">interested</span><span class="w-ru">заинтересованный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wonderful" onclick="speak(this)"><span class="w-en">wonderful</span><span class="w-ru">замечательный</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u7')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U8: Sports day! ── -->
+  <div class="unit-acc" id="unit_u8">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U8</div>
+      <h3 class="unit-acc-title">Sports day! <span class="acc-ru">· Спорт</span></h3>
+      <span class="unit-acc-count">19 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 19 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="already" onclick="speak(this)"><span class="w-en">already<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">уже</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="prize" onclick="speak(this)"><span class="w-en">prize<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">приз</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="competition" onclick="speak(this)"><span class="w-en">competition<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">соревнование</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="race" onclick="speak(this)"><span class="w-en">race<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">гонка, забег</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="end" onclick="speak(this)"><span class="w-en">end</span><span class="w-ru">конец; заканчивать(ся)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="score" onclick="speak(this)"><span class="w-en">score</span><span class="w-ru">счёт в игре; забивать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="explain" onclick="speak(this)"><span class="w-en">explain</span><span class="w-ru">объяснять</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="snack" onclick="speak(this)"><span class="w-en">snack</span><span class="w-ru">перекус, лёгкая закуска</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fall over" onclick="speak(this)"><span class="w-en">fall over</span><span class="w-ru">падать, упасть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sore" onclick="speak(this)"><span class="w-en">sore</span><span class="w-ru">воспалённый, больной (sore knee)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="goal" onclick="speak(this)"><span class="w-en">goal<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">гол; ворота</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="team" onclick="speak(this)"><span class="w-en">team<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">команда</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="golf" onclick="speak(this)"><span class="w-en">golf</span><span class="w-ru">гольф</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="volleyball" onclick="speak(this)"><span class="w-en">volleyball</span><span class="w-ru">волейбол</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="just" onclick="speak(this)"><span class="w-en">just</span><span class="w-ru">только что</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="winner" onclick="speak(this)"><span class="w-en">winner<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">победитель</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="knee" onclick="speak(this)"><span class="w-en">knee</span><span class="w-ru">колено</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="yet" onclick="speak(this)"><span class="w-en">yet</span><span class="w-ru">ещё (не); уже (в вопросах)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="match" onclick="speak(this)"><span class="w-en">match<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">матч</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u8')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── R2: Revision 2 ── -->
+  <div class="unit-acc" id="unit_rev2">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">R2</div>
+      <h3 class="unit-acc-title">Revision 2 <span class="acc-ru">· Повторение 5–8</span></h3>
+      <span class="unit-acc-count">6 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 6 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="engine" onclick="speak(this)"><span class="w-en">engine</span><span class="w-ru">двигатель, мотор</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="repair" onclick="speak(this)"><span class="w-en">repair</span><span class="w-ru">ремонтировать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="invent" onclick="speak(this)"><span class="w-en">invent</span><span class="w-ru">изобретать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="suddenly" onclick="speak(this)"><span class="w-en">suddenly</span><span class="w-ru">вдруг</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="racing car" onclick="speak(this)"><span class="w-en">racing car</span><span class="w-ru">гоночная машина</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="win" onclick="speak(this)"><span class="w-en">win</span><span class="w-ru">выигрывать, побеждать</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_rev2')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U9: Our camping adventure ── -->
+  <div class="unit-acc" id="unit_u9">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U9</div>
+      <h3 class="unit-acc-title">Our camping adventure <span class="acc-ru">· Кемпинг</span></h3>
+      <span class="unit-acc-count">40 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 40 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="alone" onclick="speak(this)"><span class="w-en">alone</span><span class="w-ru">один, самостоятельно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="magazine" onclick="speak(this)"><span class="w-en">magazine</span><span class="w-ru">журнал</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="belt" onclick="speak(this)"><span class="w-en">belt</span><span class="w-ru">ремень</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="missing" onclick="speak(this)"><span class="w-en">missing</span><span class="w-ru">пропавший; отсутствующий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="biscuits" onclick="speak(this)"><span class="w-en">biscuits</span><span class="w-ru">печенье</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="nest" onclick="speak(this)"><span class="w-en">nest</span><span class="w-ru">гнездо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="burn" onclick="speak(this)"><span class="w-en">burn</span><span class="w-ru">гореть; обжечься</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="newspaper" onclick="speak(this)"><span class="w-en">newspaper</span><span class="w-ru">газета</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="camp" onclick="speak(this)"><span class="w-en">camp<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">лагерь; разбить лагерь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="path" onclick="speak(this)"><span class="w-en">path<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">тропинка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="cave" onclick="speak(this)"><span class="w-en">cave<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пещера</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pocket" onclick="speak(this)"><span class="w-en">pocket</span><span class="w-ru">карман</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="dark" onclick="speak(this)"><span class="w-en">dark<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">тёмный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="rock" onclick="speak(this)"><span class="w-en">rock<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">скала; камень</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="decide" onclick="speak(this)"><span class="w-en">decide</span><span class="w-ru">решать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="soft" onclick="speak(this)"><span class="w-en">soft</span><span class="w-ru">мягкий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="deep" onclick="speak(this)"><span class="w-en">deep</span><span class="w-ru">глубокий</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="stars" onclick="speak(this)"><span class="w-en">stars<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">звёзды</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="Earth" onclick="speak(this)"><span class="w-en">Earth</span><span class="w-ru">Земля (планета)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="stone" onclick="speak(this)"><span class="w-en">stone</span><span class="w-ru">камень</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="elbow" onclick="speak(this)"><span class="w-en">elbow</span><span class="w-ru">локоть</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="strange" onclick="speak(this)"><span class="w-en">strange</span><span class="w-ru">странный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="explore" onclick="speak(this)"><span class="w-en">explore</span><span class="w-ru">исследовать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tent" onclick="speak(this)"><span class="w-en">tent<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">палатка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fire" onclick="speak(this)"><span class="w-en">fire</span><span class="w-ru">огонь; пожар</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="together" onclick="speak(this)"><span class="w-en">together</span><span class="w-ru">вместе</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="fur" onclick="speak(this)"><span class="w-en">fur</span><span class="w-ru">мех</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="torch" onclick="speak(this)"><span class="w-en">torch<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">фонарик</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="furry" onclick="speak(this)"><span class="w-en">furry</span><span class="w-ru">пушистый, в мехах</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="tyre" onclick="speak(this)"><span class="w-en">tyre</span><span class="w-ru">шина, покрышка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="heavy" onclick="speak(this)"><span class="w-en">heavy</span><span class="w-ru">тяжёлый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="umbrella" onclick="speak(this)"><span class="w-en">umbrella</span><span class="w-ru">зонт</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hill" onclick="speak(this)"><span class="w-en">hill</span><span class="w-ru">холм</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="whisper" onclick="speak(this)"><span class="w-en">whisper<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">шептать; шёпот</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="horrible" onclick="speak(this)"><span class="w-en">horrible</span><span class="w-ru">ужасный, отвратительный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="whistle" onclick="speak(this)"><span class="w-en">whistle</span><span class="w-ru">свистеть; свисток</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="kilometre" onclick="speak(this)"><span class="w-en">kilometre</span><span class="w-ru">километр</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wing" onclick="speak(this)"><span class="w-en">wing</span><span class="w-ru">крыло</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="large" onclick="speak(this)"><span class="w-en">large</span><span class="w-ru">большой</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wood" onclick="speak(this)"><span class="w-en">wood</span><span class="w-ru">лес</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u9')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U10: A good year! ── -->
+  <div class="unit-acc" id="unit_u10">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U10</div>
+      <h3 class="unit-acc-title">A good year! <span class="acc-ru">· Времена года</span></h3>
+      <span class="unit-acc-count">18 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 18 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="autumn" onclick="speak(this)"><span class="w-en">autumn<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">осень</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="snowball" onclick="speak(this)"><span class="w-en">snowball<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">снежок</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="collect" onclick="speak(this)"><span class="w-en">collect</span><span class="w-ru">собирать (коллекцию)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="snowboard" onclick="speak(this)"><span class="w-en">snowboard</span><span class="w-ru">сноуборд; кататься на сноуборде</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="enter" onclick="speak(this)"><span class="w-en">enter</span><span class="w-ru">входить (в); участвовать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="snowman" onclick="speak(this)"><span class="w-en">snowman<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">снеговик</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="grow" onclick="speak(this)"><span class="w-en">grow</span><span class="w-ru">расти; выращивать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="spring" onclick="speak(this)"><span class="w-en">spring<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">весна</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="leaf" onclick="speak(this)"><span class="w-en">leaf</span><span class="w-ru">лист (дерева)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="summer" onclick="speak(this)"><span class="w-en">summer</span><span class="w-ru">лето</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="lie" onclick="speak(this)"><span class="w-en">lie</span><span class="w-ru">лежать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="trip" onclick="speak(this)"><span class="w-en">trip</span><span class="w-ru">поездка, экскурсия</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pull" onclick="speak(this)"><span class="w-en">pull</span><span class="w-ru">тянуть (на себя)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="winter" onclick="speak(this)"><span class="w-en">winter</span><span class="w-ru">зима</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="push" onclick="speak(this)"><span class="w-en">push</span><span class="w-ru">толкать (от себя)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="wish" onclick="speak(this)"><span class="w-en">wish<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">желание; загадывать</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sledge" onclick="speak(this)"><span class="w-en">sledge<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">санки; кататься на санках</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="x-ray" data-say="x-ray" onclick="speak(this)"><span class="w-en">x-ray</span><span class="w-ru">рентген; рентгеновский снимок</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u10')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U11: Our summer holidays ── -->
+  <div class="unit-acc" id="unit_u11">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U11</div>
+      <h3 class="unit-acc-title">Our summer holidays <span class="acc-ru">· Летние каникулы</span></h3>
+      <span class="unit-acc-count">23 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 23 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="camel" onclick="speak(this)"><span class="w-en">camel<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">верблюд</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="rock music" onclick="speak(this)"><span class="w-en">rock music</span><span class="w-ru">рок-музыка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="desert" onclick="speak(this)"><span class="w-en">desert<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">пустыня</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="should" onclick="speak(this)"><span class="w-en">should<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">следует, стоит</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="environment" onclick="speak(this)"><span class="w-en">environment</span><span class="w-ru">окружающая среда</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="snowing" onclick="speak(this)"><span class="w-en">snowing</span><span class="w-ru">идёт снег (о погоде)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ever" onclick="speak(this)"><span class="w-en">ever<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">когда-либо</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="spotted" onclick="speak(this)"><span class="w-en">spotted</span><span class="w-ru">в пятнах, пятнистый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="foggy" onclick="speak(this)"><span class="w-en">foggy<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">туманный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="storm" onclick="speak(this)"><span class="w-en">storm</span><span class="w-ru">гроза, буря</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="gloves" onclick="speak(this)"><span class="w-en">gloves<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">перчатки</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="striped" onclick="speak(this)"><span class="w-en">striped</span><span class="w-ru">в полоску, полосатый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="lift" onclick="speak(this)"><span class="w-en">lift</span><span class="w-ru">лифт; подвезти</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="suitcase" onclick="speak(this)"><span class="w-en">suitcase<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">чемодан</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="London" onclick="speak(this)"><span class="w-en">London</span><span class="w-ru">Лондон</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sunglasses" onclick="speak(this)"><span class="w-en">sunglasses<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">солнечные очки</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="meet" onclick="speak(this)"><span class="w-en">meet</span><span class="w-ru">встречать; познакомиться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="sunny" onclick="speak(this)"><span class="w-en">sunny</span><span class="w-ru">солнечный</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="octopus" onclick="speak(this)"><span class="w-en">octopus<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">осьминог</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="toe" onclick="speak(this)"><span class="w-en">toe</span><span class="w-ru">палец (на ноге)</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pop music" onclick="speak(this)"><span class="w-en">pop music</span><span class="w-ru">поп-музыка</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="trainers" onclick="speak(this)"><span class="w-en">trainers<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">кроссовки</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="raining" onclick="speak(this)"><span class="w-en">raining</span><span class="w-ru">идёт дождь (о погоде)</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u11')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── U12: Past and future ── -->
+  <div class="unit-acc" id="unit_u12">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">U12</div>
+      <h3 class="unit-acc-title">Past and future <span class="acc-ru">· Прошлое и будущее</span></h3>
+      <span class="unit-acc-count">18 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 18 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="calendar" onclick="speak(this)"><span class="w-en">calendar<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">календарь</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="pond" onclick="speak(this)"><span class="w-en">pond</span><span class="w-ru">пруд</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="eagle" onclick="speak(this)"><span class="w-en">eagle</span><span class="w-ru">орёл</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="racing bike" onclick="speak(this)"><span class="w-en">racing bike</span><span class="w-ru">гоночный велосипед</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="enough" onclick="speak(this)"><span class="w-en">enough</span><span class="w-ru">достаточно</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ready" onclick="speak(this)"><span class="w-en">ready</span><span class="w-ru">готовый</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="future" onclick="speak(this)"><span class="w-en">future<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">будущее</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="rocket" onclick="speak(this)"><span class="w-en">rocket<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">ракета</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="guess" onclick="speak(this)"><span class="w-en">guess<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">угадывать; догадываться</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="ski" onclick="speak(this)"><span class="w-en">ski</span><span class="w-ru">лыжи; кататься на лыжах</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="hope" onclick="speak(this)"><span class="w-en">hope<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">надеяться; надежда</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="space" onclick="speak(this)"><span class="w-en">space</span><span class="w-ru">космос; место</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="land" onclick="speak(this)"><span class="w-en">land</span><span class="w-ru">приземляться; земля, суша</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="spaceship" onclick="speak(this)"><span class="w-en">spaceship<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">космический корабль</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="past" onclick="speak(this)"><span class="w-en">past</span><span class="w-ru">прошлое; прошедший</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="steam" onclick="speak(this)"><span class="w-en">steam</span><span class="w-ru">пар</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="planet" onclick="speak(this)"><span class="w-en">planet<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">планета</span><span class="play-icon">▶</span></button>
+        <button class="word-btn" data-word="worried" onclick="speak(this)"><span class="w-en">worried<span class="star" title="Ключевое слово юнита">★</span></span><span class="w-ru">обеспокоенный, который волнуется</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_u12')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── R3: Revision 3 ── -->
+  <div class="unit-acc" id="unit_rev3">
+    <div class="unit-acc-header" onclick="toggleUnit(this)">
+      <div class="unit-acc-num">R3</div>
+      <h3 class="unit-acc-title">Revision 3 <span class="acc-ru">· Повторение 9–12</span></h3>
+      <span class="unit-acc-count">1 слов</span>
+      <span class="unit-acc-arrow">▶</span>
+    </div>
+    <div class="unit-acc-body">
+
+      <div class="cat-group">
+        <div class="cat-name">Wordlist раздела — все 1 слов с переводом</div>
+        <div class="word-grid">
+        <button class="word-btn" data-word="ice" onclick="speak(this)"><span class="w-en">ice</span><span class="w-ru">лёд</span><span class="play-icon">▶</span></button>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button class="unit-action-btn" onclick="playUnit('unit_rev3')">▶ Играть все слова юнита</button>
+        <button class="unit-action-btn secondary" onclick="stopAllTTS()">⏹ Стоп</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="now-playing" id="nowPlaying">
+    <span class="np-icon">🔊</span>
+    <span class="np-word" id="npWord">…</span>
+    <button class="np-stop" onclick="stopAllTTS()">⏹ Стоп</button>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>Audio Player · Get ready for Flyers · Web Speech API</p>
+  <p><a href="../index.html">← Вернуться к годовому плану</a> · <a href="../vocabulary.html">Лексика</a> · <a href="../flashcards.html">Флеш-карточки</a></p>
+</footer>
+
+<script>
+// ══ Web Speech API · надёжное ядро озвучки (по образцу audio.html) ══
+// Общий код для всех страниц курса. Страницы определяют: ttsRate(), pickVoiceUI(),
+// onVoicesLoaded(), showNP(text), hideNP(), clearPlaying() — при необходимости.
+
+var synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+var VOICES = [];
+var currentBtn = null;
+var playQueue = [];
+var queueMode = false;
+
+function scoreVoice(v) {
+  var s = 0, name = v.name || '';
+  if (/Google UK English Male/i.test(name)) s = 10;
+  else if (/Google UK English/i.test(name)) s = 9;
+  else if (/Google US English/i.test(name)) s = 8;
+  else if (/Microsoft George/i.test(name)) s = 8;
+  else if (/Microsoft Sonia|Microsoft Hazel|Microsoft Ryan/i.test(name)) s = 7;
+  else if (/Daniel|Arthur|Kate|Serena|Karen|Moira|Oliver|Libby|Ryan/i.test(name)) s = 6;
+  else if (/^en-GB/i.test(v.lang || '')) s = 5;
+  else if (/^en[-_]US/i.test(v.lang || '')) s = 4;
+  else if (/^en/i.test(v.lang || '')) s = 3;
+  if (s === 0) s = -1; // не-английский голос — берём только если нет других
+  return s;
+}
+
+function loadVoices() {
+  if (!synth) return false;
+  var all = [];
+  try { all = synth.getVoices() || []; } catch (e) { all = []; }
+  var en = all.filter(function(v) { return /^en/i.test(v.lang || ''); });
+  if (en.length) { VOICES = en; return true; }
+  if (all.length) { VOICES = all; return true; } // крайний случай: языка en нет — берём все
+  return false;
+}
+
+function autoBestVoice() {
+  if (!VOICES.length) loadVoices();
+  var best = null, bs = -99;
+  VOICES.forEach(function(v) {
+    var s = scoreVoice(v);
+    if (s > bs) { bs = s; best = v; }
+  });
+  return best;
+}
+
+function pickVoiceUI() { return null; } // переопределяется на страницах с выбором голоса
+function ttsRate() { return 0.85; }     // переопределяется на страницах со слайдером
+function onVoicesLoaded() {}            // переопределяется при необходимости
+function showNP(text) {}
+function hideNP() {}
+function clearPlaying() {}
+
+function makeUtter(text) {
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB'; // ВСЕГДА английский, иначе браузер берёт голос языка страницы (ru) — отсюда «странный» звук
+  u.rate = ttsRate();
+  u.pitch = 1.0;
+  var v = pickVoiceUI() || autoBestVoice();
+  if (v) u.voice = v;
+  return u;
+}
+
+function speakText(text, btn, chained) {
+  if (!synth) {
+    alert('Ваш браузер не поддерживает синтез речи (Web Speech API).\n\nОткройте этот файл в Google Chrome, Microsoft Edge или Safari — там звук работает.');
+    return;
+  }
+  if (!chained) {
+    synth.cancel();
+    clearPlaying();
+  }
+  var u = makeUtter(text);
+  if (btn) {
+    btn.classList.add('playing');
+    currentBtn = btn;
+    showNP(text);
+  }
+  u.onend = function() {
+    if (btn) btn.classList.remove('playing');
+    if (currentBtn === btn) currentBtn = null;
+    if (queueMode) { playNext(); } else { hideNP(); }
+  };
+  u.onerror = function(e) {
+    if (btn) btn.classList.remove('playing');
+    if (currentBtn === btn) currentBtn = null;
+    if (!queueMode) hideNP();
+    if (e && (e.error === 'not-allowed' || e.error === 'service-not-allowed')) {
+      alert('Браузер заблокировал звук.\n\nРазрешите автозапуск звука для этого файла или откройте страницу в Chrome / Edge / Safari.');
+    }
+  };
+  try { if (synth.paused) synth.resume(); } catch (e) {}
+  if (chained) {
+    synth.speak(u);
+  } else {
+    // Обход бага Chrome: speak() сразу после cancel() может быть «проглочен»
+    setTimeout(function() { try { synth.speak(u); } catch (e) {} }, 30);
+  }
+}
+
+function playNext() {
+  if (!queueMode || !playQueue.length) { stopAllTTS(); return; }
+  var b = playQueue.shift();
+  var w = b.getAttribute('data-say') || b.getAttribute('data-word');
+  speakText(w, b, true);
+}
+
+function playButtons(btns) {
+  stopAllTTS();
+  playQueue = Array.prototype.slice.call(btns);
+  if (!playQueue.length) return false;
+  queueMode = true;
+  playNext();
+  return true;
+}
+
+function stopAllTTS() {
+  queueMode = false;
+  playQueue = [];
+  if (synth) synth.cancel();
+  clearPlaying();
+  hideNP();
+}
+
+// Голоса в Chrome подгружаются асинхронно — опрашиваем до появления
+if (synth) {
+  var _onVoices = function() {
+    if (loadVoices()) onVoicesLoaded();
+  };
+  if (typeof synth.addEventListener === 'function') synth.addEventListener('voiceschanged', _onVoices);
+  else if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = _onVoices;
+  loadVoices();
+  var _voicePoll = setInterval(function() {
+    if (loadVoices()) { clearInterval(_voicePoll); onVoicesLoaded(); }
+  }, 250);
+  setTimeout(function() { clearInterval(_voicePoll); }, 8000);
+}
+
+
+// ── Специфика страницы плеера ──
+var DICT = {};
+document.querySelectorAll('.word-btn').forEach(function(b) {
+  DICT[b.getAttribute('data-word')] = (b.querySelector('.w-ru') || {}).textContent || '';
+});
+
+function ttsRate() {
+  var r = document.getElementById('speedRange');
+  return r ? parseFloat(r.value) : 0.8;
+}
+
+function pickVoiceUI() {
+  var sel = document.getElementById('voiceSelect');
+  if (!sel || sel.value === '') return null;
+  var i = parseInt(sel.value, 10);
+  return (VOICES && VOICES[i]) ? VOICES[i] : null;
+}
+
+function onVoicesLoaded() { fillVoiceSelect(); }
+
+function fillVoiceSelect() {
+  var sel = document.getElementById('voiceSelect');
+  if (!sel) return;
+  var prev = sel.value;
+  if (!VOICES.length) {
+    sel.innerHTML = '<option value="">— голоса загружаются… —</option>';
+    return;
+  }
+  sel.innerHTML = '';
+  var bestIdx = 0, bestScore = -99;
+  VOICES.forEach(function(v, i) {
+    var s = scoreVoice(v);
+    if (s > bestScore) { bestScore = s; bestIdx = i; }
+  });
+  VOICES.forEach(function(v, i) {
+    var o = document.createElement('option');
+    o.value = i;
+    o.textContent = v.name + ' (' + v.lang + ')';
+    sel.appendChild(o);
+  });
+  if (prev !== '' && parseInt(prev, 10) < VOICES.length) { sel.value = prev; } else { sel.value = bestIdx; }
+}
+
+function showNP(text) {
+  var ru = DICT[text] ? ' <span class="np-ru">· ' + DICT[text] + '</span>' : '';
+  document.getElementById('npWord').innerHTML = escHtml(text) + ru;
+  document.getElementById('nowPlaying').classList.add('show');
+}
+function escHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function hideNP() { document.getElementById('nowPlaying').classList.remove('show'); }
+function clearPlaying() {
+  document.querySelectorAll('.word-btn.playing').forEach(function(b) { b.classList.remove('playing'); });
+}
+
+function speak(btn) { speakText(btn.getAttribute('data-say') || btn.getAttribute('data-word'), btn, false); }
+
+function playUnit(unitId) {
+  var unit = document.getElementById(unitId);
+  if (unit && !unit.classList.contains('open')) unit.classList.add('open');
+  var btns = document.querySelectorAll('#' + unitId + ' .word-btn');
+  if (!playButtons(btns)) alert('В этом разделе нет слов.');
+}
+
+function playAll() {
+  var open = document.querySelectorAll('.unit-acc.open .word-btn');
+  if (open.length === 0) { alert('Сначала открой хотя бы один раздел!'); return; }
+  playButtons(open);
+}
+
+function expandAll() { document.querySelectorAll('.unit-acc').forEach(function(u) { u.classList.add('open'); }); }
+function collapseAll() { document.querySelectorAll('.unit-acc').forEach(function(u) { u.classList.remove('open'); }); }
+function toggleUnit(header) { header.parentElement.classList.toggle('open'); }
+
+// Слайдер скорости
+document.getElementById('speedRange').addEventListener('input', function(e) {
+  document.getElementById('speedValue').textContent = parseFloat(e.target.value).toFixed(1) + 'x';
+});
+
+// Первый юнит открыт по умолчанию (как в примере audio.html)
+document.addEventListener('DOMContentLoaded', function() {
+  fillVoiceSelect();
+  var first = document.querySelector('.unit-acc');
+  if (first) first.classList.add('open');
+});
+fillVoiceSelect();
+</script>
+
+</body>
+</html>
