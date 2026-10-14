@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Таблица всех неправильных глаголов из учебника Get Ready for Flyers (стр. 120): go — went — gone, see — saw — seen. 73 глагола с переводом. Для печати.">
+<title>Неправильные глаголы · Get Ready for Flyers · Irregular verbs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0; --c-card: #ffffff; --c-section: #fdeadf; --c-card-bg: #fbeee4;
+    --c-table-stripe: #fdf0e7; --c-header: #d26b4d; --c-header-2: #bd5c42;
+    --c-border: #f0d5c6; --c-accent: #b8432c; --c-accent-2: #dd714f;
+    --c-text: #2e2320; --c-text-muted: #93796c;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px; --container: 900px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--c-bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; color: var(--c-text); -webkit-font-smoothing: antialiased; }
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .toolbar-brand { font-weight: 600; font-size: 14px; }
+  .toolbar-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toolbar-actions a, .toolbar-actions button { background: rgba(255,255,255,0.18); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .toolbar-actions a:hover, .toolbar-actions button:hover { background: rgba(255,255,255,0.3); }
+  .toolbar-actions button.primary { background: #fff; color: var(--c-accent); font-weight: 600; }
+  .page-header { background: linear-gradient(160deg, #dd7b5e 0%, #d26b4d 55%, #bd5c42 100%); color: #fff; padding: 40px 24px 34px; }
+  .page-header-inner { max-width: var(--container); margin: 0 auto; }
+  .page-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin: 0 0 10px; }
+  .page-title { font-family: 'Noto Serif', Georgia, serif; font-size: 32px; font-weight: 700; margin: 0 0 8px; line-height: 1.2; }
+  .page-title .accent { color: #ffd9c4; }
+  .page-subtitle { font-size: 15px; color: rgba(255,255,255,0.9); margin: 0; max-width: 660px; }
+  .container { max-width: var(--container); margin: 0 auto; padding: 28px 24px 60px; }
+  .howto { background: var(--c-card-bg); border-radius: var(--radius); padding: 14px 20px; margin: 0 0 18px; font-size: 14px; }
+  .howto b { color: var(--c-accent); }
+  .search-box { width: 100%; padding: 11px 16px; font-size: 15px; font-family: 'Inter', sans-serif; border: 2px solid var(--c-accent-2); border-radius: var(--radius); margin: 0 0 14px; background: #fff; color: var(--c-text); outline: none; }
+  .search-box:focus { border-color: var(--c-accent); }
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: 0 1px 4px var(--c-shadow); }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 14px; }
+  thead th { background: var(--c-header); color: #fff; text-align: left; padding: 10px 12px; font-weight: 600; font-size: 12.5px; letter-spacing: 0.3px; }
+  tbody td { padding: 6px 12px; border-top: 1px solid var(--c-border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: var(--c-table-stripe); }
+  tbody tr:hover { background: var(--c-section); }
+  td.num { width: 44px; color: var(--c-text-muted); font-variant-numeric: tabular-nums; }
+  td.v1 { font-family: 'Noto Serif', serif; font-weight: 700; color: var(--c-accent); }
+  td.v2 { font-family: 'Noto Serif', serif; color: var(--c-header-2); }
+  td.v3 { font-family: 'Noto Serif', serif; color: var(--c-header-2); }
+  td.ru { color: var(--c-text-muted); }
+  .legend-row { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--c-text-muted); margin: 10px 0 0; }
+  .footer { background: var(--c-header); color: rgba(255,255,255,0.9); padding: 24px; text-align: center; font-size: 13px; margin-top: 40px; }
+  .footer a { color: #ffd9c4; text-decoration: none; }
+  @media print {
+    .toolbar, .footer, .search-box, .howto { display: none !important; }
+    body { background: #fff; font-size: 9.5pt; }
+    .page-header { background: #fff !important; color: #000 !important; border-bottom: 3px solid #000; padding: 0 0 12px; }
+    .page-kicker, .page-subtitle { color: #555 !important; }
+    .page-title { color: #000 !important; font-size: 20pt; }
+    .page-title .accent { color: #b8432c !important; }
+    .container { padding: 12px 0; max-width: 100%; }
+    .table-wrap { box-shadow: none; border: 1px solid #ccc; }
+    thead th { position: static; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    tbody tr { break-inside: avoid; }
+  }
+  @media (max-width: 600px) { .container { padding: 24px 16px 40px; } td.ru { display: none; } }
+</style>
+</head>
+<body>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand"><span class="dot"></span>Irregular verbs · Get Ready for Flyers</div>
+    <div class="toolbar-actions">
+      <a href="index.html">← К плану</a>
+      <a href="vocabulary.html">Лексика</a>
+      <a href="grammar.html">Грамматика</a>
+      <button onclick="window.print()" class="primary">🖨 Печать</button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="page-kicker">Irregular verb list · Get Ready for Flyers 2nd ed. · стр. 120</p>
+    <h1 class="page-title">Неправильные глаголы <span class="accent">— все 73</span></h1>
+    <p class="page-subtitle">go → went → gone, see → saw → seen… Полный список из учебника с переводом (73 глагола). Выучи формы V1–V2–V3: они нужны в Past simple (V2) и Present perfect (V3).</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="howto">
+    <b>Как учить:</b> 10 глаголов в неделю — к маю все 73 будут выучены. Формы V2 и V3 нужны для Units 6, 8, 9, 11 и 12 (Past simple, Present perfect, Past continuous) и для экзамена Flyers R&amp;W Parts 5–7. Проверяй себя вразброс: «fly — ?» (flew — flown), «побеждать — ?» (win — won — won).
+  </div>
+
+  <input type="text" class="search-box" id="search" placeholder="🔎 Найти глагол… (go, went, видеть)" oninput="filterRows()">
+
+  <div class="table-wrap">
+    <table id="verb-table">
+      <thead><tr><th>№</th><th>Infinitive (V1)</th><th>Past Simple (V2)</th><th>Past Participle (V3)</th><th>Перевод</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="v1">be</td><td class="v2">was / were</td><td class="v3">been</td><td class="ru">быть</td></tr>
+        <tr><td class="num">2</td><td class="v1">begin</td><td class="v2">began</td><td class="v3">begun</td><td class="ru">начинать</td></tr>
+        <tr><td class="num">3</td><td class="v1">break</td><td class="v2">broke</td><td class="v3">broken</td><td class="ru">ломать</td></tr>
+        <tr><td class="num">4</td><td class="v1">bring</td><td class="v2">brought</td><td class="v3">brought</td><td class="ru">приносить</td></tr>
+        <tr><td class="num">5</td><td class="v1">build</td><td class="v2">built</td><td class="v3">built</td><td class="ru">строить</td></tr>
+        <tr><td class="num">6</td><td class="v1">buy</td><td class="v2">bought</td><td class="v3">bought</td><td class="ru">покупать</td></tr>
+        <tr><td class="num">7</td><td class="v1">can</td><td class="v2">could</td><td class="v3">—</td><td class="ru">мочь, уметь</td></tr>
+        <tr><td class="num">8</td><td class="v1">catch</td><td class="v2">caught</td><td class="v3">caught</td><td class="ru">ловить</td></tr>
+        <tr><td class="num">9</td><td class="v1">choose</td><td class="v2">chose</td><td class="v3">chosen</td><td class="ru">выбирать</td></tr>
+        <tr><td class="num">10</td><td class="v1">come</td><td class="v2">came</td><td class="v3">come</td><td class="ru">приходить</td></tr>
+        <tr><td class="num">11</td><td class="v1">cut</td><td class="v2">cut</td><td class="v3">cut</td><td class="ru">резать</td></tr>
+        <tr><td class="num">12</td><td class="v1">do</td><td class="v2">did</td><td class="v3">done</td><td class="ru">делать</td></tr>
+        <tr><td class="num">13</td><td class="v1">draw</td><td class="v2">drew</td><td class="v3">drawn</td><td class="ru">рисовать</td></tr>
+        <tr><td class="num">14</td><td class="v1">drink</td><td class="v2">drank</td><td class="v3">drunk</td><td class="ru">пить</td></tr>
+        <tr><td class="num">15</td><td class="v1">drive</td><td class="v2">drove</td><td class="v3">driven</td><td class="ru">водить (машину)</td></tr>
+        <tr><td class="num">16</td><td class="v1">dry</td><td class="v2">dried</td><td class="v3">dried</td><td class="ru">сушить(ся)</td></tr>
+        <tr><td class="num">17</td><td class="v1">eat</td><td class="v2">ate</td><td class="v3">eaten</td><td class="ru">есть, кушать</td></tr>
+        <tr><td class="num">18</td><td class="v1">fall</td><td class="v2">fell</td><td class="v3">fallen</td><td class="ru">падать</td></tr>
+        <tr><td class="num">19</td><td class="v1">feed</td><td class="v2">fed</td><td class="v3">fed</td><td class="ru">кормить</td></tr>
+        <tr><td class="num">20</td><td class="v1">feel</td><td class="v2">felt</td><td class="v3">felt</td><td class="ru">чувствовать</td></tr>
+        <tr><td class="num">21</td><td class="v1">find</td><td class="v2">found</td><td class="v3">found</td><td class="ru">находить</td></tr>
+        <tr><td class="num">22</td><td class="v1">fly</td><td class="v2">flew</td><td class="v3">flown</td><td class="ru">летать</td></tr>
+        <tr><td class="num">23</td><td class="v1">forget</td><td class="v2">forgot</td><td class="v3">forgotten</td><td class="ru">забывать</td></tr>
+        <tr><td class="num">24</td><td class="v1">get</td><td class="v2">got</td><td class="v3">gotten</td><td class="ru">получать</td></tr>
+        <tr><td class="num">25</td><td class="v1">give</td><td class="v2">gave</td><td class="v3">given</td><td class="ru">давать</td></tr>
+        <tr><td class="num">26</td><td class="v1">go</td><td class="v2">went</td><td class="v3">gone</td><td class="ru">идти, ехать</td></tr>
+        <tr><td class="num">27</td><td class="v1">grow</td><td class="v2">grew</td><td class="v3">grown</td><td class="ru">расти</td></tr>
+        <tr><td class="num">28</td><td class="v1">have</td><td class="v2">had</td><td class="v3">had</td><td class="ru">иметь</td></tr>
+        <tr><td class="num">29</td><td class="v1">have got</td><td class="v2">had got</td><td class="v3">had gotten</td><td class="ru">иметь (обладать)</td></tr>
+        <tr><td class="num">30</td><td class="v1">hear</td><td class="v2">heard</td><td class="v3">heard</td><td class="ru">слышать</td></tr>
+        <tr><td class="num">31</td><td class="v1">hide</td><td class="v2">hid</td><td class="v3">hidden</td><td class="ru">прятать(ся)</td></tr>
+        <tr><td class="num">32</td><td class="v1">hit</td><td class="v2">hit</td><td class="v3">hit</td><td class="ru">ударять</td></tr>
+        <tr><td class="num">33</td><td class="v1">hold</td><td class="v2">held</td><td class="v3">held</td><td class="ru">держать</td></tr>
+        <tr><td class="num">34</td><td class="v1">hurt</td><td class="v2">hurt</td><td class="v3">hurt</td><td class="ru">ранить; болеть</td></tr>
+        <tr><td class="num">35</td><td class="v1">keep</td><td class="v2">kept</td><td class="v3">kept</td><td class="ru">хранить, держать</td></tr>
+        <tr><td class="num">36</td><td class="v1">know</td><td class="v2">knew</td><td class="v3">known</td><td class="ru">знать</td></tr>
+        <tr><td class="num">37</td><td class="v1">learn</td><td class="v2">learned / learnt</td><td class="v3">learned / learnt</td><td class="ru">учить(ся)</td></tr>
+        <tr><td class="num">38</td><td class="v1">leave</td><td class="v2">left</td><td class="v3">left</td><td class="ru">оставлять; уезжать</td></tr>
+        <tr><td class="num">39</td><td class="v1">let</td><td class="v2">let</td><td class="v3">let</td><td class="ru">позволять</td></tr>
+        <tr><td class="num">40</td><td class="v1">lie</td><td class="v2">lied</td><td class="v3">lied</td><td class="ru">лгать</td></tr>
+        <tr><td class="num">41</td><td class="v1">lose</td><td class="v2">lost</td><td class="v3">lost</td><td class="ru">терять</td></tr>
+        <tr><td class="num">42</td><td class="v1">make</td><td class="v2">made</td><td class="v3">made</td><td class="ru">делать, изготовлять</td></tr>
+        <tr><td class="num">43</td><td class="v1">mean</td><td class="v2">meant</td><td class="v3">meant</td><td class="ru">значить, иметь в виду</td></tr>
+        <tr><td class="num">44</td><td class="v1">meet</td><td class="v2">met</td><td class="v3">met</td><td class="ru">встречать</td></tr>
+        <tr><td class="num">45</td><td class="v1">put</td><td class="v2">put</td><td class="v3">put</td><td class="ru">класть</td></tr>
+        <tr><td class="num">46</td><td class="v1">read</td><td class="v2">read /red/</td><td class="v3">read /red/</td><td class="ru">читать</td></tr>
+        <tr><td class="num">47</td><td class="v1">ride</td><td class="v2">rode</td><td class="v3">ridden</td><td class="ru">ездить верхом</td></tr>
+        <tr><td class="num">48</td><td class="v1">run</td><td class="v2">ran</td><td class="v3">run</td><td class="ru">бегать</td></tr>
+        <tr><td class="num">49</td><td class="v1">say</td><td class="v2">said /sed/</td><td class="v3">said</td><td class="ru">говорить</td></tr>
+        <tr><td class="num">50</td><td class="v1">see</td><td class="v2">saw</td><td class="v3">seen</td><td class="ru">видеть</td></tr>
+        <tr><td class="num">51</td><td class="v1">sell</td><td class="v2">sold</td><td class="v3">sold</td><td class="ru">продавать</td></tr>
+        <tr><td class="num">52</td><td class="v1">send</td><td class="v2">sent</td><td class="v3">sent</td><td class="ru">отправлять</td></tr>
+        <tr><td class="num">53</td><td class="v1">sing</td><td class="v2">sang</td><td class="v3">sung</td><td class="ru">петь</td></tr>
+        <tr><td class="num">54</td><td class="v1">sit</td><td class="v2">sat</td><td class="v3">sat</td><td class="ru">сидеть</td></tr>
+        <tr><td class="num">55</td><td class="v1">sleep</td><td class="v2">slept</td><td class="v3">slept</td><td class="ru">спать</td></tr>
+        <tr><td class="num">56</td><td class="v1">smell</td><td class="v2">smelt</td><td class="v3">smelt</td><td class="ru">пахнуть</td></tr>
+        <tr><td class="num">57</td><td class="v1">speak</td><td class="v2">spoke</td><td class="v3">spoken</td><td class="ru">говорить</td></tr>
+        <tr><td class="num">58</td><td class="v1">spell</td><td class="v2">spelled / spelt</td><td class="v3">spelled / spelt</td><td class="ru">писать по буквам</td></tr>
+        <tr><td class="num">59</td><td class="v1">spend</td><td class="v2">spent</td><td class="v3">spent</td><td class="ru">тратить (время, деньги)</td></tr>
+        <tr><td class="num">60</td><td class="v1">stand</td><td class="v2">stood</td><td class="v3">stood</td><td class="ru">стоять</td></tr>
+        <tr><td class="num">61</td><td class="v1">steal</td><td class="v2">stole</td><td class="v3">stolen</td><td class="ru">красть</td></tr>
+        <tr><td class="num">62</td><td class="v1">swim</td><td class="v2">swam</td><td class="v3">swum</td><td class="ru">плавать</td></tr>
+        <tr><td class="num">63</td><td class="v1">swing</td><td class="v2">swung</td><td class="v3">swung</td><td class="ru">качаться</td></tr>
+        <tr><td class="num">64</td><td class="v1">take</td><td class="v2">took</td><td class="v3">taken</td><td class="ru">брать, взять</td></tr>
+        <tr><td class="num">65</td><td class="v1">teach</td><td class="v2">taught</td><td class="v3">taught</td><td class="ru">учить, обучать</td></tr>
+        <tr><td class="num">66</td><td class="v1">tell</td><td class="v2">told</td><td class="v3">told</td><td class="ru">рассказывать</td></tr>
+        <tr><td class="num">67</td><td class="v1">think</td><td class="v2">thought</td><td class="v3">thought</td><td class="ru">думать</td></tr>
+        <tr><td class="num">68</td><td class="v1">throw</td><td class="v2">threw</td><td class="v3">thrown</td><td class="ru">бросать</td></tr>
+        <tr><td class="num">69</td><td class="v1">understand</td><td class="v2">understood</td><td class="v3">understood</td><td class="ru">понимать</td></tr>
+        <tr><td class="num">70</td><td class="v1">wake up</td><td class="v2">woke up</td><td class="v3">woken up</td><td class="ru">просыпаться</td></tr>
+        <tr><td class="num">71</td><td class="v1">wear</td><td class="v2">wore</td><td class="v3">worn</td><td class="ru">носить (одежду)</td></tr>
+        <tr><td class="num">72</td><td class="v1">win</td><td class="v2">won</td><td class="v3">won</td><td class="ru">побеждать</td></tr>
+        <tr><td class="num">73</td><td class="v1">write</td><td class="v2">wrote</td><td class="v3">written</td><td class="ru">писать</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend-row">
+    <span>Всего глаголов: <b style="color:var(--c-accent)">73</b></span>
+    <span>/red/, /sed/ — произношение второй формы</span>
+    <span>«—» у can: нет третьей формы</span>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>Неправильные глаголы · Get Ready for Flyers (2nd ed.) · стр. 120</p>
+  <p><a href="index.html">← Годовой план</a> · <a href="vocabulary.html">Лексика по разделам</a> · <a href="grammar.html">Грамматика по разделам</a> · <a href="flashcards.html">Флеш-карточки</a></p>
+</footer>
+
+<script>
+function filterRows() {
+  var q = document.getElementById('search').value.toLowerCase();
+  var rows = document.querySelectorAll('#verb-table tbody tr');
+  var shown = 0;
+  rows.forEach(function(r) {
+    var text = r.textContent.toLowerCase();
+    var ok = text.indexOf(q) !== -1;
+    r.style.display = ok ? '' : 'none';
+    if (ok) shown++;
+  });
+  document.getElementById('count-note') && (document.getElementById('count-note').textContent = shown);
+}
+</script>
+
+</body>
+</html>

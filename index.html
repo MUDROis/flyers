@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Годовой план подготовки к экзамену Cambridge English Flyers для ребёнка 10–11 лет по учебнику Get Ready for Flyers (2nd Edition). 34 занятия по 50 минут, октябрь 2026 — май 2027, печатные листы домашних заданий.">
+<title>Годовой план подготовки к Cambridge Flyers · 2026–2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0;
+    --c-card: #ffffff;
+    --c-section: #fdeadf;
+    --c-card-bg: #fbeee4;
+    --c-table-stripe: #fdf0e7;
+    --c-header: #d26b4d;
+    --c-header-2: #bd5c42;
+    --c-border: #f0d5c6;
+    --c-icon: #c05a33;
+    --c-accent: #b8432c;
+    --c-accent-2: #dd714f;
+    --c-text: #2e2320;
+    --c-text-muted: #93796c;
+    --c-success: #3f8a5c;
+    --c-info: #4673a1;
+    --c-warn: #b07f3a;
+    --c-error: #c04b3d;
+    --c-mock: #f9e2c8;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px;
+    --radius-sm: 4px;
+    --container: 980px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--c-bg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px; line-height: 1.65; color: var(--c-text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .topnav { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .topnav-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .topnav-brand { font-weight: 600; font-size: 14px; letter-spacing: 0.3px; }
+  .topnav-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .topnav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  .topnav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 13px; padding: 6px 10px; border-radius: 4px; transition: background 0.15s; }
+  .topnav-links a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .topnav-actions { display: flex; gap: 8px; }
+  .topnav-actions a { background: rgba(255,255,255,0.18); color: #fff; text-decoration: none; padding: 8px 14px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; }
+  .topnav-actions a:hover { background: rgba(255,255,255,0.3); }
+  @media (max-width: 720px) { .topnav-links { display: none; } }
+
+  .hero {
+    background: var(--c-header);
+    background-image:
+      radial-gradient(circle at 85% 15%, rgba(255,255,255,0.13) 0, rgba(255,255,255,0.13) 28px, transparent 29px),
+      radial-gradient(circle at 92% 55%, rgba(255,255,255,0.10) 0, rgba(255,255,255,0.10) 46px, transparent 47px),
+      radial-gradient(circle at 74% 82%, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 22px, transparent 23px),
+      radial-gradient(circle at 40% 95%, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 34px, transparent 35px),
+      linear-gradient(160deg, #dd7b5e 0%, #d26b4d 55%, #bd5c42 100%);
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; left: 12%; top: 10%; bottom: 10%; width: 6px; background: #ffd9c4; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; padding: 100px 24px 80px 18%; position: relative; }
+  .hero-kicker { font-size: 13px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin: 0 0 24px; }
+  .hero-badge { position: absolute; top: 100px; right: 24px; background: var(--c-header-2); border: 1px solid rgba(255,255,255,0.35); color: #fff; padding: 8px 14px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; border-radius: 4px; }
+  .hero-title { font-family: 'Noto Serif', Georgia, serif; font-size: clamp(36px, 5vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -1px; margin: 0 0 24px; max-width: 720px; }
+  .hero-title .accent { color: #ffd9c4; }
+  .hero-summary { font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.9); max-width: 580px; margin: 0 0 40px; }
+  .hero-summary b { color: #fff; font-weight: 600; }
+  .hero-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 720px; }
+  .hero-meta-item { border-left: 2px solid rgba(255,255,255,0.35); padding-left: 14px; }
+  .hero-meta-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 4px; }
+  .hero-meta-value { font-size: 15px; font-weight: 500; color: #fff; }
+  @media (max-width: 600px) { .hero-badge { display: none; } .hero-inner { padding: 60px 20px 50px 20px; } .hero::before { display: none; } }
+
+  .container { max-width: var(--container); margin: 0 auto; padding: 60px 24px; }
+  section { scroll-margin-top: 80px; }
+  .section-num { font-family: 'Noto Serif', serif; font-size: 14px; color: var(--c-accent); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  h2.section-title { font-family: 'Noto Serif', Georgia, serif; font-size: 28px; font-weight: 700; color: var(--c-accent); margin: 0 0 12px; line-height: 1.2; }
+  .section-divider { width: 60px; height: 3px; background: var(--c-accent-2); border: none; margin: 0 0 24px; }
+  h3.subsection { font-family: 'Noto Serif', Georgia, serif; font-size: 18px; font-weight: 600; color: var(--c-header-2); margin: 32px 0 12px; }
+  p { margin: 0 0 14px; }
+  .lead { font-size: 17px; line-height: 1.7; color: var(--c-text); max-width: 780px; }
+  ul, ol { padding-left: 22px; margin: 8px 0 14px; }
+  li { margin-bottom: 6px; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0 24px; border-radius: var(--radius); box-shadow: 0 1px 4px var(--c-shadow); }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 14px; line-height: 1.5; }
+  thead th { background: var(--c-header); color: #fff; text-align: left; padding: 12px 14px; font-weight: 600; font-size: 13px; letter-spacing: 0.3px; white-space: nowrap; }
+  tbody td { padding: 10px 14px; border-top: 1px solid var(--c-border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: var(--c-table-stripe); }
+  tbody tr.revision-row { background: var(--c-section); font-style: italic; }
+  tbody tr.mock-row { background: var(--c-mock); font-weight: 600; }
+  tbody td.num { font-variant-numeric: tabular-nums; color: var(--c-accent); font-weight: 600; }
+  tbody td.center { text-align: center; }
+
+  /* ── HW link badge (кнопка в таблице плана) ── */
+  .hw-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--c-accent-2); color: #fff; text-decoration: none;
+    padding: 5px 10px; border-radius: 4px; font-size: 12px;
+    font-weight: 600; letter-spacing: 0.3px;
+    transition: background 0.15s;
+  }
+  .hw-link:hover { background: var(--c-header-2); }
+  .hw-link::before { content: '🖨'; font-size: 14px; }
+
+  /* ── Homework cell content ── */
+  .hw-cell { font-size: 13px; line-height: 1.55; }
+  .hw-cell .hw-title { font-weight: 600; color: var(--c-accent); display: block; margin-bottom: 4px; }
+  .hw-cell ul { margin: 4px 0 6px; padding-left: 18px; font-size: 12.5px; }
+  .hw-cell ul li { margin-bottom: 3px; }
+  .hw-cell .hw-speaking {
+    display: inline-block; background: rgba(226, 97, 60, 0.12);
+    border-left: 2px solid var(--c-accent-2); padding: 4px 8px; margin-top: 4px;
+    font-size: 12px; color: var(--c-accent); border-radius: 0 3px 3px 0;
+  }
+  .hw-cell .hw-speaking::before { content: '🎤 Speaking: '; font-weight: 600; }
+
+  .card { background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 20px 22px; margin: 16px 0; box-shadow: 0 1px 4px var(--c-shadow); }
+  .card h4 { margin: 0 0 10px; font-size: 15px; color: var(--c-accent); font-weight: 600; }
+  .callout { background: #fff; border-left: 4px solid var(--c-accent-2); padding: 14px 18px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 14px; color: var(--c-text-muted); }
+  .callout strong { color: var(--c-text); }
+
+  /* ── Downloads cards (под 3.1) ── */
+  .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 16px 0 8px; }
+  .dl-card { display: flex; flex-direction: column; gap: 6px; background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 16px 18px; text-decoration: none; color: var(--c-text); box-shadow: 0 1px 4px var(--c-shadow); transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s; }
+  .dl-card:hover { transform: translateY(-2px); border-color: var(--c-accent-2); box-shadow: 0 4px 12px var(--c-shadow); }
+  .dl-card .dl-icon { font-size: 24px; line-height: 1; }
+  .dl-card .dl-name { font-weight: 600; font-size: 14.5px; color: var(--c-accent); }
+  .dl-card .dl-desc { font-size: 12.5px; color: var(--c-text-muted); line-height: 1.5; }
+  .dl-card .dl-tag { margin-top: auto; align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--c-header-2); background: var(--c-section); border-radius: 999px; padding: 3px 10px; }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 20px; font-size: 13px; align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-color { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--c-border); }
+
+  .footer { background: var(--c-header); color: rgba(255,255,255,0.9); padding: 40px 24px; margin-top: 60px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; font-size: 14px; }
+  .footer h4 { margin: 0 0 10px; color: #fff; font-size: 14px; font-weight: 600; }
+  .footer a { color: #ffd9c4; text-decoration: none; }
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  @media print {
+    .topnav, .footer { display: none; }
+    body { background: #fff; }
+  }
+  @media (max-width: 720px) { .container { padding: 40px 16px; } }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand"><span class="dot"></span>Flyers · 2026–2027</div>
+    <div class="topnav-links">
+      <a href="#about">О курсе</a>
+      <a href="#lesson">Урок</a>
+      <a href="#units">Юниты</a>
+      <a href="#plan">План 34 нед</a>
+      <a href="#homework-system">ДЗ</a>
+      <a href="#control">Контроль</a>
+      <a href="#parents">Родителям</a>
+    </div>
+    <div class="topnav-actions">
+      <a href="#" onclick="window.print(); return false;">Печать</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">A2 · 10–11 лет</div>
+    <p class="hero-kicker">Year Plan · Cambridge YLE Flyers · 2026–2027</p>
+    <h1 class="hero-title">
+      Годовой план<br>
+      подготовки к экзамену<br>
+      <span class="accent">Cambridge Flyers</span>
+    </h1>
+    <p class="hero-summary">
+      Системный план занятий по учебнику <b>Get Ready for Flyers (2nd Edition)</b> для ребёнка 10–11 лет с уровнем, близким к A2. Включает структуру уроков, распределение 12 юнитов по 34 неделям, печатные листы домашних заданий к каждому уроку, три точки контроля и итоговый mock exam в формате Cambridge YLE Flyers.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-label">Учебник</div><div class="hero-meta-value">Get Ready for Flyers, 2nd Edition (Oxford)</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-label">Расписание</div><div class="hero-meta-value">1 раз в неделю · 50 мин · 34 занятия</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-label">Период</div><div class="hero-meta-value">октябрь 2026 — май 2027</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-label">Уровень</div><div class="hero-meta-value">A1 → A2 (Flyers)</div></div>
+    </div>
+  </div>
+</header>
+
+
+<section id="about" class="container">
+  <div class="section-num">Раздел 1</div>
+  <h2 class="section-title">Общие сведения о курсе</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    Данный план разработан для ребёнка 10–11 лет с уровнем владения английским языком, близким к A2 (уверенно пройдена ступень Movers). Цель учебного года — системная подготовка к экзамену <strong>Cambridge English: Young Learners (YLE) Flyers</strong> и уверенное закрепление уровня A2 по всем четырём речевым навыкам: аудированию, чтению, письму и говорению. План опирается на учебник <strong>Get Ready for Flyers, 2nd Edition</strong> (Oxford University Press) и охватывает вводный блок Hello!, все 12 тематических юнитов, встроенные в учебник развороты Flyers practice test, три раздела Revision и итоговое тестирование в формате экзамена.
+  </p>
+  <p>
+    Занятия проходят один раз в неделю, длительность — 50 минут. За учебный год запланировано 34 занятия с октября по май с учётом школьных каникул и праздничных дней; при пропусках материал переносится на следующую неделю без сокращения объёма. Домашнее задание обязательно после каждого занятия: к каждому уроку подготовлен <strong>отдельный печатный лист с упражнениями</strong> — кнопка «🖨 Печать ДЗ» в таблице плана (раздел 4). Оптимальная продолжительность выполнения домашней работы в этом возрасте — 25–30 минут в день.
+  </p>
+
+  <h3 class="subsection">1.1. Целевой экзамен: Cambridge YLE Flyers</h3>
+  <p>
+    Экзамен Cambridge English: Young Learners (YLE) Flyers — третья, высшая ступень серии детских экзаменов Cambridge English, рассчитанная на детей примерно 9–12 лет. Уровень сложности соответствует CEFR A2 (у детей, показавших высокий результат, фиксируется уровень выше A2). Сертификат отражает результат по каждой из трёх частей в виде «щитов» (shields) от 1 до 15, максимальная сумма — 45. Общая продолжительность экзамена — около 70–75 минут. Официальных «проходных» порогов нет, но практический ориентир готовности — 10+ щитов в среднем по каждой части.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Часть</th><th>Длительность</th><th>Заданий</th><th>Что проверяется</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Listening</strong></td><td>~25 мин</td><td>5 частей / 25 вопросов</td><td>Понимание речи на слух: описания людей и картинок, короткие диалоги, записки и объявления, выделение деталей (время, место, действия)</td></tr>
+        <tr><td><strong>Reading &amp; Writing</strong></td><td>~40 мин</td><td>7 частей / 44 вопроса</td><td>Понимание коротких текстов и диалогов, подбор слов к определениям, заполнение пропусков, завершение диалога, написание рассказа по картинкам (20+ слов)</td></tr>
+        <tr><td><strong>Speaking</strong></td><td>~7–9 мин</td><td>4 части</td><td>Поиск отличий между картинками (present continuous), обмен информацией по картинке/карте, рассказ по серии картинок (прошедшее время), личные вопросы</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Финальный mock-экзамен запланирован на последнее занятие учебного года (34-я неделя, конец апреля — май 2027): аудирование выполняется полностью, Reading &amp; Writing — в сокращённом объёме с завершением оставшихся частей дома. Устная часть в формате экзамена отрабатывается отдельно на 33-й неделе. Три промежуточные точки контроля (после Units 1–4, Units 5–8 и финальное повторение) позволяют отслеживать прогресс в течение года и адаптировать темп при необходимости.
+  </p>
+
+  <h3 class="subsection">1.2. УМК и дополнительные материалы</h3>
+  <p>
+    Основной учебник: <strong>Get Ready for Flyers, 2nd Edition</strong> (Oxford University Press). Книга устроена ритмично и предсказуемо: вводный блок «Hello!» (стр. 2–3), затем 12 юнитов (стр. 4–107), после каждого юнита — разворот <em>Flyers practice test</em> с заданием в формате экзамена, три раздела Revision (стр. 36, 72, 108), Wordlist (стр. 112–117), грамматический справочник (стр. 118–119) и набор Picture cards. Каждый юнит занимает 6 страниц: Words → Listening &amp; speaking → Story / Conversation (в подвале страницы указана грамматическая тема юнита) → Reading &amp; writing → Words 2. Это позволяет вести занятия по единой схеме и заранее видеть, какая лексика и грамматика выносится в домашнюю работу.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Ресурс</th><th>Назначение</th></tr></thead>
+      <tbody>
+        <tr><td>Audio CD / Oxford Learner's Bookshelf</td><td>Аудиозаписи ко всем заданиям Listening, историям и диалогам юнитов</td></tr>
+        <tr><td>Picture cards в конце учебника</td><td>Визуальная опора для speaking-активностей на уроке (в тексте помечены как P129, P131 и т. д.)</td></tr>
+        <tr><td>Cambridge YLE Flyers Sample Papers (cambridge.org)</td><td>Знакомство с форматом экзамена, материалы для мини-тестов и финального mock exam</td></tr>
+        <tr><td>Fun for Flyers (Cambridge)</td><td>Дополнительный тренажёр лексики и грамматики по слабым зонам</td></tr>
+        <tr><td>Quizlet / Wordwall</td><td>Электронные наборы карточек и игры для повторения лексики дома (5–7 минут в день)</td></tr>
+        <tr><td>Мультсериалы с английскими субтитрами (Hilda, The Magic School Bus Rides Again)</td><td>Развитие навыка аудирования через понятный контекст, 10–15 минут 2–3 раза в неделю</td></tr>
+        <tr><td>British Council LearnEnglish Kids</td><td>Короткие тексты, игры и worksheets для разнообразия домашних заданий</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="lesson" class="container">
+  <div class="section-num">Раздел 2</div>
+  <h2 class="section-title">Структура урока 50 минут</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    Каждое занятие построено по фиксированной структуре с предсказуемой сменой активностей. Для ребёнка 10–11 лет это создаёт ощущение управляемости и позволяет сосредоточиться на содержании, а не на организационных вопросах. Структура рассчитана на 50 минут и балансирует между пассивным усвоением (аудирование, чтение), активной отработкой (говорение, письмо) и экзаменационными форматами Flyers. Каждый блок имеет чёткую цель и временные рамки, что позволяет контролировать темп урока и не уходить в перегрузку.
+  </p>
+  <p>
+    Если на уроке запланирован Revision или мини-тест, структура модифицируется: блоки «Words» и «Grammar focus» заменяются тестовой частью (20–25 минут), а оставшееся время уделяется разбору ошибок и точечному повторению самых сложных тем. На последнем занятии месяца полезно проводить короткий «инвентаризационный» опрос: ребёнок сам называет 5–7 выученных слов и одну грамматическую структуру из последних юнитов — это развивает навык самооценки перед экзаменом.
+  </p>
+
+  <h3 class="subsection">2.1. Тайминг и содержание блоков</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Блок</th><th>Мин</th><th>Что делаем</th><th>Цель</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Warm-up &amp; проверка ДЗ</strong></td><td class="center">5</td><td>Quick review пройденного материала, проверка домашнего задания (звёздочки за выполнение), 1–2 коротких личных вопроса</td><td>Активация пройденного, обратная связь по домашке</td></tr>
+        <tr><td><strong>Words / Vocabulary</strong></td><td class="center">8</td><td>Презентация новой лексики через картинку учебника или карточки, хоровое и индивидуальное проговаривание, matching, word wheels</td><td>Ввести 10–12 новых ЛЕ, добиться правильного произношения и письма</td></tr>
+        <tr><td><strong>Grammar focus</strong></td><td class="center">10</td><td>Введение структуры через Story / Conversation юнита, грамматическая схема, 3–4 тренировочных упражнения, перевод моделей</td><td>Понять структуру и отработать её в контролируемых упражнениях</td></tr>
+        <tr><td><strong>Exam-format practice</strong></td><td class="center">15</td><td>Задания из учебника и Flyers practice test в экзаменационном формате: gap-fill, диалоги, listening с CD, Reading &amp; Writing parts</td><td>Перенести знания в формат экзамена, натренировать стратегию выполнения заданий</td></tr>
+        <tr><td><strong>Speaking / Listening round-up</strong></td><td class="center">7</td><td>Мини-диалог с преподавателем по теме урока, описание картинки, 2–3 личных вопроса в стиле Speaking Part 4</td><td>Развитие устной речи, беглости и понимания на слух</td></tr>
+        <tr><td><strong>Homework explanation</strong></td><td class="center">5</td><td>Разбор домашнего листа: что делать, где посмотреть образец (Wordlist, Grammar стр. 118–119), сколько времени потратить</td><td>Обеспечить самостоятельность выполнения домашней работы</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection">2.2. Принципы работы с ребёнком 10–11 лет</h3>
+  <p>
+    В возрасте 10–11 лет дети хорошо удерживают внимание на 8–10 минутах одной активности, но быстро теряют интерес к «детским» форматам. Поэтому на уроках преобладают соревновательные и командные форматы: гонки на время с лексикой, «экзамен наоборот» (ребёнок задаёт вопросы преподавателю), загадки о профессиях и предметах, мини-проекты (план путешествия, меню, расписание). Полезно давать выбор: например, предложить два варианта письменного задания и позволить выбрать один — это повышает ответственность и вовлечённость без потери учебных целей.
+  </p>
+  <p>
+    Важно постепенно передавать ребёнку самостоятельность: домашние задания оформляются как печатный лист с упражнениями и чек-листом, где он сам отмечает выполненное; словарь проверяется по Wordlist учебника (стр. 112–117), грамматика — по справочнику (стр. 118–119). Объяснения на русском занимают не более 30–40 секунд подряд: в этом возрасте ребёнок уже способен понимать инструкцию на английском при визуальной опоре. Похвала и система мотивации сохраняются: за выполненное домашнее задание — звёздочка, за активную работу — дополнительный балл; каждые 10 звёздочек — небольшой приз. Прогресс к экзамену удобно визуализировать «трекером»: после каждой контрольной точки на шкале отмечается, сколько «щитов» собрано условно.
+  </p>
+</section>
+
+
+<section id="units" class="container">
+  <div class="section-num">Раздел 3</div>
+  <h2 class="section-title">Содержание учебника и распределение по юнитам</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    Учебник «Get Ready for Flyers, 2nd Edition» построен модульно: 12 тематических юнитов сгруппированы в 3 блока по 4 юнита, каждый блок завершается разделом Revision с заданиями в формате экзамена. После каждого юнита идёт разворот <em>Flyers practice test</em> — это встроенные «пробы» экзамена, которые план использует для тренировки формата уже с октября. Перед Unit 1 идёт блок «Hello!», который знакомит с героями учебника Holly и Harry, повторяет числа до 1000, месяцы года и структуру have got. Лексический и грамматический материал каждого юнита соответствует требованиям Cambridge YLE Flyers, а грамматика изложена по спирали: от конструкций с every-/some-/no-/any- до Present perfect и Past continuous.
+  </p>
+
+  <h3 class="subsection">3.1. Сводная таблица юнитов</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>№</th><th>Юнит</th><th>Стр.</th><th>Тема</th>
+          <th>Грамматика</th><th>Лексика (ключевые группы)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="center">—</td><td>Hello!</td><td>2–3</td><td>Знакомство с героями</td><td>Have got, вопросы о семье, числа до 1000</td><td>Члены семьи (family tree), месяцы года, большие числа</td></tr>
+        <tr><td class="center">1</td><td>Unit 1</td><td>4–9</td><td>Our home</td><td>Местоимения с every-, some-, no-, any- (everyone, something, nowhere)</td><td>Дом и комнаты, предметы быта (shelf, cooker, fridge), прилагательные (tidy, empty, broken, noisy)</td></tr>
+        <tr><td class="center">2</td><td>Unit 2</td><td>12–17</td><td>Going to town</td><td>Will (вежливые просьбы и обещания): Will you fetch…?</td><td>Магазины и места города, транспорт, глаголы поручений (fetch, post, change, forget)</td></tr>
+        <tr><td class="center">3</td><td>Unit 3</td><td>20–25</td><td>Eating out</td><td>Make somebody/something + adjective; be/look/feel like; made of</td><td>Еда и напитки, ресторан и посуда (chopsticks, fork, knife), материалы (wood, metal, wool)</td></tr>
+        <tr><td class="center">4</td><td>Unit 4</td><td>28–33</td><td>At school</td><td>What time…? (quarter past/to, half past, midday, midnight)</td><td>Школьные предметы (maths, geography, science), расписание, after-school clubs, время суток</td></tr>
+        <tr class="revision-row"><td class="center">—</td><td>Revision 1</td><td>36–39</td><td>Review Units 1–4</td><td>Flyers-format mini-test</td><td>Все лексические темы Units 1–4</td></tr>
+        <tr><td class="center">5</td><td>Unit 5</td><td>40–45</td><td>A day out</td><td>Be going to (утверждение, отрицание, вопрос); as … as</td><td>Выходной и развлечения (cinema, circus, theatre), музей и парк, dinosaurs</td></tr>
+        <tr><td class="center">6</td><td>Unit 6</td><td>48–53</td><td>Dream jobs</td><td>Could / would like to (мечты и возможности)</td><td>Профессии (pilot, dentist, journalist, mechanic), места работы, черты характера (lazy, rich, poor, brave)</td></tr>
+        <tr><td class="center">7</td><td>Unit 7</td><td>56–61</td><td>At the castle</td><td>Might (предположения); be going to в вопросах; направления</td><td>Замок (crown, gate, king, queen, swan), материалы (gold, silver), направления (east, west)</td></tr>
+        <tr><td class="center">8</td><td>Unit 8</td><td>64–69</td><td>Sports day!</td><td>Present perfect с just, already, yet</td><td>Спорт и соревнования (race, match, goal, prize, team), победители и участники</td></tr>
+        <tr class="revision-row"><td class="center">—</td><td>Revision 2</td><td>72–75</td><td>Review Units 5–8</td><td>Flyers-format mini-test</td><td>Все лексические темы Units 5–8</td></tr>
+        <tr><td class="center">9</td><td>Unit 9</td><td>76–81</td><td>Our camping adventure</td><td>Past continuous; while; Past simple в связном рассказе</td><td>Кемпинг и поход (tent, torch, cave, path), лес и ночь, глаголы повествования (whisper, explore, decide)</td></tr>
+        <tr><td class="center">10</td><td>Unit 10</td><td>84–89</td><td>A good year!</td><td>If clauses (If it's sunny, I…); Shall we…?</td><td>Погода и времена года (autumn, leaf, sledge, snowman), месяцы и праздники, wish</td></tr>
+        <tr><td class="center">11</td><td>Unit 11</td><td>92–97</td><td>Our summer holidays</td><td>Present perfect: Have you ever…? + неправильные причастия (flown, seen, ridden); should</td><td>Отпуск и путешествия (camel, desert, suitcase), should/shouldn't, впечатления</td></tr>
+        <tr><td class="center">12</td><td>Unit 12</td><td>100–105</td><td>Past and future</td><td>Past simple (повторение) + be going to / will; Present perfect с yet</td><td>История и изобретения (steam, rocket, spaceship), контраст «раньше — теперь»</td></tr>
+        <tr class="revision-row"><td class="center">—</td><td>Revision 3</td><td>108–111</td><td>Review Units 9–12 + весь курс</td><td>Итоговое повторение всей грамматики</td><td>Вся лексика курса (Wordlist стр. 112–117)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Полезно знать:</strong> развороты <em>Flyers practice test</em> после каждого юнита (стр. 10–11, 18–19, 26–27, 34–35, 46–47, 54–55, 62–63, 70–71, 82–83, 90–91, 98–99, 106–107) содержат задания в точном формате экзамена: Reading &amp; Writing Part 1 и Part 7, Listening Part 4 и другие. Они используются на третьем уроке каждого юнита и в мини-тестах, чтобы ребёнок привыкал к формату постепенно, без «авральной» подготовки весной.
+  </div>
+
+  <h3 class="subsection" id="materials">3.2. Материалы для скачивания и печати</h3>
+  <p>
+    К плану прилагается комплект учебных материалов: полный Wordlist учебника (все 493 слова стр. 112–117 с переводом), грамматика по всем разделам, таблица неправильных глаголов (стр. 120), аудио-плеер произношения и интерактивные флеш-карточки. Аудио работает через встроенный в браузер синтез речи (Web Speech API) — без MP3-файлов, офлайн. Все справочные страницы свёрстаны для печати: откройте страницу и нажмите кнопку «🖨 Печать».
+  </p>
+
+  <div class="dl-grid">
+    <a class="dl-card" href="vocabulary.html" target="_blank">
+      <span class="dl-icon">📖</span>
+      <span class="dl-name">Vocabulary — вся лексика</span>
+      <span class="dl-desc">Все 493 слова Wordlist (стр. 112–117) с переводом, ★ ключевые слова и кнопками произношения по разделам: Hello!, Units 1–12, Revisions.</span>
+      <span class="dl-tag">HTML · 493 слова · печать</span>
+    </a>
+    <a class="dl-card" href="grammar.html" target="_blank">
+      <span class="dl-icon">🧩</span>
+      <span class="dl-name">Grammar — вся грамматика</span>
+      <span class="dl-desc">Грамматический справочник по разделам с таблицами и примерами (стр. 118–119 учебника).</span>
+      <span class="dl-tag">HTML · печать</span>
+    </a>
+    <a class="dl-card" href="irregular-verbs.html" target="_blank">
+      <span class="dl-icon">⚡</span>
+      <span class="dl-name">Irregular verbs</span>
+      <span class="dl-desc">Таблица всех неправильных глаголов: go → went → gone, see → saw → seen. 74 глагола с переводом.</span>
+      <span class="dl-tag">HTML · печать</span>
+    </a>
+    <a class="dl-card" href="flashcards.html" target="_blank">
+      <span class="dl-icon">🎛</span>
+      <span class="dl-name">Flashcards — флеш-карточки</span>
+      <span class="dl-desc">Две колоды: 154 ключевых слова или все 493 слова учебника. Озвучка — синтез речи браузера, выбор голоса и скорости.</span>
+      <span class="dl-tag">HTML · Web Speech</span>
+    </a>
+    <a class="dl-card" href="audio/index.html" target="_blank">
+      <span class="dl-icon">🔊</span>
+      <span class="dl-name">Audio — произношение слов</span>
+      <span class="dl-desc">Все 493 слова учебника: нажми на слово — услышишь произношение. Выбор голоса и скорости, «Играть раздел» — для заучивания.</span>
+      <span class="dl-tag">Web Speech · 493 слова</span>
+    </a>
+    <a class="dl-card" href="homework-guide.html" target="_blank">
+      <span class="dl-icon">🗂</span>
+      <span class="dl-name">Все 34 листа ДЗ</span>
+      <span class="dl-desc">Навигатор по печатным страницам домашних заданий: быстрый переход к любой неделе.</span>
+      <span class="dl-tag">HTML · 34 листа</span>
+    </a>
+  </div>
+</section>
+
+
+<section id="plan" class="container">
+  <div class="section-num">Раздел 4</div>
+  <h2 class="section-title">Годовой план по неделям</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    Ниже представлен подробный план на 34 учебные недели. Преподаватель адаптирует календарь под свой график с учётом школьных каникул и праздничных дней (Новый год, 8 марта, майские). Если занятие пропущено по уважительной причине, материал переносится на следующую неделю без сокращения объёма; в крайнем случае два блока объединяются в один (Words + Grammar на одном уроке) с уменьшением времени на игру. К каждому уроку подготовлен печатный лист домашних заданий — кнопка «🖨 Печать ДЗ» открывает страницу с 7 упражнениями и скрытыми ответами для самопроверки.
+  </p>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-color" style="background:#fdeadf;"></span> Revision (точки контроля)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#f9e2c8;"></span> Финальный mock-exam</div>
+    <div class="legend-item"><span style="color:#fff;padding:1px 6px;background:#dd714f;border-radius:3px;font-size:11px;font-weight:600;">🖨 Печать ДЗ</span><span style="color:var(--c-text-muted);">— печатный лист с упражнениями к уроку</span></div>
+  </div>
+
+  <h3 class="subsection">4.1. Полное расписание занятий</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>№</th><th>Юнит</th><th>Фокус урока</th><th>Домашнее задание</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td>Hello!</td>
+          <td>Знакомство с героями Holly и Harry: family tree, месяцы, числа, have got</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: aunt, uncle, cousin, grandma, grandpa…</span><ul><li>Wordlist: выучи 8 слов — aunt, uncle, cousin, grandma…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Нарисуй и подпиши своё family tree — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — How many people are there in your family?</span><br><a href="hw-week1.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td>Unit 1</td>
+          <td>Words: дом, предметы быта и прилагательные для описания комнат</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: shelf, cooker, fridge, cushion, comb…</span><ul><li>Wordlist: выучи 8 слов — shelf, cooker, fridge, cushion…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Опиши свою комнату — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Is your room tidy or untidy?</span><br><a href="hw-week2.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td>Unit 1</td>
+          <td>Story + Grammar: everyone, something, nowhere (every-, some-, no-, any-) + R&amp;W Part 1</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: everyone, something, nowhere, anyone, diary…</span><ul><li>Wordlist: выучи 8 слов — everyone, something, nowhere, anyone…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши мини-рассказ «My home» — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Describe your kitchen. What is there in it?</span><br><a href="hw-week3.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td>Unit 2</td>
+          <td>Words: магазины и места города, транспорт</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: bank, castle, chemist's, factory, fire station…</span><ul><li>Wordlist: выучи 8 слов — bank, castle, chemist's, factory…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Нарисуй карту своего района с 5 местами и подпиши их по-английски. Напиши 2–3 предложения о карте — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What places are there near your home?</span><br><a href="hw-week4.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td>Unit 2</td>
+          <td>Conversation + Grammar: will (вежливые просьбы и обещания) + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: fetch, post, change, forget, remember…</span><ul><li>Wordlist: выучи 8 слов — fetch, post, change, forget…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 5 просьб с Will you…?, которые ты можешь попросить у родителей сегодня — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What do you ask your parents to do every day?</span><br><a href="hw-week5.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td>Unit 3</td>
+          <td>Words: еда, напитки, посуда для ресторана</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: biscuit, butter, honey, jam, strawberry…</span><ul><li>Wordlist: выучи 8 слов — biscuit, butter, honey, jam…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Составь меню семьи на день — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What do you have for breakfast?</span><br><a href="hw-week6.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td>Unit 3</td>
+          <td>Speaking &amp; listening + Grammar: be/look/feel like; make somebody + adjective</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: delicious, excited, frightened, ill, lovely…</span><ul><li>Wordlist: выучи 8 слов — delicious, excited, frightened, ill…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 5 предложений «…makes me hungry / happy / tired» о еде, музыке, играх, погоде — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What food makes you happy?</span><br><a href="hw-week7.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">8</td>
+          <td>Unit 3</td>
+          <td>Words 2 (кухня и материалы: made of) + Reading &amp; Writing + Listening Part 4</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: wood, metal, plastic, wool, glass…</span><ul><li>Wordlist: выучи 8 слов — wood, metal, plastic, wool…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Выбери 5 предметов у тебя дома и напиши, из чего они сделаны — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What is your favourite thing at home made of?</span><br><a href="hw-week8.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">9</td>
+          <td>Unit 4</td>
+          <td>Words: школьные предметы, кружки после уроков</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: timetable, subject, dictionary, quiz, club…</span><ul><li>Wordlist: выучи 8 слов — timetable, subject, dictionary, quiz…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши мини-текст «My school week» — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What is your favourite subject? Why?</span><br><a href="hw-week9.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">10</td>
+          <td>Unit 4</td>
+          <td>Story + Grammar: What time…? (quarter past/to, half past, midday, midnight)</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: quarter, half, midday, midnight, o'clock…</span><ul><li>Wordlist: выучи 8 слов — quarter, half, midday, midnight…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 5 вопросов What time…? о своём дне и ответь на них — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What time do you get up on Sunday?</span><br><a href="hw-week10.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">11</td>
+          <td>Unit 4</td>
+          <td>Writing: моё расписание + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: invitation, information, improve, excellent, enormous…</span><ul><li>Wordlist: выучи 8 слов — invitation, information, improve, excellent…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши своё расписание недели по образцу Harry — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Tell about your timetable for two days.?</span><br><a href="hw-week11.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr class="revision-row">
+          <td class="num">12</td>
+          <td>Revision 1</td>
+          <td>Мини-тест в формате Flyers: Units 1–4 + подробный разбор ошибок</td>
+          <td><div class="hw-cell"><span class="hw-title">Работа над ошибками + повторение блока</span><ul><li>Wordlist: выучи 8 слов — borrow, keep, search, wheel…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Перепиши в тетрадь все ошибки из мини-теста — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Запиши аудио: назови 5 предметов дома, 5 мест в городе, 5 школьных предметов?</span><br><a href="hw-week12.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">13</td>
+          <td>Unit 5</td>
+          <td>Words: выходной, развлечения, музей и парк</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: cinema, circus, theatre, clown, cage…</span><ul><li>Wordlist: выучи 8 слов — cinema, circus, theatre, clown…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Составь план идеального выходного «My perfect Saturday» — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Where do you like to go with your family?</span><br><a href="hw-week13.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">14</td>
+          <td>Unit 5</td>
+          <td>Listening + Grammar: be going to (планы на будущее)</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: tomorrow, stay, sell, several, special…</span><ul><li>Wordlist: выучи 8 слов — tomorrow, stay, sell, several…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши план субботы «My Saturday» — 5 предложений с be going to — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What are you going to do next weekend?</span><br><a href="hw-week14.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">15</td>
+          <td>Unit 5</td>
+          <td>Reading &amp; Writing + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: ago, hate, million, ocean, pleased…</span><ul><li>Wordlist: выучи 8 слов — ago, hate, million, ocean…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 4–5 предложений о том, что ты собираешься делать на следующих выходных — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What are you going to do tomorrow?</span><br><a href="hw-week15.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">16</td>
+          <td>Unit 6</td>
+          <td>Words: профессии и места работы</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: dentist, engineer, fire fighter, journalist, mechanic…</span><ul><li>Wordlist: выучи 8 слов — dentist, engineer, fire fighter, journalist…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши «My dream job» — 5 предложений по плану — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What does your mum/dad do?</span><br><a href="hw-week16.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">17</td>
+          <td>Unit 6</td>
+          <td>Story + Grammar: could / would like to (мечты и возможности)</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: begin, each, early, fast, happen…</span><ul><li>Wordlist: выучи 8 слов — begin, each, early, fast…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 5 предложений о мечтах твоей семьи и друзей с would like to — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What would you like to do next summer?</span><br><a href="hw-week17.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">18</td>
+          <td>Unit 6</td>
+          <td>Reading &amp; Writing + Words 2 + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: poor, rich, office, nurse, manager…</span><ul><li>Wordlist: выучи 8 слов — poor, rich, office, nurse…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши загадку о профессии — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Name 5 jobs and say one thing about each.?</span><br><a href="hw-week18.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">19</td>
+          <td>Unit 7</td>
+          <td>Words: поездка, замок, королевская семья</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: crown, gate, silver, gold, king…</span><ul><li>Wordlist: выучи 8 слов — crown, gate, silver, gold…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Опиши воображаемый замок — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Would you like to live in a castle? Why?</span><br><a href="hw-week19.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">20</td>
+          <td>Unit 7</td>
+          <td>Conversation + Grammar: be going to в вопросах; might (предположения)</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: might, north, south, east, west…</span><ul><li>Wordlist: выучи 8 слов — might, north, south, east…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши диалог-план похода в музей — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What are you going to do at the weekend?</span><br><a href="hw-week20.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">21</td>
+          <td>Unit 7</td>
+          <td>Reading &amp; writing (маршрут по карте) + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: bridge, follow, steps, touch, tour…</span><ul><li>Wordlist: выучи 8 слов — bridge, follow, steps, touch…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши маршрут от дома до школы — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Запиши устный маршрут: от дома до школы или до магазина (5–6 предложений).?</span><br><a href="hw-week21.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">22</td>
+          <td>Unit 8</td>
+          <td>Words: спорт и соревнования</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: competition, goal, prize, race, score…</span><ul><li>Wordlist: выучи 8 слов — competition, goal, prize, race…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши о спорте в твоей жизни — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What sports do you like?</span><br><a href="hw-week22.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">23</td>
+          <td>Unit 8</td>
+          <td>Conversation + Grammar: Present perfect с just, already</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: already, just, end, explain, knee…</span><ul><li>Wordlist: выучи 8 слов — already, just, end, explain…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 6 предложений о том, что твоя семья уже сделала сегодня — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What have you already done today?</span><br><a href="hw-week23.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">24</td>
+          <td>Unit 8</td>
+          <td>Reading &amp; writing (yet) + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: competition, yet, explain, goal, match…</span><ul><li>Wordlist: выучи 8 слов — competition, yet, explain, goal…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши «Моя неделя — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What haven't you done yet this week?</span><br><a href="hw-week24.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr class="revision-row">
+          <td class="num">25</td>
+          <td>Revision 2</td>
+          <td>Мини-тест в формате Flyers: Units 5–8 + подробный разбор ошибок</td>
+          <td><div class="hw-cell"><span class="hw-title">Работа над ошибками + повторение блока</span><ul><li>Wordlist: выучи 8 слов — several, unusual, compete→competition, suddenly…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Перепиши в тетрадь все ошибки из мини-теста — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Запиши аудио: перескажи мини-историю из 5 предложений в Present perfect?</span><br><a href="hw-week25.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">26</td>
+          <td>Unit 9</td>
+          <td>Words: кемпинг и поход + знакомство с историей юнита</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: tent, torch, camp, cave, path…</span><ul><li>Wordlist: выучи 8 слов — tent, torch, camp, cave…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши список вещей для похода — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Would you like to sleep in a tent? Why?</span><br><a href="hw-week26.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">27</td>
+          <td>Unit 9</td>
+          <td>Reading &amp; writing: Past continuous + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: decide, explore, burn, elbow, kilometre…</span><ul><li>Wordlist: выучи 8 слов — decide, explore, burn, elbow…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши «Вчера в 7 вечера…» — 5 предложений — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What were you doing at 8 o'clock yesterday evening?</span><br><a href="hw-week27.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">28</td>
+          <td>Unit 10</td>
+          <td>Words (погода, времена года) + Grammar: If clauses; Shall we…?</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: autumn, spring, leaf, sledge, snowball…</span><ul><li>Wordlist: выучи 8 слов — autumn, spring, leaf, sledge…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Веди дневник погоды 3 дня — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What's your favourite season? Why?</span><br><a href="hw-week28.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">29</td>
+          <td>Unit 10</td>
+          <td>Reading &amp; writing + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: enter, grow, pull, push, wish…</span><ul><li>Wordlist: выучи 8 слов — enter, grow, pull, push…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши мини-сочинение «Мой идеальный год» — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Which season do you like least? Why?</span><br><a href="hw-week29.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">30</td>
+          <td>Unit 11</td>
+          <td>Words + Grammar: Present perfect — Have you ever…? (сжатый юнит)</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: camel, desert, environment, ever, gloves…</span><ul><li>Wordlist: выучи 8 слов — camel, desert, environment, ever…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Проведи интервью с родителями — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Запиши аудио-интервью с родителем: 3 вопроса Have you ever…? и ответы.?</span><br><a href="hw-week30.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">31</td>
+          <td>Unit 12</td>
+          <td>Words + Writing: Past simple (жизнь 100 лет назад) + Flyers practice test</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: calendar, eagle, enough, future, guess…</span><ul><li>Wordlist: выучи 8 слов — calendar, eagle, enough, future…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши «100 лет назад» — 5 предложений — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — How did people live 100 years ago?</span><br><a href="hw-week31.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr>
+          <td class="num">32</td>
+          <td>Unit 12</td>
+          <td>Reading &amp; writing: будущее (be going to / will) + Present perfect с yet</td>
+          <td><div class="hw-cell"><span class="hw-title">Новые слова: planet, pond, land, space, steam…</span><ul><li>Wordlist: выучи 8 слов — planet, pond, land, space…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши «Мои планы на лето» — 5 предложений — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — What are you going to do in the summer holidays?</span><br><a href="hw-week32.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr class="revision-row">
+          <td class="num">33</td>
+          <td>Revision 3 + Speaking mock</td>
+          <td>Повторение всей грамматики + Speaking mock в формате Flyers (4 части)</td>
+          <td><div class="hw-cell"><span class="hw-title">Финальное повторение + подготовка speaking-тем</span><ul><li>Wordlist: выучи 8 слов — believe, minute, mix, turn on…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Напиши 3 «горячие темы» для speaking о себе — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Подготовь ответы о себе, семье, школе и хобби (по 30 секунд на тему).?</span><br><a href="hw-week33.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+        <tr class="mock-row">
+          <td class="num">34</td>
+          <td>Final Mock</td>
+          <td>Mock-exam: Listening (полный формат) + Reading &amp; Writing Parts 1–4 + обратная связь</td>
+          <td><div class="hw-cell"><span class="hw-title">Дописать R&amp;W Parts 5–7 + вопросы преподавателю</span><ul><li>Wordlist: выучи 8 слов — answer sheet, spelling, question, careful…</li><li>Выполни упр. 1–5 на печатном листе: matching, unscramble, грамматика, чтение</li><li>Writing: Составь список из 5 вопросов преподавателю по самым сложным темам mock-экзамена — задание на листе</li></ul><span class="hw-speaking">запиши аудио 30–60 сек: ответь по плану — Запиши финальное аудио (~60 сек): расскажи о себе, семье, планах на лето.?</span><br><a href="hw-week34.html" target="_blank" class="hw-link" style="margin-top:6px;">🖨 Печать ДЗ</a></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Запас и гибкость:</strong> план рассчитан на учебный год октября–мая, в котором при недельной интенсивности укладывается 33–35 встреч. Если все 34 занятия прошли без пропусков и осталось время до конца мая, оно используется для повторения самых сложных тем (Present perfect, Past continuous, if clauses), второй попытки мини-тестов и дополнительной speaking-практики в формате Flyers Speaking. Жёлтым фоном выделен финальный mock-exam (34-я неделя, конец апреля — май), коралловым — три промежуточные точки контроля и итоговое повторение.
+  </div>
+</section>
+
+
+<section id="homework-system" class="container">
+  <div class="section-num">Раздел 5</div>
+  <h2 class="section-title">Система домашних заданий</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    Домашнее задание — обязательная часть курса: при одной встрече в неделю без самостоятельной работы невозможно уверенно выйти на уровень A2 к концу года. Для ребёнка 10–11 лет оптимальная продолжительность домашней работы — 25–30 минут в день при регулярности 3–4 раза в неделю. К каждому из 34 уроков подготовлен отдельный печатный лист: в нём 7 упражнений — от лексики до speaking — и скрытый блок «Проверить ответы» для самопроверки (маленькая кнопка внизу страницы, на печать не выводится). Все задания выдаются строго по пройденным темам и разнообразны по формату — письменные, устные, творческие.
+  </p>
+
+  <h3 class="subsection">5.1. Структура домашнего листа</h3>
+  <p>Каждый лист домашнего задания строится по шаблону из 7 блоков общей продолжительностью 28–30 минут:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Упр.</th><th>Мин</th><th>Тип задания</th><th>Цель</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Match</strong></td><td class="center">4</td><td>Соединить 8 новых слов с переводом</td><td>Закрепление лексики юнита</td></tr>
+        <tr><td><strong>2. Unscramble</strong></td><td class="center">4</td><td>Расшифровать слова по переводу-подсказке</td><td>Правописание новых слов</td></tr>
+        <tr><td><strong>3. Fill in</strong></td><td class="center">6</td><td>Вставить слова в предложения из рамки (word bank)</td><td>Лексика + грамматика урока в контексте</td></tr>
+        <tr><td><strong>4. Grammar practice</strong></td><td class="center">6</td><td>Трансформации, вопросы, исправление ошибок по теме урока</td><td>Отработка грамматики урока</td></tr>
+        <tr><td><strong>5. Reading (True/False)</strong></td><td class="center">5</td><td>Мини-текст по теме юнита + 4 утверждения</td><td>Чтение и экзаменационные стратегии</td></tr>
+        <tr><td><strong>6. Writing</strong></td><td class="center">5</td><td>Мини-сочинение с планом (подготовка к R&amp;W Part 7 — 20+ слов)</td><td>Подготовка к письменной части экзамена</td></tr>
+        <tr><td><strong>7. Speaking task</strong></td><td class="center">5</td><td>Записать аудио 30–60 секунд по плану и прислать преподавателю</td><td>Развитие устной речи и беглости без стресса</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection">5.2. Принципы оценивания и мотивации</h3>
+  <p>
+    Каждое выполненное задание оценивается по двухбалльной системе: звёздочка за выполнение и звёздочка за правильность. Максимум за лист — 10–11 звёздочек; каждые 10 звёздочек — небольшой приз (наклейка, ластик, закладка). Если ребёнок выполнил домашнюю работу менее чем на 50%, оценка не снижается: преподаватель обсуждает с родителем причины и предлагает упрощённый вариант листа на следующую неделю. Цель системы — поддерживать мотивацию, а не наказывать за ошибки. Блок «Проверить ответы» приучает ребёнка к самопроверке: сначала задание выполняется самостоятельно, потом ответы открываются и ошибки исправляются зелёной ручкой.
+  </p>
+  <p>
+    Особое внимание уделяется speaking-заданию: ребёнок записывает короткое аудио (30–60 секунд) и присылает преподавателю в мессенджер до следующего занятия. В ответ преподаватель отправляет короткое голосовое сообщение с похвалой и одним конструктивным комментарием. Это создаёт постоянную обратную связь и развивает навык самостоятельной устной речи — ключевой для Speaking-части Flyers, где ребёнок должен говорить развёрнуто и без пауз-подсказок.
+  </p>
+
+  <h3 class="subsection">5.3. Что делать, если домашка не выполнена</h3>
+  <p>
+    Если домашнее задание не выполнено по уважительной причине (болезнь, семейные обстоятельства), материал переносится на следующую неделю с уменьшением объёма. Если ребёнок систематически (три раза подряд) не выполняет домашнюю работу, проводится разговор с родителем: выясняются причины, корректируется нагрузка или формат заданий. Важно понимать, что при интенсивности 1 раз в неделю каждый пропуск домашней работы напрямую замедляет прохождение программы: к маю 2027 года нужен весь лексический и грамматический объём Flyers, включая последние, самые сложные юниты.
+  </p>
+</section>
+
+<section id="control" class="container">
+  <div class="section-num">Раздел 6</div>
+  <h2 class="section-title">Контроль и оценивание</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    Контроль в курсе построен так, чтобы ребёнок привыкал к формату экзамена постепенно и без стресса: задания в формате Flyers появляются с первого месяца (встроенные развороты Flyers practice test после каждого юнита), а полноценные проверки проводятся трижды за год. Каждый контроль сопровождается подробным разбором: ошибки не просто исправляются, а группируются по типам (лексика, грамматика, понимание задания, невнимательность) — это позволяет точно определить, что тренировать дальше.
+  </p>
+
+  <h3 class="subsection">6.1. Шкала оценивания Cambridge YLE Flyers</h3>
+  <p>
+    За каждую из трёх частей экзамена ребёнок получает от 1 до 15 «щитов» (shields); максимальная сумма — 45. Официальных проходных порогов у Cambridge нет — сертификат фиксирует результат каждого ребёнка. Практические ориентиры готовности: 13–15 щитов по части — уверенное владение материалом; 10–12 — хороший результат с отдельными зонами роста; ниже 10 по какой-либо части — эта зона требует дополнительной отработки перед реальной сдачей. Результат высокого уровня по всем частям свидетельствует о владении языком на уровне выше A2.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Неделя</th><th>Формат</th><th>Что проверяется</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">12</td><td><strong>Мини-тест 1</strong> (20–25 мин) в формате Flyers + разбор</td><td>Лексика и грамматика Units 1–4: местоимения every-/some-/any-, will, make + adjective, made of, What time…?</td></tr>
+        <tr><td class="num">25</td><td><strong>Мини-тест 2</strong> (20–25 мин) в формате Flyers + разбор</td><td>Лексика и грамматика Units 5–8: be going to, could / would like to, might, Present perfect</td></tr>
+        <tr><td class="num">33</td><td><strong>Speaking mock</strong> (7–9 мин на ребёнка) + Revision 3</td><td>Все 4 части устного экзамена: find the differences, information gap, picture story, личные вопросы</td></tr>
+        <tr class="mock-row"><td class="num">34</td><td><strong>Финальный mock-exam</strong></td><td>Listening в полном объёме (5 частей, 25 вопросов), Reading &amp; Writing Parts 1–4 (Parts 5–7 — как домашнее задание)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection">6.2. Что делать, если выявлены слабые зоны</h3>
+  <p>
+    По результатам каждой контрольной точки преподаватель фиксирует слабые зоны и включает их в домашние задания на следующие 2–3 недели: 3–4 коротких упражнения по каждой проблемной теме вместо общих заданий. Если слабой зоной является говорение, добавляется второй speaking-аудио-задачей в неделю; если аудирование — ребёнок получает ссылку на короткий видео- или аудиофрагмент с заданием. Повторная проверка проблемной зоны проводится в мини-формате (5–7 минут) через 2–3 недели после первой. При устойчивых трудностях имеет смысл дополнительно привлечь тренажёр Fun for Flyers — он даёт избыточную, но дозированную практику по каждой теме.
+  </p>
+</section>
+
+<section id="parents" class="container">
+  <div class="section-num">Раздел 7</div>
+  <h2 class="section-title">Рекомендации для родителей</h2>
+  <hr class="section-divider">
+
+  <p class="lead">
+    В возрасте 10–11 лет ребёнок уже способен заниматься во многом самостоятельно, но регулярность и настрой во многом задаются семьёй. Роль родителя — не контролировать каждое упражнение, а обеспечить условия: фиксированное время занятий, спокойное место, работающий плеер для аудио и доступ к материалам. Ниже — практические рекомендации, которые помогают пройти год подготовки ровно и без авралов.
+  </p>
+
+  <h3 class="subsection">7.1. Организация домашних занятий</h3>
+  <p>
+    Оптимально выделить для английского 3–4 коротких дня в неделю по 25–30 минут, чем один длинный «марафон» в выходной: лексика переходит в долговременную память только при повторении с интервалами. Помогает простой ритуал: один и тот же день и час, телефон убран, печатный лист домашнего задания и учебник лежат наготове с вечера. Ребёнок отмечает выполненные упражнения чек-листа самостоятельно — это тренирует ответственность, а заодно даёт родителю объективную картину без ежедневных вопросов «ты сделал?». Кнопка «🖨 Печать» на странице каждого домашнего листа распечатывает упражнения на 1–2 страницах A4.
+  </p>
+
+  <h3 class="subsection">7.2. Создание языковой среды</h3>
+  <p>
+    Для ребёнка 10–11 лет среда строится не на «детских песенках», а на контенте, который ему действительно интересен. Хорошо работают мультсериалы с английскими субтитрами (Hilda, The Magic School Bus Rides Again) — 10–15 минут 2–3 раза в неделю; настольные и видеоигры с интерфейсом на английском; электронные наборы карточек Quizlet и игры Wordwall, которые преподаватель синхронизирует с юнитами учебника. Для повторения слов удобно использовать флеш-карточки с аудио из раздела 3.2: 5–7 минут в день достаточно, чтобы слова переходили в активный словарь. Полезно завести привычку «вопрос недели»: раз в неделю ребёнок записывает по-английски 2–3 предложения о том, что произошло интересного, — это незаметно готовит его к письменной и устной частям экзамена.
+  </p>
+
+  <h3 class="subsection">7.3. Что обсуждать с преподавателем</h3>
+  <p>
+    Ключевые точки для общения с преподавателем — результаты трёх контрольных точек (недели 12, 25 и 33–34): сколько условных «щитов» собрано, какие зоны роста зафиксированы и как скорректированы домашние задания. Полезно заранее обсудить и организационные вопросы реальной сдачи: сроки регистрации на экзамен в вашем экзаменационном центре, даты проведения сессии (обычно май–июнь), формат записи на Speaking. Если нагрузка кажется ребёнку избыточной или, наоборот, недостаточной — сообщите преподавателю: план на 34 занятия имеет встроенные резервы и может быть адаптирован без потери результата.
+  </p>
+</section>
+
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <h4>О плане</h4>
+      <p>
+        Годовой план подготовки к Cambridge YLE Flyers по учебнику Get Ready for Flyers, 2nd Edition (Oxford University Press): 34 занятия по 50 минут, октябрь 2026 — май 2027. К каждому уроку — печатный лист домашних заданий с упражнениями и ответами для самопроверки.
+      </p>
+    </div>
+    <div>
+      <h4>Полезные материалы</h4>
+      <ul>
+        <li><a href="vocabulary.html">Лексика по разделам (Wordlist)</a></li>
+        <li><a href="grammar.html">Грамматика по разделам</a></li>
+        <li><a href="irregular-verbs.html">Таблица неправильных глаголов</a></li>
+        <li><a href="flashcards.html">Флеш-карточки с аудио</a></li>
+        <li><a href="https://www.cambridgeenglish.org/exams-and-tests/flyers/" target="_blank">Cambridge English: Flyers — официальный раздел</a></li>
+        <li><a href="https://www.cambridgeenglish.org/exams-and-tests/flyers/preparation/" target="_blank">Free sample papers (Listening, Reading &amp; Writing, Speaking)</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

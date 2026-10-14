@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Флеш-карточки для повторения лексики Flyers: 152 ключевых слова или все 493 слова учебника, озвучка через Web Speech API.">
+<title>Флеш-карточки · Get Ready for Flyers · Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0; --c-card: #ffffff; --c-section: #fdeadf; --c-card-bg: #fbeee4;
+    --c-border: #f0d5c6; --c-header: #d26b4d; --c-header-2: #bd5c42;
+    --c-accent: #b8432c; --c-accent-2: #dd714f;
+    --c-text: #2e2320; --c-text-muted: #93796c;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px; --container: 760px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--c-bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; color: var(--c-text); -webkit-font-smoothing: antialiased; }
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .toolbar-brand { font-weight: 600; font-size: 14px; }
+  .toolbar-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toolbar-actions a { background: rgba(255,255,255,0.18); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 500; }
+  .toolbar-actions a:hover { background: rgba(255,255,255,0.3); }
+  .page-header { background: linear-gradient(160deg, #dd7b5e 0%, #d26b4d 55%, #bd5c42 100%); color: #fff; padding: 34px 24px 30px; }
+  .page-header-inner { max-width: var(--container); margin: 0 auto; }
+  .page-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin: 0 0 10px; }
+  .page-title { font-family: 'Noto Serif', Georgia, serif; font-size: 30px; font-weight: 700; margin: 0 0 8px; line-height: 1.2; }
+  .page-title .accent { color: #ffd9c4; }
+  .page-subtitle { font-size: 14.5px; color: rgba(255,255,255,0.9); margin: 0; max-width: 640px; }
+  .container { max-width: var(--container); margin: 0 auto; padding: 24px 24px 60px; }
+
+  .mode-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 10px; }
+  .mode-row .mode-label { font-size: 13px; color: var(--c-text-muted); }
+  .chip { border: 1.5px solid var(--c-accent-2); background: #fff; color: var(--c-accent); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.12s; }
+  .chip:hover { background: var(--c-section); }
+  .chip.active { background: var(--c-accent-2); border-color: var(--c-accent-2); color: #fff; }
+  .units { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .units .u-chip { border-color: var(--c-border); color: var(--c-header-2); font-weight: 500; }
+  .units .u-chip.active { background: var(--c-header-2); border-color: var(--c-header-2); color: #fff; }
+
+  .audio-controls { display: flex; align-items: center; gap: 12px; background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 10px 16px; margin: 0 0 14px; flex-wrap: wrap; font-size: 13.5px; color: var(--c-text-muted); }
+  .audio-controls select { padding: 6px 10px; border: 1.5px solid var(--c-border); border-radius: 4px; background: #fff; font-family: inherit; font-size: 13px; cursor: pointer; max-width: 280px; }
+  .audio-controls select:focus { outline: none; border-color: var(--c-accent-2); }
+  .audio-controls input[type="range"] { width: 100px; accent-color: var(--c-accent-2); }
+
+  .progress-line { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font-size: 13.5px; color: var(--c-text-muted); }
+  .progress-track { flex: 1; height: 8px; background: var(--c-section); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--c-accent-2), var(--c-header-2)); border-radius: 999px; transition: width 0.25s; }
+  .stat { white-space: nowrap; } .stat b { color: var(--c-accent); }
+
+  .card { background: var(--c-card); border: 1.5px solid var(--c-border); border-radius: 14px; box-shadow: 0 4px 16px var(--c-shadow); padding: 38px 30px 30px; text-align: center; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; position: relative; }
+  .card .unit-tag { position: absolute; top: 12px; left: 14px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--c-text-muted); }
+  .card .counter { position: absolute; top: 12px; right: 14px; font-size: 12px; color: var(--c-text-muted); font-variant-numeric: tabular-nums; }
+  .card .en .star { font-size: 22px; color: #e2a23c; vertical-align: 6px; margin-left: 8px; }
+  .card .en { font-family: 'Noto Serif', Georgia, serif; font-size: 40px; font-weight: 700; color: var(--c-accent); line-height: 1.15; }
+  .card .ru { font-size: 20px; color: var(--c-text); min-height: 30px; }
+  .card .ru.hidden-word { visibility: hidden; }
+  .card .hint { font-size: 12.5px; color: var(--c-text-muted); font-style: italic; }
+
+  .btn { border: none; border-radius: 8px; padding: 11px 20px; font-size: 14.5px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.12s, transform 0.08s; }
+  .btn:active { transform: scale(0.98); }
+  .btn-ghost { background: var(--c-section); color: var(--c-accent); }
+  .btn-ghost:hover { background: #f8ddcd; }
+  .btn-audio { background: var(--c-header-2); color: #fff; border-radius: 999px; padding: 11px 18px; font-size: 15px; }
+  .btn-audio:hover { background: #a83f28; }
+  .btn-know { background: #3f8a5c; color: #fff; }
+  .btn-know:hover { background: #347a4f; }
+  .btn-again { background: #c04b3d; color: #fff; }
+  .btn-again:hover { background: #ad3f32; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .nav-row { margin-top: 16px; }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+
+  .done { background: var(--c-card); border: 1.5px dashed var(--c-accent-2); border-radius: 14px; padding: 44px 30px; text-align: center; }
+  .done .big { font-size: 44px; }
+  .done h3 { font-family: 'Noto Serif', serif; color: var(--c-accent); margin: 8px 0 6px; font-size: 22px; }
+  .done p { color: var(--c-text-muted); margin: 0 0 16px; }
+
+  .note { background: var(--c-card-bg); border-radius: var(--radius); padding: 12px 18px; font-size: 13px; color: var(--c-text-muted); margin-top: 20px; }
+  .note b { color: var(--c-accent); }
+
+  /* ── Печатная версия: сетка карточек ── */
+  .print-grid { display: none; }
+  @media print {
+    .toolbar, .page-header, .mode-row, .units, .audio-controls, .card-area, .progress-line, .note { display: none !important; }
+    body { background: #fff; }
+    .print-grid { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0; }
+    .print-card { border: 1.2px solid #999; border-radius: 6px; padding: 8px 10px; break-inside: avoid; page-break-inside: avoid; }
+    .print-card .pen { font-family: 'Noto Serif', serif; font-weight: 700; font-size: 13.5px; color: #000; }
+    .print-card .pru { font-size: 11.5px; color: #444; }
+    .print-head { display: block !important; font-family: 'Noto Serif', serif; font-size: 15pt; font-weight: 700; margin: 10px 0 6px; }
+  }
+  .print-head { display: none; }
+</style>
+</head>
+<body>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand"><span class="dot"></span>Flashcards · Flyers</div>
+    <div class="toolbar-actions">
+      <a href="index.html">← К плану</a>
+      <a href="vocabulary.html">Лексика</a>
+      <a href="audio/index.html">Аудио</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="page-kicker">Flashcards · Get Ready for Flyers · Web Speech API</p>
+    <h1 class="page-title">Флеш-карточки <span class="accent">для повторения</span></h1>
+    <p class="page-subtitle">Выбери колоду и юнит, слушай слово (синтез речи браузера — голос и скорость настраиваются), вспоминай перевод, проверяй себя. Кнопки «Знаю» и «Ещё раз» — прямо на лицевой стороне карточки; листай колоду кнопками «Назад» и «Дальше» или стрелками ← → на клавиатуре. «Знаю» — карточка уходит из колоды, «ещё раз» — возвращается в конец.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="mode-row">
+    <span class="mode-label">Колода:</span>
+    <button class="chip" id="mode-key" onclick="setMode('key')">★ Ключевые слова (154)</button>
+    <button class="chip" id="mode-all" onclick="setMode('all')">Все слова учебника (493)</button>
+  </div>
+
+  <div class="units" id="units"></div>
+
+  <div class="audio-controls">
+    <span>🔊 Голос:</span>
+    <select id="voiceSelect"></select>
+    <span>🐢 Скорость:</span>
+    <input type="range" id="speedRange" min="0.5" max="1.5" step="0.1" value="0.8">
+    <span id="speedValue">0.8x</span>
+  </div>
+
+  <div class="progress-line">
+    <span class="stat">Карточка <b id="pos">1</b> из <b id="total">0</b></span>
+    <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+    <span class="stat">Знаю: <b id="known">0</b> · Осталось: <b id="left">0</b></span>
+  </div>
+
+  <div class="card-area" id="card-area"></div>
+
+  <div class="note">
+    <b>Как заниматься:</b> 5–7 минут в день. Проговаривай каждое слово вслух — так слово запоминается в 3 раза лучше, чем при молчаливом чтении. Кнопка «🖨 Печать» в браузере распечатает все карточки текущей колоды как бумажный набор для игры в «парочки». Ключевые слова отмечены ★.
+  </div>
+
+  <div class="print-grid" id="print-grid"></div>
+
+</main>
+
+<script>
+const DATA = [{"u":"hello","en":"April","ru":"апрель","key":false},{"u":"hello","en":"August","ru":"август","key":false},{"u":"hello","en":"aunt","ru":"тётя","key":true},{"u":"hello","en":"brother","ru":"брат","key":false},{"u":"hello","en":"cousin","ru":"двоюродный брат / сестра","key":true},{"u":"hello","en":"dad","ru":"папа","key":false},{"u":"hello","en":"December","ru":"декабрь","key":false},{"u":"hello","en":"family tree","ru":"генеалогическое древо","key":true},{"u":"hello","en":"February","ru":"февраль","key":false},{"u":"hello","en":"grandma","ru":"бабушка","key":true},{"u":"hello","en":"grandpa","ru":"дедушка","key":true},{"u":"hello","en":"husband","ru":"муж","key":true},{"u":"hello","en":"January","ru":"январь","key":false},{"u":"hello","en":"July","ru":"июль","key":false},{"u":"hello","en":"June","ru":"июнь","key":false},{"u":"hello","en":"March","ru":"март","key":false},{"u":"hello","en":"May","ru":"май","key":false},{"u":"hello","en":"month","ru":"месяц","key":true},{"u":"hello","en":"mum","ru":"мама","key":false},{"u":"hello","en":"November","ru":"ноябрь","key":false},{"u":"hello","en":"October","ru":"октябрь","key":false},{"u":"hello","en":"September","ru":"сентябрь","key":false},{"u":"hello","en":"sister","ru":"сестра","key":false},{"u":"hello","en":"surname","ru":"фамилия","key":true},{"u":"hello","en":"thousand","ru":"тысяча","key":true},{"u":"hello","en":"twins","ru":"близнецы","key":true},{"u":"hello","en":"uncle","ru":"дядя","key":true},{"u":"hello","en":"way","ru":"путь, дорога","key":false},{"u":"hello","en":"wife","ru":"жена","key":true},{"u":"u1","en":"after","ru":"после, затем","key":false},{"u":"u1","en":"anyone","ru":"кто-нибудь, любой","key":true},{"u":"u1","en":"anything","ru":"что-нибудь, что угодно","key":false},{"u":"u1","en":"anywhere","ru":"где-нибудь, куда-нибудь","key":false},{"u":"u1","en":"arrive","ru":"прибывать, приезжать","key":false},{"u":"u1","en":"away","ru":"прочь; не дома","key":false},{"u":"u1","en":"before","ru":"до, перед","key":false},{"u":"u1","en":"bin","ru":"мусорное ведро, бак","key":false},{"u":"u1","en":"bit","ru":"кусочек; немного","key":false},{"u":"u1","en":"bored","ru":"которому скучно","key":false},{"u":"u1","en":"borrow","ru":"брать (на время), занимать","key":false},{"u":"u1","en":"broken","ru":"сломанный","key":true},{"u":"u1","en":"brush","ru":"щётка","key":true},{"u":"u1","en":"channel","ru":"телеканал","key":false},{"u":"u1","en":"chat","ru":"болтать; беседа","key":false},{"u":"u1","en":"chess","ru":"шахматы","key":false},{"u":"u1","en":"college","ru":"колледж","key":false},{"u":"u1","en":"comb","ru":"расчёска","key":true},{"u":"u1","en":"cooker","ru":"плита","key":true},{"u":"u1","en":"cushion","ru":"диванная подушка","key":true},{"u":"u1","en":"cycle","ru":"ездить на велосипеде","key":false},{"u":"u1","en":"dear","ru":"дорогой (обращение в письме)","key":false},{"u":"u1","en":"diary","ru":"дневник","key":false},{"u":"u1","en":"drums","ru":"барабаны","key":false},{"u":"u1","en":"empty","ru":"пустой","key":true},{"u":"u1","en":"envelope","ru":"конверт","key":false},{"u":"u1","en":"everyone","ru":"все, каждый","key":true},{"u":"u1","en":"everything","ru":"всё","key":false},{"u":"u1","en":"everywhere","ru":"везде, повсюду","key":false},{"u":"u1","en":"file","ru":"папка (для бумаг)","key":false},{"u":"u1","en":"fridge","ru":"холодильник","key":true},{"u":"u1","en":"friendly","ru":"дружелюбный","key":true},{"u":"u1","en":"full","ru":"полный","key":true},{"u":"u1","en":"fun","ru":"веселье, забава","key":false},{"u":"u1","en":"go out","ru":"выходить (из дома)","key":false},{"u":"u1","en":"important","ru":"важный","key":false},{"u":"u1","en":"interesting","ru":"интересный","key":false},{"u":"u1","en":"keep","ru":"хранить, держать","key":false},{"u":"u1","en":"key","ru":"ключ","key":false},{"u":"u1","en":"kind","ru":"добрый","key":false},{"u":"u1","en":"late","ru":"поздний; поздно","key":false},{"u":"u1","en":"letter","ru":"письмо","key":false},{"u":"u1","en":"little","ru":"маленький","key":false},{"u":"u1","en":"lucky","ru":"удачливый, везучий","key":false},{"u":"u1","en":"meal","ru":"блюдо; приём пищи","key":false},{"u":"u1","en":"much","ru":"много","key":false},{"u":"u1","en":"necklace","ru":"ожерелье","key":false},{"u":"u1","en":"news","ru":"новости","key":false},{"u":"u1","en":"noisy","ru":"шумный","key":true},{"u":"u1","en":"no-one","ru":"никто","key":false},{"u":"u1","en":"of course","ru":"конечно","key":false},{"u":"u1","en":"oven","ru":"духовка","key":true},{"u":"u1","en":"paper","ru":"бумага","key":false},{"u":"u1","en":"popular","ru":"популярный","key":false},{"u":"u1","en":"post","ru":"отправлять почтой","key":false},{"u":"u1","en":"postcard","ru":"открытка","key":false},{"u":"u1","en":"programme","ru":"программа (ТВ)","key":false},{"u":"u1","en":"quiet","ru":"тихий","key":true},{"u":"u1","en":"rucksack","ru":"рюкзак","key":false},{"u":"u1","en":"search","ru":"искать","key":false},{"u":"u1","en":"shampoo","ru":"шампунь","key":true},{"u":"u1","en":"shelf","ru":"полка","key":true},{"u":"u1","en":"soap","ru":"мыло","key":true},{"u":"u1","en":"somewhere","ru":"где-то, куда-то","key":false},{"u":"u1","en":"stamps","ru":"марки","key":false},{"u":"u1","en":"take","ru":"брать","key":false},{"u":"u1","en":"teach","ru":"учить, обучать","key":false},{"u":"u1","en":"tidy","ru":"аккуратный; убирать","key":true},{"u":"u1","en":"time","ru":"время","key":false},{"u":"u1","en":"toothpaste","ru":"зубная паста","key":true},{"u":"u1","en":"unfriendly","ru":"недружелюбный","key":false},{"u":"u1","en":"unhappy","ru":"несчастный","key":false},{"u":"u1","en":"unkind","ru":"недобрый","key":false},{"u":"u1","en":"untidy","ru":"неубранный","key":true},{"u":"u1","en":"usually","ru":"обычно","key":false},{"u":"u1","en":"violin","ru":"скрипка","key":false},{"u":"u1","en":"warm","ru":"тёплый","key":false},{"u":"u1","en":"wheel","ru":"колесо","key":false},{"u":"u1","en":"wifi","ru":"вай-фай, беспроводной интернет","key":false},{"u":"u2","en":"across","ru":"через, поперёк","key":false},{"u":"u2","en":"airport","ru":"аэропорт","key":false},{"u":"u2","en":"ambulance","ru":"скорая помощь","key":true},{"u":"u2","en":"bank","ru":"банк","key":true},{"u":"u2","en":"bicycle","ru":"велосипед","key":false},{"u":"u2","en":"bridge","ru":"мост","key":false},{"u":"u2","en":"castle","ru":"замок","key":true},{"u":"u2","en":"chemist's","ru":"аптека","key":true},{"u":"u2","en":"corner","ru":"угол","key":true},{"u":"u2","en":"expensive","ru":"дорогой (по цене)","key":false},{"u":"u2","en":"factory","ru":"фабрика, завод","key":true},{"u":"u2","en":"fetch","ru":"принести, сходить за","key":true},{"u":"u2","en":"fire engine","ru":"пожарная машина","key":true},{"u":"u2","en":"fire station","ru":"пожарная часть","key":true},{"u":"u2","en":"forget","ru":"забыть","key":true},{"u":"u2","en":"front","ru":"передняя часть, фасад","key":false},{"u":"u2","en":"get to","ru":"добираться до","key":true},{"u":"u2","en":"hill","ru":"холм","key":false},{"u":"u2","en":"hotel","ru":"гостиница","key":false},{"u":"u2","en":"How long","ru":"как долго","key":false},{"u":"u2","en":"later","ru":"позже","key":false},{"u":"u2","en":"left","ru":"левый; налево","key":false},{"u":"u2","en":"middle","ru":"середина","key":false},{"u":"u2","en":"money","ru":"деньги","key":false},{"u":"u2","en":"motorway","ru":"автомагистраль","key":false},{"u":"u2","en":"museum","ru":"музей","key":false},{"u":"u2","en":"next","ru":"следующий","key":false},{"u":"u2","en":"other","ru":"другой","key":false},{"u":"u2","en":"over","ru":"над; через","key":false},{"u":"u2","en":"past","ru":"мимо","key":false},{"u":"u2","en":"police station","ru":"полицейский участок","key":true},{"u":"u2","en":"post office","ru":"почта","key":true},{"u":"u2","en":"pyjamas","ru":"пижама","key":false},{"u":"u2","en":"railway station","ru":"железнодорожный вокзал","key":true},{"u":"u2","en":"remember","ru":"помнить, вспомнить","key":true},{"u":"u2","en":"restaurant","ru":"ресторан","key":false},{"u":"u2","en":"right","ru":"правый; направо","key":false},{"u":"u2","en":"shorts","ru":"шорты","key":false},{"u":"u2","en":"sky","ru":"небо","key":false},{"u":"u2","en":"skyscraper","ru":"небоскрёб","key":true},{"u":"u2","en":"stadium","ru":"стадион","key":true},{"u":"u2","en":"taxi","ru":"такси","key":false},{"u":"u2","en":"through","ru":"сквозь, через","key":false},{"u":"u2","en":"traffic","ru":"дорожное движение","key":true},{"u":"u2","en":"university","ru":"университет","key":false},{"u":"u2","en":"will","ru":"вспом. глагол будущего времени; вежливая просьба","key":false},{"u":"u2","en":"wood","ru":"лес","key":false},{"u":"u3","en":"amazing","ru":"изумительный","key":false},{"u":"u3","en":"biscuit","ru":"печенье","key":true},{"u":"u3","en":"bracelet","ru":"браслет","key":false},{"u":"u3","en":"butter","ru":"сливочное масло","key":true},{"u":"u3","en":"chopsticks","ru":"палочки для еды","key":true},{"u":"u3","en":"dangerous","ru":"опасный","key":false},{"u":"u3","en":"delicious","ru":"очень вкусный","key":true},{"u":"u3","en":"excited","ru":"взволнованный","key":true},{"u":"u3","en":"feel","ru":"чувствовать(ся)","key":false},{"u":"u3","en":"finish","ru":"заканчивать(ся)","key":false},{"u":"u3","en":"flour","ru":"мука","key":true},{"u":"u3","en":"fork","ru":"вилка","key":true},{"u":"u3","en":"frightened","ru":"испуганный","key":true},{"u":"u3","en":"group","ru":"группа","key":false},{"u":"u3","en":"hard","ru":"твёрдый; трудный","key":false},{"u":"u3","en":"hear","ru":"слышать","key":false},{"u":"u3","en":"honey","ru":"мёд","key":true},{"u":"u3","en":"ill","ru":"больной","key":true},{"u":"u3","en":"jam","ru":"джем, варенье","key":true},{"u":"u3","en":"knife","ru":"нож","key":true},{"u":"u3","en":"look like","ru":"выглядеть как, быть похожим на","key":false},{"u":"u3","en":"lovely","ru":"милый, прекрасный","key":false},{"u":"u3","en":"medicine","ru":"лекарство","key":true},{"u":"u3","en":"mind","ru":"возражать; разум","key":false},{"u":"u3","en":"olives","ru":"оливки","key":true},{"u":"u3","en":"pepper","ru":"перец","key":true},{"u":"u3","en":"piece","ru":"кусок, кусочек","key":false},{"u":"u3","en":"pizza","ru":"пицца","key":false},{"u":"u3","en":"salt","ru":"соль","key":true},{"u":"u3","en":"smell","ru":"пахнуть; запах","key":false},{"u":"u3","en":"soft","ru":"мягкий","key":false},{"u":"u3","en":"sound","ru":"звучать","key":false},{"u":"u3","en":"spend","ru":"проводить (время); тратить","key":false},{"u":"u3","en":"spoon","ru":"ложка","key":true},{"u":"u3","en":"strawberry","ru":"клубника","key":true},{"u":"u3","en":"sugar","ru":"сахар","key":true},{"u":"u3","en":"surprise","ru":"сюрприз","key":true},{"u":"u3","en":"tastes","ru":"имеет вкус (глагол taste)","key":false},{"u":"u3","en":"tortoise","ru":"черепаха","key":false},{"u":"u3","en":"visit","ru":"посещать","key":false},{"u":"u3","en":"wool","ru":"шерсть","key":true},{"u":"u3","en":"yoghurt","ru":"йогурт","key":true},{"u":"u4","en":"a.m.","ru":"до полудня (утра)","key":false},{"u":"u4","en":"actually","ru":"на самом деле, вообще-то","key":false},{"u":"u4","en":"agree","ru":"соглашаться","key":false},{"u":"u4","en":"art","ru":"изобразительное искусство (ИЗО)","key":true},{"u":"u4","en":"beetle","ru":"жук","key":false},{"u":"u4","en":"card","ru":"карточка; открытка","key":false},{"u":"u4","en":"club","ru":"кружок, клуб","key":true},{"u":"u4","en":"cut","ru":"резать","key":false},{"u":"u4","en":"dictionary","ru":"словарь","key":true},{"u":"u4","en":"disappear","ru":"исчезать","key":false},{"u":"u4","en":"during","ru":"во время","key":false},{"u":"u4","en":"enormous","ru":"огромный","key":true},{"u":"u4","en":"excellent","ru":"отличный, превосходный","key":true},{"u":"u4","en":"geography","ru":"география","key":true},{"u":"u4","en":"half","ru":"половина","key":true},{"u":"u4","en":"history","ru":"история","key":true},{"u":"u4","en":"improve","ru":"улучшать(ся)","key":true},{"u":"u4","en":"information","ru":"информация","key":false},{"u":"u4","en":"invitation","ru":"приглашение","key":false},{"u":"u4","en":"IT","ru":"информатика","key":true},{"u":"u4","en":"join","ru":"присоединяться, вступать","key":false},{"u":"u4","en":"language","ru":"язык","key":false},{"u":"u4","en":"maths","ru":"математика","key":true},{"u":"u4","en":"metal","ru":"металл","key":false},{"u":"u4","en":"midday","ru":"полдень","key":true},{"u":"u4","en":"midnight","ru":"полночь","key":true},{"u":"u4","en":"music","ru":"музыка","key":false},{"u":"u4","en":"o'clock","ru":"ровно (о времени)","key":false},{"u":"u4","en":"p.m.","ru":"после полудня (дня)","key":false},{"u":"u4","en":"plastic","ru":"пластик, пластиковый","key":false},{"u":"u4","en":"platform","ru":"платформа, перрон","key":false},{"u":"u4","en":"program","ru":"программа (амер. написание)","key":false},{"u":"u4","en":"quarter","ru":"четверть","key":true},{"u":"u4","en":"repeat","ru":"повторять","key":false},{"u":"u4","en":"same","ru":"тот же, такой же","key":false},{"u":"u4","en":"save","ru":"спасать; копить, экономить","key":false},{"u":"u4","en":"science","ru":"естествознание, наука","key":true},{"u":"u4","en":"study","ru":"учиться, изучать","key":false},{"u":"u4","en":"subject","ru":"школьный предмет","key":true},{"u":"u4","en":"sure","ru":"уверенный","key":false},{"u":"u4","en":"timetable","ru":"расписание","key":true},{"u":"u4","en":"quiz","ru":"викторина","key":true},{"u":"rev1","en":"believe","ru":"верить","key":false},{"u":"rev1","en":"minute","ru":"минута","key":false},{"u":"rev1","en":"mix","ru":"смешивать","key":false},{"u":"rev1","en":"turn on","ru":"включать","key":false},{"u":"rev1","en":"until","ru":"до (какого-то момента)","key":false},{"u":"rev1","en":"without","ru":"без","key":false},{"u":"u5","en":"act","ru":"играть (в спектакле)","key":false},{"u":"u5","en":"actor","ru":"актёр","key":false},{"u":"u5","en":"ago","ru":"тому назад","key":false},{"u":"u5","en":"air","ru":"воздух","key":false},{"u":"u5","en":"also","ru":"тоже, также","key":false},{"u":"u5","en":"brave","ru":"смелый","key":false},{"u":"u5","en":"cage","ru":"клетка","key":true},{"u":"u5","en":"cartoon","ru":"мультфильм","key":false},{"u":"u5","en":"cereal","ru":"хлопья (с молоком)","key":false},{"u":"u5","en":"cheap","ru":"дешёвый","key":false},{"u":"u5","en":"cinema","ru":"кинотеатр","key":true},{"u":"u5","en":"circus","ru":"цирк","key":true},{"u":"u5","en":"clown","ru":"клоун","key":true},{"u":"u5","en":"dinosaurs","ru":"динозавры","key":true},{"u":"u5","en":"extinct","ru":"вымерший","key":true},{"u":"u5","en":"find out","ru":"выяснять, узнавать","key":false},{"u":"u5","en":"frightening","ru":"пугающий","key":false},{"u":"u5","en":"gym","ru":"спортивный зал","key":false},{"u":"u5","en":"hate","ru":"ненавидеть","key":false},{"u":"u5","en":"high","ru":"высокий","key":false},{"u":"u5","en":"hole","ru":"дыра, нора","key":false},{"u":"u5","en":"hour","ru":"час","key":false},{"u":"u5","en":"million","ru":"миллион","key":false},{"u":"u5","en":"museum","ru":"музей","key":false},{"u":"u5","en":"ocean","ru":"океан","key":false},{"u":"u5","en":"pleased","ru":"довольный","key":false},{"u":"u5","en":"project","ru":"проект","key":false},{"u":"u5","en":"pyramids","ru":"пирамиды","key":false},{"u":"u5","en":"screen","ru":"экран","key":false},{"u":"u5","en":"seat","ru":"место (сиденье)","key":false},{"u":"u5","en":"sell","ru":"продавать","key":false},{"u":"u5","en":"several","ru":"несколько","key":false},{"u":"u5","en":"special","ru":"особенный","key":false},{"u":"u5","en":"stage","ru":"сцена","key":true},{"u":"u5","en":"stay","ru":"оставаться; останавливаться","key":false},{"u":"u5","en":"swing","ru":"качели; качаться","key":false},{"u":"u5","en":"telephone","ru":"телефон","key":false},{"u":"u5","en":"theatre","ru":"театр","key":true},{"u":"u5","en":"tomorrow","ru":"завтра","key":false},{"u":"u5","en":"tune","ru":"мелодия","key":false},{"u":"u5","en":"wild","ru":"дикий","key":false},{"u":"u5","en":"zoo","ru":"зоопарк","key":false},{"u":"u6","en":"artist","ru":"художник","key":false},{"u":"u6","en":"astronaut","ru":"космонавт","key":false},{"u":"u6","en":"bandage","ru":"бинт, повязка","key":false},{"u":"u6","en":"begin","ru":"начинать","key":false},{"u":"u6","en":"businessman/woman","ru":"бизнесмен / деловая женщина","key":false},{"u":"u6","en":"cook","ru":"повар; готовить","key":false},{"u":"u6","en":"dentist","ru":"стоматолог","key":true},{"u":"u6","en":"designer","ru":"дизайнер","key":false},{"u":"u6","en":"doctor","ru":"врач","key":false},{"u":"u6","en":"each","ru":"каждый (по отдельности)","key":false},{"u":"u6","en":"early","ru":"ранний; рано","key":false},{"u":"u6","en":"engineer","ru":"инженер","key":true},{"u":"u6","en":"fast","ru":"быстрый; быстро","key":false},{"u":"u6","en":"fire fighter","ru":"пожарный","key":true},{"u":"u6","en":"happen","ru":"случаться, происходить","key":false},{"u":"u6","en":"job","ru":"работа","key":false},{"u":"u6","en":"journalist","ru":"журналист","key":true},{"u":"u6","en":"lazy","ru":"ленивый","key":false},{"u":"u6","en":"look after","ru":"заботиться (о ком-то)","key":false},{"u":"u6","en":"manager","ru":"менеджер, управляющий","key":false},{"u":"u6","en":"mechanic","ru":"механик","key":true},{"u":"u6","en":"meeting","ru":"встреча; собрание","key":false},{"u":"u6","en":"nowhere","ru":"нигде, никуда","key":false},{"u":"u6","en":"nurse","ru":"медсестра","key":false},{"u":"u6","en":"office","ru":"офис","key":false},{"u":"u6","en":"perhaps","ru":"может быть, возможно","key":false},{"u":"u6","en":"photographer","ru":"фотограф","key":true},{"u":"u6","en":"pilot","ru":"пилот","key":true},{"u":"u6","en":"police officer","ru":"полицейский","key":false},{"u":"u6","en":"poor","ru":"бедный","key":false},{"u":"u6","en":"rich","ru":"богатый","key":false},{"u":"u6","en":"singer","ru":"певец, певица","key":false},{"u":"u6","en":"teacher","ru":"учитель","key":false},{"u":"u6","en":"tennis player","ru":"теннисист","key":false},{"u":"u6","en":"waiter","ru":"официант","key":true},{"u":"u7","en":"appear","ru":"появляться","key":false},{"u":"u7","en":"bridge","ru":"мост","key":false},{"u":"u7","en":"building","ru":"здание","key":false},{"u":"u7","en":"butterfly","ru":"бабочка","key":false},{"u":"u7","en":"century","ru":"век, столетие","key":false},{"u":"u7","en":"conversation","ru":"разговор, беседа","key":false},{"u":"u7","en":"costume","ru":"костюм","key":false},{"u":"u7","en":"creature","ru":"существо","key":false},{"u":"u7","en":"crown","ru":"корона","key":true},{"u":"u7","en":"date","ru":"дата","key":false},{"u":"u7","en":"design","ru":"дизайн; проектировать","key":false},{"u":"u7","en":"east","ru":"восток","key":false},{"u":"u7","en":"entrance","ru":"вход","key":true},{"u":"u7","en":"exit","ru":"выход","key":false},{"u":"u7","en":"festival","ru":"фестиваль","key":false},{"u":"u7","en":"finger","ru":"палец (на руке)","key":false},{"u":"u7","en":"flag","ru":"флаг","key":false},{"u":"u7","en":"follow","ru":"следовать (за)","key":false},{"u":"u7","en":"gate","ru":"ворота, калитка","key":true},{"u":"u7","en":"glass","ru":"стекло; стакан","key":false},{"u":"u7","en":"gold","ru":"золото","key":true},{"u":"u7","en":"insect","ru":"насекомое","key":false},{"u":"u7","en":"interested","ru":"заинтересованный","key":false},{"u":"u7","en":"journey","ru":"путешествие, поездка","key":false},{"u":"u7","en":"king","ru":"король","key":true},{"u":"u7","en":"leave","ru":"покидать, оставлять","key":false},{"u":"u7","en":"make sure","ru":"убедиться, проверить","key":false},{"u":"u7","en":"might","ru":"может быть (о вероятности)","key":false},{"u":"u7","en":"north","ru":"север","key":false},{"u":"u7","en":"postcard","ru":"открытка","key":false},{"u":"u7","en":"queen","ru":"королева","key":true},{"u":"u7","en":"ring","ru":"кольцо","key":false},{"u":"u7","en":"send","ru":"отправлять","key":false},{"u":"u7","en":"silver","ru":"серебро","key":true},{"u":"u7","en":"south","ru":"юг","key":false},{"u":"u7","en":"steps","ru":"ступеньки; крыльцо","key":false},{"u":"u7","en":"still","ru":"всё ещё","key":false},{"u":"u7","en":"swan","ru":"лебедь","key":true},{"u":"u7","en":"swing","ru":"качели; качаться","key":false},{"u":"u7","en":"touch","ru":"трогать","key":false},{"u":"u7","en":"tour","ru":"экскурсия; тур","key":false},{"u":"u7","en":"unusual","ru":"необычный","key":false},{"u":"u7","en":"view","ru":"вид (из окна)","key":false},{"u":"u7","en":"west","ru":"запад","key":false},{"u":"u7","en":"wild","ru":"дикий","key":false},{"u":"u7","en":"wonderful","ru":"замечательный","key":false},{"u":"u8","en":"already","ru":"уже","key":true},{"u":"u8","en":"competition","ru":"соревнование","key":true},{"u":"u8","en":"end","ru":"конец; заканчивать(ся)","key":false},{"u":"u8","en":"explain","ru":"объяснять","key":false},{"u":"u8","en":"fall over","ru":"падать, упасть","key":false},{"u":"u8","en":"goal","ru":"гол; ворота","key":true},{"u":"u8","en":"golf","ru":"гольф","key":false},{"u":"u8","en":"just","ru":"только что","key":false},{"u":"u8","en":"knee","ru":"колено","key":false},{"u":"u8","en":"match","ru":"матч","key":true},{"u":"u8","en":"prize","ru":"приз","key":true},{"u":"u8","en":"race","ru":"гонка, забег","key":true},{"u":"u8","en":"score","ru":"счёт в игре; забивать","key":false},{"u":"u8","en":"snack","ru":"перекус, лёгкая закуска","key":false},{"u":"u8","en":"sore","ru":"воспалённый, больной (sore knee)","key":false},{"u":"u8","en":"team","ru":"команда","key":true},{"u":"u8","en":"volleyball","ru":"волейбол","key":false},{"u":"u8","en":"winner","ru":"победитель","key":true},{"u":"u8","en":"yet","ru":"ещё (не); уже (в вопросах)","key":false},{"u":"rev2","en":"engine","ru":"двигатель, мотор","key":false},{"u":"rev2","en":"invent","ru":"изобретать","key":false},{"u":"rev2","en":"racing car","ru":"гоночная машина","key":false},{"u":"rev2","en":"repair","ru":"ремонтировать","key":false},{"u":"rev2","en":"suddenly","ru":"вдруг","key":false},{"u":"rev2","en":"win","ru":"выигрывать, побеждать","key":false},{"u":"u9","en":"alone","ru":"один, самостоятельно","key":false},{"u":"u9","en":"belt","ru":"ремень","key":false},{"u":"u9","en":"biscuits","ru":"печенье","key":false},{"u":"u9","en":"burn","ru":"гореть; обжечься","key":false},{"u":"u9","en":"camp","ru":"лагерь; разбить лагерь","key":true},{"u":"u9","en":"cave","ru":"пещера","key":true},{"u":"u9","en":"dark","ru":"тёмный","key":true},{"u":"u9","en":"decide","ru":"решать","key":false},{"u":"u9","en":"deep","ru":"глубокий","key":false},{"u":"u9","en":"Earth","ru":"Земля (планета)","key":false},{"u":"u9","en":"elbow","ru":"локоть","key":false},{"u":"u9","en":"explore","ru":"исследовать","key":false},{"u":"u9","en":"fire","ru":"огонь; пожар","key":false},{"u":"u9","en":"fur","ru":"мех","key":false},{"u":"u9","en":"furry","ru":"пушистый, в мехах","key":false},{"u":"u9","en":"heavy","ru":"тяжёлый","key":false},{"u":"u9","en":"hill","ru":"холм","key":false},{"u":"u9","en":"horrible","ru":"ужасный, отвратительный","key":false},{"u":"u9","en":"kilometre","ru":"километр","key":false},{"u":"u9","en":"large","ru":"большой","key":false},{"u":"u9","en":"magazine","ru":"журнал","key":false},{"u":"u9","en":"missing","ru":"пропавший; отсутствующий","key":false},{"u":"u9","en":"nest","ru":"гнездо","key":false},{"u":"u9","en":"newspaper","ru":"газета","key":false},{"u":"u9","en":"path","ru":"тропинка","key":true},{"u":"u9","en":"pocket","ru":"карман","key":false},{"u":"u9","en":"rock","ru":"скала; камень","key":true},{"u":"u9","en":"soft","ru":"мягкий","key":false},{"u":"u9","en":"stars","ru":"звёзды","key":false},{"u":"u9","en":"stone","ru":"камень","key":false},{"u":"u9","en":"strange","ru":"странный","key":false},{"u":"u9","en":"tent","ru":"палатка","key":true},{"u":"u9","en":"together","ru":"вместе","key":false},{"u":"u9","en":"torch","ru":"фонарик","key":true},{"u":"u9","en":"tyre","ru":"шина, покрышка","key":false},{"u":"u9","en":"umbrella","ru":"зонт","key":false},{"u":"u9","en":"whisper","ru":"шептать; шёпот","key":true},{"u":"u9","en":"whistle","ru":"свистеть; свисток","key":false},{"u":"u9","en":"wing","ru":"крыло","key":false},{"u":"u9","en":"wood","ru":"лес","key":false},{"u":"u10","en":"autumn","ru":"осень","key":true},{"u":"u10","en":"collect","ru":"собирать (коллекцию)","key":false},{"u":"u10","en":"enter","ru":"входить (в); участвовать","key":false},{"u":"u10","en":"grow","ru":"расти; выращивать","key":false},{"u":"u10","en":"leaf","ru":"лист (дерева)","key":false},{"u":"u10","en":"lie","ru":"лежать","key":false},{"u":"u10","en":"pull","ru":"тянуть (на себя)","key":false},{"u":"u10","en":"push","ru":"толкать (от себя)","key":false},{"u":"u10","en":"sledge","ru":"санки; кататься на санках","key":true},{"u":"u10","en":"snowball","ru":"снежок","key":true},{"u":"u10","en":"snowboard","ru":"сноуборд; кататься на сноуборде","key":false},{"u":"u10","en":"snowman","ru":"снеговик","key":true},{"u":"u10","en":"spring","ru":"весна","key":true},{"u":"u10","en":"summer","ru":"лето","key":false},{"u":"u10","en":"trip","ru":"поездка, экскурсия","key":false},{"u":"u10","en":"winter","ru":"зима","key":false},{"u":"u10","en":"wish","ru":"желание; загадывать","key":true},{"u":"u10","en":"x-ray","ru":"рентген; рентгеновский снимок","key":false},{"u":"u11","en":"camel","ru":"верблюд","key":true},{"u":"u11","en":"desert","ru":"пустыня","key":true},{"u":"u11","en":"environment","ru":"окружающая среда","key":false},{"u":"u11","en":"ever","ru":"когда-либо","key":true},{"u":"u11","en":"foggy","ru":"туманный","key":true},{"u":"u11","en":"gloves","ru":"перчатки","key":true},{"u":"u11","en":"lift","ru":"лифт; подвезти","key":false},{"u":"u11","en":"London","ru":"Лондон","key":false},{"u":"u11","en":"meet","ru":"встречать; познакомиться","key":false},{"u":"u11","en":"octopus","ru":"осьминог","key":true},{"u":"u11","en":"pop music","ru":"поп-музыка","key":false},{"u":"u11","en":"raining","ru":"идёт дождь (о погоде)","key":false},{"u":"u11","en":"rock music","ru":"рок-музыка","key":false},{"u":"u11","en":"should","ru":"следует, стоит","key":true},{"u":"u11","en":"snowing","ru":"идёт снег (о погоде)","key":false},{"u":"u11","en":"spotted","ru":"в пятнах, пятнистый","key":false},{"u":"u11","en":"storm","ru":"гроза, буря","key":false},{"u":"u11","en":"striped","ru":"в полоску, полосатый","key":false},{"u":"u11","en":"suitcase","ru":"чемодан","key":true},{"u":"u11","en":"sunglasses","ru":"солнечные очки","key":true},{"u":"u11","en":"sunny","ru":"солнечный","key":false},{"u":"u11","en":"toe","ru":"палец (на ноге)","key":false},{"u":"u11","en":"trainers","ru":"кроссовки","key":true},{"u":"u12","en":"calendar","ru":"календарь","key":true},{"u":"u12","en":"eagle","ru":"орёл","key":false},{"u":"u12","en":"enough","ru":"достаточно","key":false},{"u":"u12","en":"future","ru":"будущее","key":true},{"u":"u12","en":"guess","ru":"угадывать; догадываться","key":true},{"u":"u12","en":"hope","ru":"надеяться; надежда","key":true},{"u":"u12","en":"land","ru":"приземляться; земля, суша","key":false},{"u":"u12","en":"past","ru":"прошлое; прошедший","key":false},{"u":"u12","en":"planet","ru":"планета","key":true},{"u":"u12","en":"pond","ru":"пруд","key":false},{"u":"u12","en":"racing bike","ru":"гоночный велосипед","key":false},{"u":"u12","en":"ready","ru":"готовый","key":false},{"u":"u12","en":"rocket","ru":"ракета","key":true},{"u":"u12","en":"ski","ru":"лыжи; кататься на лыжах","key":false},{"u":"u12","en":"space","ru":"космос; место","key":false},{"u":"u12","en":"spaceship","ru":"космический корабль","key":true},{"u":"u12","en":"steam","ru":"пар","key":false},{"u":"u12","en":"worried","ru":"обеспокоенный, который волнуется","key":true},{"u":"rev3","en":"ice","ru":"лёд","key":false}];
+const UNIT_NAMES = {"hello":"Hello! · Знакомство с героями","u1":"Unit 1 · Our home","u2":"Unit 2 · Going to town","u3":"Unit 3 · Eating out","u4":"Unit 4 · At school","u5":"Unit 5 · A day out","u6":"Unit 6 · Dream jobs","u7":"Unit 7 · At the castle","u8":"Unit 8 · Sports day!","u9":"Unit 9 · Our camping adventure","u10":"Unit 10 · A good year!","u11":"Unit 11 · Our summer holidays","u12":"Unit 12 · Past and future","rev1":"Revision 1 · Units 1–4","rev2":"Revision 2 · Units 5–8","rev3":"Revision 3 · весь курс"};
+const UNIT_NUMS = {"hello":"H","u1":"U1","u2":"U2","u3":"U3","u4":"U4","u5":"U5","u6":"U6","u7":"U7","u8":"U8","u9":"U9","u10":"U10","u11":"U11","u12":"U12","rev1":"R1","rev2":"R2","rev3":"R3"};
+let mode = 'key', curUnit = 'all';
+let deck = [], idx = 0, known = 0;
+// ── Web Speech API: надёжное ядро озвучки (как в audio.html) ──
+// ══ Web Speech API · надёжное ядро озвучки (по образцу audio.html) ══
+// Общий код для всех страниц курса. Страницы определяют: ttsRate(), pickVoiceUI(),
+// onVoicesLoaded(), showNP(text), hideNP(), clearPlaying() — при необходимости.
+
+var synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+var VOICES = [];
+var currentBtn = null;
+var playQueue = [];
+var queueMode = false;
+
+function scoreVoice(v) {
+  var s = 0, name = v.name || '';
+  if (/Google UK English Male/i.test(name)) s = 10;
+  else if (/Google UK English/i.test(name)) s = 9;
+  else if (/Google US English/i.test(name)) s = 8;
+  else if (/Microsoft George/i.test(name)) s = 8;
+  else if (/Microsoft Sonia|Microsoft Hazel|Microsoft Ryan/i.test(name)) s = 7;
+  else if (/Daniel|Arthur|Kate|Serena|Karen|Moira|Oliver|Libby|Ryan/i.test(name)) s = 6;
+  else if (/^en-GB/i.test(v.lang || '')) s = 5;
+  else if (/^en[-_]US/i.test(v.lang || '')) s = 4;
+  else if (/^en/i.test(v.lang || '')) s = 3;
+  if (s === 0) s = -1; // не-английский голос — берём только если нет других
+  return s;
+}
+
+function loadVoices() {
+  if (!synth) return false;
+  var all = [];
+  try { all = synth.getVoices() || []; } catch (e) { all = []; }
+  var en = all.filter(function(v) { return /^en/i.test(v.lang || ''); });
+  if (en.length) { VOICES = en; return true; }
+  if (all.length) { VOICES = all; return true; } // крайний случай: языка en нет — берём все
+  return false;
+}
+
+function autoBestVoice() {
+  if (!VOICES.length) loadVoices();
+  var best = null, bs = -99;
+  VOICES.forEach(function(v) {
+    var s = scoreVoice(v);
+    if (s > bs) { bs = s; best = v; }
+  });
+  return best;
+}
+
+function pickVoiceUI() { return null; } // переопределяется на страницах с выбором голоса
+function ttsRate() { return 0.85; }     // переопределяется на страницах со слайдером
+function onVoicesLoaded() {}            // переопределяется при необходимости
+function showNP(text) {}
+function hideNP() {}
+function clearPlaying() {}
+
+function makeUtter(text) {
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB'; // ВСЕГДА английский, иначе браузер берёт голос языка страницы (ru) — отсюда «странный» звук
+  u.rate = ttsRate();
+  u.pitch = 1.0;
+  var v = pickVoiceUI() || autoBestVoice();
+  if (v) u.voice = v;
+  return u;
+}
+
+function speakText(text, btn, chained) {
+  if (!synth) {
+    alert('Ваш браузер не поддерживает синтез речи (Web Speech API).\n\nОткройте этот файл в Google Chrome, Microsoft Edge или Safari — там звук работает.');
+    return;
+  }
+  if (!chained) {
+    synth.cancel();
+    clearPlaying();
+  }
+  var u = makeUtter(text);
+  if (btn) {
+    btn.classList.add('playing');
+    currentBtn = btn;
+    showNP(text);
+  }
+  u.onend = function() {
+    if (btn) btn.classList.remove('playing');
+    if (currentBtn === btn) currentBtn = null;
+    if (queueMode) { playNext(); } else { hideNP(); }
+  };
+  u.onerror = function(e) {
+    if (btn) btn.classList.remove('playing');
+    if (currentBtn === btn) currentBtn = null;
+    if (!queueMode) hideNP();
+    if (e && (e.error === 'not-allowed' || e.error === 'service-not-allowed')) {
+      alert('Браузер заблокировал звук.\n\nРазрешите автозапуск звука для этого файла или откройте страницу в Chrome / Edge / Safari.');
+    }
+  };
+  try { if (synth.paused) synth.resume(); } catch (e) {}
+  if (chained) {
+    synth.speak(u);
+  } else {
+    // Обход бага Chrome: speak() сразу после cancel() может быть «проглочен»
+    setTimeout(function() { try { synth.speak(u); } catch (e) {} }, 30);
+  }
+}
+
+function playNext() {
+  if (!queueMode || !playQueue.length) { stopAllTTS(); return; }
+  var b = playQueue.shift();
+  var w = b.getAttribute('data-say') || b.getAttribute('data-word');
+  speakText(w, b, true);
+}
+
+function playButtons(btns) {
+  stopAllTTS();
+  playQueue = Array.prototype.slice.call(btns);
+  if (!playQueue.length) return false;
+  queueMode = true;
+  playNext();
+  return true;
+}
+
+function stopAllTTS() {
+  queueMode = false;
+  playQueue = [];
+  if (synth) synth.cancel();
+  clearPlaying();
+  hideNP();
+}
+
+// Голоса в Chrome подгружаются асинхронно — опрашиваем до появления
+if (synth) {
+  var _onVoices = function() {
+    if (loadVoices()) onVoicesLoaded();
+  };
+  if (typeof synth.addEventListener === 'function') synth.addEventListener('voiceschanged', _onVoices);
+  else if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = _onVoices;
+  loadVoices();
+  var _voicePoll = setInterval(function() {
+    if (loadVoices()) { clearInterval(_voicePoll); onVoicesLoaded(); }
+  }, 250);
+  setTimeout(function() { clearInterval(_voicePoll); }, 8000);
+}
+
+
+// ── Клей страницы карточек ──
+function ttsRate() {
+  var r = document.getElementById('speedRange');
+  return r ? parseFloat(r.value) : 0.8;
+}
+function pickVoiceUI() {
+  var sel = document.getElementById('voiceSelect');
+  if (!sel || sel.value === '') return null;
+  var i = parseInt(sel.value, 10);
+  return (VOICES && VOICES[i]) ? VOICES[i] : null;
+}
+function onVoicesLoaded() { fillVoiceSelect(); }
+function fillVoiceSelect() {
+  var sel = document.getElementById('voiceSelect');
+  if (!sel) return;
+  var prev = sel.value;
+  if (!VOICES.length) { sel.innerHTML = '<option value="">— голоса загружаются… —</option>'; return; }
+  sel.innerHTML = '';
+  var bestIdx = 0, bestScore = -99;
+  VOICES.forEach(function(v, i) { var s = scoreVoice(v); if (s > bestScore) { bestScore = s; bestIdx = i; } });
+  VOICES.forEach(function(v, i) {
+    var o = document.createElement('option');
+    o.value = i;
+    o.textContent = v.name + ' (' + v.lang + ')';
+    sel.appendChild(o);
+  });
+  if (prev !== '' && parseInt(prev, 10) < VOICES.length) { sel.value = prev; } else { sel.value = bestIdx; }
+}
+function speak(text) { speakText(text, null, false); }
+fillVoiceSelect();
+
+document.getElementById('speedRange').addEventListener('input', e => {
+  document.getElementById('speedValue').textContent = parseFloat(e.target.value).toFixed(1) + 'x';
+});
+
+// ── Колода ──
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function poolList() {
+  return DATA.filter(d => (mode === 'all' || d.key) && (curUnit === 'all' || d.u === curUnit));
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('mode-key').classList.toggle('active', m === 'key');
+  document.getElementById('mode-all').classList.toggle('active', m === 'all');
+  curUnit = 'all';
+  buildUnits();
+  startDeck();
+  buildPrint();
+}
+
+function buildUnits() {
+  const box = document.getElementById('units');
+  box.innerHTML = '';
+  const units = Object.keys(UNIT_NAMES).filter(u => DATA.some(d => d.u === u && (mode === 'all' || d.key)));
+  const mk = (id, label, title) => {
+    const b = document.createElement('button');
+    b.className = 'chip u-chip' + (curUnit === id ? ' active' : '');
+    b.textContent = label;
+    if (title) b.title = title;
+    b.onclick = () => { curUnit = id; buildUnits(); startDeck(); };
+    box.appendChild(b);
+  };
+  const total = poolList().length;
+  mk('all', 'Все юниты (' + total + ')');
+  units.forEach(u => {
+    const n = DATA.filter(d => d.u === u && (mode === 'all' || d.key)).length;
+    mk(u, UNIT_NUMS[u] + ' (' + n + ')', UNIT_NAMES[u]);
+  });
+}
+
+function startDeck() {
+  deck = shuffle(poolList());
+  idx = 0; known = 0;
+  render();
+}
+
+function render() {
+  const area = document.getElementById('card-area');
+  document.getElementById('total').textContent = deck.length;
+  document.getElementById('known').textContent = known;
+  document.getElementById('left').textContent = deck.length - idx;
+  document.getElementById('fill').style.width = (deck.length ? Math.round(known / (known + deck.length - idx) * 100) : 0) + '%';
+  if (idx >= deck.length) {
+    area.innerHTML = '<div class="done"><div class="big">🎉</div><h3>Колода пройдена!</h3>'
+      + '<p>Слов «знаю»: ' + known + '. Пройди колоду ещё раз или выбери другой юнит.</p>'
+      + '<div class="row"><button class="btn btn-ghost" onclick="startDeck()">↻ Пройти снова</button>'
+      + '<button class="btn btn-ghost" onclick="curUnit=\'all\';buildUnits();startDeck()">Все юниты</button></div></div>';
+    document.getElementById('pos').textContent = '—';
+    return;
+  }
+  const item = deck[idx];
+  document.getElementById('pos').textContent = idx + 1;
+  const star = item.key ? '<span class="star" title="Ключевое слово юнита">★</span>' : '';
+  area.innerHTML = '<div class="card">'
+    + '<span class="unit-tag">' + (UNIT_NAMES[item.u] || item.u) + '</span>'
+    + '<span class="counter">' + (idx + 1) + ' / ' + deck.length + '</span>'
+    + '<div class="en">' + item.en + star + '</div>'
+    + '<div class="ru hidden-word" id="ru">' + item.ru + '</div>'
+    + '<div class="row">'
+    + '<button class="btn btn-audio" onclick="speak(deck[idx].en)">🔊 Слушать</button>'
+    + '<button class="btn btn-ghost" id="reveal" onclick="reveal()">Показать перевод</button>'
+    + '</div>'
+    + '<div class="row">'
+    + '<button class="btn btn-know" onclick="mark(true)">✔ Знаю</button>'
+    + '<button class="btn btn-again" onclick="mark(false)">✘ Ещё раз</button>'
+    + '</div>'
+    + '<span class="hint">Скажи слово вслух, прежде чем открыть перевод</span>'
+    + '</div>'
+    + '<div class="row nav-row">'
+    + '<button class="btn btn-ghost" id="prevBtn" onclick="prevCard()"' + (idx === 0 ? ' disabled' : '') + '>← Назад</button>'
+    + '<button class="btn btn-ghost" id="nextBtn" onclick="nextCard()">Дальше →</button>'
+    + '</div>';
+  speak(item.en);
+}
+
+function reveal() {
+  document.getElementById('ru').classList.remove('hidden-word');
+  document.getElementById('reveal').style.display = 'none';
+}
+
+function mark(good) {
+  if (idx >= deck.length) return;    // колода уже пройдена
+  const item = deck[idx];
+  if (good) { known++; idx++; }
+  else { deck.push(item); idx++; }   // вернём в конец колоды
+  render();
+}
+
+function prevCard() {
+  if (idx > 0) { idx--; render(); }
+}
+
+function nextCard() {
+  if (idx < deck.length) { idx++; render(); }
+}
+
+// Клавиатура: ← → листают, пробел — перевод, 1 — «Знаю», 2 — «Ещё раз»
+document.addEventListener('keydown', function(e) {
+  var t = e.target && e.target.tagName;
+  if (t === 'SELECT' || t === 'INPUT' || t === 'TEXTAREA') return;
+  if (e.key === 'ArrowLeft') { prevCard(); }
+  else if (e.key === 'ArrowRight') { nextCard(); }
+  else if (e.key === ' ') {
+    var r = document.getElementById('reveal');
+    if (r && r.style.display !== 'none') { e.preventDefault(); reveal(); }
+  }
+  else if (e.key === '1') { mark(true); }
+  else if (e.key === '2') { mark(false); }
+});
+
+function buildPrint() {
+  const g = document.getElementById('print-grid');
+  let html = '';
+  Object.keys(UNIT_NAMES).forEach(u => {
+    const items = DATA.filter(d => d.u === u && (mode === 'all' || d.key));
+    if (!items.length) return;
+    html += '<div class="print-head">' + UNIT_NAMES[u] + '</div>';
+    items.forEach(d => { html += '<div class="print-card"><div class="pen">' + (d.key ? '★ ' : '') + d.en + '</div><div class="pru">' + d.ru + '</div></div>'; });
+  });
+  g.innerHTML = html;
+}
+
+document.getElementById('mode-key').classList.add('active');
+buildUnits();
+startDeck();
+buildPrint();
+</script>
+
+</body>
+</html>

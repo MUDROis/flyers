@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Домашнее задание, неделя 23 — Conversation + Grammar: Present perfect с just, already. Учебник Get Ready for Flyers. 7 упражнений для распечатки.">
+<title>Домашнее задание · Неделя 23 · Unit 8 · Sports day! · Flyers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0;
+    --c-card: #ffffff;
+    --c-section: #fdeadf;
+    --c-card-bg: #fbeee4;
+    --c-table-stripe: #fdf0e7;
+    --c-header: #d26b4d;
+    --c-header-2: #bd5c42;
+    --c-border: #f0d5c6;
+    --c-icon: #c05a33;
+    --c-accent: #b8432c;
+    --c-accent-2: #dd714f;
+    --c-text: #2e2320;
+    --c-text-muted: #93796c;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px;
+    --radius-sm: 4px;
+    --container: 820px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--c-bg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px; line-height: 1.65; color: var(--c-text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .toolbar-brand { font-weight: 600; font-size: 14px; }
+  .toolbar-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toolbar-actions a, .toolbar-actions button {
+    background: var(--c-header-2); color: #fff; border: none; padding: 8px 14px; border-radius: 4px;
+    text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .toolbar-actions a:hover, .toolbar-actions button:hover { background: #a83f28; }
+  .toolbar-actions a.secondary, .toolbar-actions button.secondary { background: rgba(255,255,255,0.18); }
+  .toolbar-actions a.secondary:hover, .toolbar-actions button.secondary:hover { background: rgba(255,255,255,0.28); }
+  .toolbar-actions button.primary { background: #fff; color: var(--c-accent); font-weight: 600; }
+  .toolbar-actions button.primary:hover { background: #ffe9dd; }
+
+  .hw-header { background: var(--c-header); color: #fff; padding: 36px 24px 30px; }
+  .hw-header-inner { max-width: var(--container); margin: 0 auto; }
+  .hw-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin: 0 0 12px; }
+  .hw-title { font-family: 'Noto Serif', Georgia, serif; font-size: 32px; font-weight: 700; margin: 0 0 10px; line-height: 1.2; }
+  .hw-title .accent { color: #ffd9c4; }
+  .hw-subtitle { font-size: 15px; color: rgba(255,255,255,0.9); margin: 0; }
+  .hw-meta { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .hw-meta-item { border-left: 2px solid rgba(255,255,255,0.35); padding-left: 12px; }
+  .hw-meta-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+  .hw-meta-value { font-size: 14px; font-weight: 500; }
+
+  .container { max-width: var(--container); margin: 0 auto; padding: 32px 24px 60px; }
+  .hw-intro { background: var(--c-card-bg); border-radius: var(--radius); padding: 18px 22px; margin: 0 0 24px; }
+  .hw-intro p { margin: 0 0 8px; }
+  .hw-intro p:last-child { margin: 0; }
+  .hw-intro b { color: var(--c-accent); }
+  .table-wrap { overflow-x: auto; margin: 16px 0 0; border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 13.5px; }
+  thead th { background: var(--c-header); color: #fff; text-align: left; padding: 10px 12px; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; }
+  tbody td { padding: 8px 12px; border-top: 1px solid var(--c-border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: var(--c-table-stripe); }
+  .vocab-table td:first-child { background: var(--c-section); font-weight: 600; color: var(--c-accent); white-space: nowrap; }
+  .callout { background: #fff; border-left: 4px solid var(--c-accent-2); padding: 12px 16px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13.5px; color: var(--c-text-muted); }
+  .callout strong { color: var(--c-text); }
+
+  .exercise { background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 22px 26px; margin: 20px 0; box-shadow: 0 2px 6px var(--c-shadow); break-inside: avoid; page-break-inside: avoid; }
+  .exercise-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--c-border); }
+  .exercise-num { flex-shrink: 0; width: 36px; height: 36px; background: var(--c-header); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; font-family: 'Noto Serif', serif; }
+  .exercise-title { font-size: 16px; font-weight: 600; color: var(--c-accent); margin: 0; }
+  .exercise-instr { font-style: italic; color: var(--c-text-muted); font-size: 14px; margin: 0 0 14px; }
+
+  .match-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 24px; max-width: 560px; margin: 12px 0; }
+  .match-row { display: flex; align-items: center; gap: 10px; padding: 6px 10px; background: var(--c-section); border-radius: 4px; font-family: 'Noto Serif', serif; font-size: 15px; }
+  .match-row .num { font-weight: 700; color: var(--c-accent); min-width: 26px; }
+  .match-row .en { min-width: 120px; font-weight: 600; }
+  .match-line { display: inline-block; width: 44px; height: 1px; border-bottom: 1px dashed var(--c-border); margin: 0 4px; }
+
+  .unscramble-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 18px; margin: 12px 0; }
+  .unsc-item { background: var(--c-section); padding: 12px 14px; border-radius: 4px; font-size: 14px; }
+  .unsc-item .letters { font-family: 'Noto Serif', serif; font-size: 16px; font-weight: 700; letter-spacing: 2px; color: var(--c-accent); }
+  .unsc-item .hint { display: block; font-size: 12.5px; color: var(--c-text-muted); margin-top: 4px; font-style: italic; }
+  .unsc-blank { display: inline-block; width: 110px; height: 24px; border-bottom: 2px solid var(--c-header); margin-left: 8px; vertical-align: bottom; }
+
+  .word-bank { background: var(--c-section); padding: 10px 14px; border-radius: 4px; font-size: 13px; color: var(--c-accent); margin: 8px 0; font-family: 'Noto Serif', serif; }
+  .word-bank b { color: var(--c-header-2); }
+  .fill-blank-list { list-style: none; padding: 0; margin: 12px 0; counter-reset: q; }
+  .fill-blank-list li { counter-increment: q; padding: 8px 0 8px 28px; font-family: 'Noto Serif', serif; font-size: 15px; border-bottom: 1px dotted var(--c-border); position: relative; }
+  .fill-blank-list li::before { content: counter(q) "."; position: absolute; left: 0; font-weight: 700; color: var(--c-accent); }
+  .fill-blank-list li:last-child { border-bottom: none; }
+  .blank-line { display: inline-block; min-width: 140px; border-bottom: 2px solid var(--c-accent-2); margin: 0 4px; }
+
+  .q-list { list-style: none; padding: 0; margin: 12px 0; counter-reset: q; }
+  .q-list li { counter-increment: q; padding: 14px 0 14px 28px; border-bottom: 1px solid var(--c-border); position: relative; }
+  .q-list li:last-child { border-bottom: none; }
+  .q-list li::before { content: counter(q) "."; position: absolute; left: 0; top: 14px; font-weight: 700; color: var(--c-accent); }
+  .q-list .question { display: block; font-weight: 600; color: var(--c-accent); margin-bottom: 6px; font-size: 14px; font-family: 'Noto Serif', serif; }
+  .write-blank { display: block; width: 100%; min-height: 34px; border-bottom: 1px solid var(--c-border); }
+
+  .reading-text { background: var(--c-section); border-radius: var(--radius); padding: 16px 20px; margin: 12px 0; font-family: 'Noto Serif', serif; font-size: 15px; line-height: 1.7; }
+  .reading-text .rt-title { font-weight: 700; color: var(--c-accent); margin-bottom: 6px; }
+  .tf-list { list-style: none; padding: 0; margin: 12px 0; counter-reset: q; }
+  .tf-list li { counter-increment: q; padding: 9px 0 9px 28px; border-bottom: 1px dotted var(--c-border); position: relative; font-family: 'Noto Serif', serif; font-size: 14.5px; }
+  .tf-list li::before { content: counter(q) "."; position: absolute; left: 0; font-weight: 700; color: var(--c-accent); }
+  .tf-list li:last-child { border-bottom: none; }
+  .tf-mark { display: inline-block; min-width: 70px; border-bottom: 2px solid var(--c-accent-2); margin-left: 8px; }
+  .tf-hint { font-size: 12px; color: var(--c-text-muted); font-style: italic; }
+
+  .writing-plan { background: var(--c-section); border-radius: var(--radius); padding: 14px 18px; margin: 12px 0; }
+  .writing-plan h5, .speaking-plan h5 { margin: 0 0 8px; color: var(--c-accent); font-size: 14px; font-weight: 600; }
+  .writing-plan ul, .speaking-plan ul { margin: 0; padding-left: 20px; }
+  .writing-plan li, .speaking-plan li { margin-bottom: 4px; }
+  .speaking-plan { background: var(--c-section); border-radius: var(--radius); padding: 16px 20px; margin: 12px 0; }
+  .speaking-example { background: #fff; border-left: 3px solid var(--c-accent-2); padding: 12px 16px; margin: 12px 0; border-radius: 0 4px 4px 0; font-family: 'Noto Serif', serif; font-size: 14px; }
+
+  .stars-note { background: #fff3e2; border: 1px solid var(--c-accent-2); border-radius: var(--radius); padding: 14px 18px; margin: 24px 0; font-size: 14px; }
+  .stars-note b { color: var(--c-accent); }
+
+  .footer { background: var(--c-header); color: rgba(255,255,255,0.9); padding: 24px; text-align: center; font-size: 13px; margin-top: 0; }
+  .footer a { color: #ffd9c4; text-decoration: none; }
+  .footer p { margin: 4px 0; }
+
+  /* ── Скрытый блок «Проверить ответы» ── */
+  .answers-section { text-align: center; padding: 6px 24px 34px; }
+  details.answers { display: inline-block; max-width: var(--container); width: 100%; text-align: left; }
+  details.answers summary {
+    display: inline-block; cursor: pointer; list-style: none;
+    background: var(--c-card); color: var(--c-accent);
+    border: 1px solid var(--c-accent-2); border-radius: 999px;
+    padding: 4px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+    transition: background 0.15s;
+  }
+  details.answers summary::-webkit-details-marker { display: none; }
+  details.answers summary:hover { background: var(--c-section); }
+  details.answers .answers-body {
+    margin-top: 12px; background: var(--c-card); border: 1px dashed var(--c-accent-2);
+    border-radius: var(--radius); padding: 16px 20px; font-size: 13.5px; color: var(--c-text);
+  }
+  .answers-body h5 { margin: 10px 0 4px; color: var(--c-accent); font-size: 13px; }
+  .answers-body h5:first-child { margin-top: 0; }
+  .answers-body ul, .answers-body ol { margin: 4px 0 10px; padding-left: 20px; }
+  .answers-body li { margin-bottom: 3px; }
+  .answers-body .ans-note { color: var(--c-text-muted); font-style: italic; }
+
+  @media print {
+    .toolbar, .footer, .answers-section { display: none !important; }
+    body { background: #fff; font-size: 11pt; }
+    .hw-header { background: #fff !important; color: #000 !important; border-bottom: 3px solid #000; padding: 0 0 12px 0; }
+    .hw-kicker, .hw-subtitle, .hw-meta-label { color: #555 !important; }
+    .hw-title { color: #000 !important; font-size: 22pt; }
+    .hw-title .accent { color: #b8432c !important; }
+    .hw-meta-item { border-left-color: #999 !important; }
+    .hw-meta-value { color: #000 !important; }
+    .container { padding: 16px 0; max-width: 100%; }
+    .exercise { box-shadow: none; border: 1px solid #999; page-break-inside: avoid; break-inside: avoid; }
+    .exercise-num { background: #d26b4d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .word-bank, .match-row, .unsc-item, .reading-text, .writing-plan, .speaking-plan, .speaking-example, .hw-intro, .vocab-table td:first-child { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .stars-note { background: #fff3e2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media (max-width: 600px) {
+    .match-grid, .unscramble-grid { grid-template-columns: 1fr; }
+    .exercise { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand"><span class="dot"></span>Домашнее задание · Неделя 23 · Unit 8 · Sports day!</div>
+    <div class="toolbar-actions">
+      <a href="hw-week22.html" class="secondary">← Неделя 22</a><a href="hw-week24.html" class="secondary">Неделя 24 →</a>
+      <a href="index.html" class="secondary">← К плану</a>
+      <button onclick="window.print()" class="primary">🖨 Печать</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hw-header">
+  <div class="hw-header-inner">
+    <p class="hw-kicker">Homework · Get Ready for Flyers · Week 23</p>
+    <h1 class="hw-title">Unit 8 <span class="accent">· Week 23</span></h1>
+    <p class="hw-subtitle">Conversation + Grammar: Present perfect с just, already — 7 упражнений, 20–25 минут</p>
+    <div class="hw-meta">
+      <div class="hw-meta-item"><div class="hw-meta-label">Учебник</div><div class="hw-meta-value">Get Ready for Flyers (2nd ed.)</div></div>
+      <div class="hw-meta-item"><div class="hw-meta-label">Страницы</div><div class="hw-meta-value">SB стр. 66</div></div>
+      <div class="hw-meta-item"><div class="hw-meta-label">Уровень</div><div class="hw-meta-value">A1 → A2</div></div>
+      <div class="hw-meta-item"><div class="hw-meta-label">Время</div><div class="hw-meta-value">20–25 минут</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="hw-intro">
+    <p>Сегодня мы начали изучать <b>Present perfect</b> — время для «только что» и «уже» сделанных действий: <b>I've just had my lunch</b>, <b>You've already done your homework</b>. Формула: have/has + третья форма глагола (V3).</p>
+    <div class="table-wrap">
+      <table class="vocab-table">
+        <thead><tr><th>Категория</th><th>Слова и выражения</th></tr></thead>
+        <tbody><tr><td>Present perfect: just</td><td>I've just had my lunch. / The match has just finished.</td></tr><tr><td>Present perfect: already</td><td>I've already had my lunch. / You've already done your homework.</td></tr><tr><td>V3 глаголы</td><td>do–done, eat–eaten, finish–finished, have–had, be–been, see–seen</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout"><strong>Инструкция для родителей:</strong> помогите ребёнку прочитать задания, но не подсказывайте ответы. Ответы — в маленькой кнопке «Проверить ответы» в самом низу страницы (она не печатается). На выполнение отведите 20–25 минут . Speaking-задание (упр. 7) запишите на телефон и пришлите преподавателю.</div>
+
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">1</div>
+      <h3 class="exercise-title">Match the words with their meaning. Соедини слова с переводом.</h3></div>
+    <p class="exercise-instr">Соедини слово и его перевод (проведи линию или напиши букву рядом с номером).</p>
+    <div class="match-grid"><div class="match-row"><span class="num">1</span><span class="en">already</span><span class="match-line"></span><span>a) только что</span></div><div class="match-row"><span class="num">2</span><span class="en">just</span><span class="match-line"></span><span>b) колено</span></div><div class="match-row"><span class="num">3</span><span class="en">end</span><span class="match-line"></span><span>c) болезненный</span></div><div class="match-row"><span class="num">4</span><span class="en">explain</span><span class="match-line"></span><span>d) перекус</span></div><div class="match-row"><span class="num">5</span><span class="en">knee</span><span class="match-line"></span><span>e) объяснять</span></div><div class="match-row"><span class="num">6</span><span class="en">sore</span><span class="match-line"></span><span>f) гольф</span></div><div class="match-row"><span class="num">7</span><span class="en">snack</span><span class="match-line"></span><span>g) конец</span></div><div class="match-row"><span class="num">8</span><span class="en">golf</span><span class="match-line"></span><span>h) уже</span></div></div>
+  </div>
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">2</div>
+      <h3 class="exercise-title">Unscramble the letters. Расшифруй слова.</h3></div>
+    <p class="exercise-instr">Буквы перепутались! Восстанови слова по подсказке-переводу и запиши их правильно.</p>
+    <div class="unscramble-grid"><div class="unsc-item"><span class="letters">a y e a l d r</span><span class="unsc-blank"></span><span class="hint">подсказка: уже</span></div><div class="unsc-item"><span class="letters">u t j s</span><span class="unsc-blank"></span><span class="hint">подсказка: только что</span></div><div class="unsc-item"><span class="letters">d n e</span><span class="unsc-blank"></span><span class="hint">подсказка: конец</span></div><div class="unsc-item"><span class="letters">p n a e l i x</span><span class="unsc-blank"></span><span class="hint">подсказка: объяснять</span></div><div class="unsc-item"><span class="letters">n e k e</span><span class="unsc-blank"></span><span class="hint">подсказка: колено</span></div><div class="unsc-item"><span class="letters">s e r o</span><span class="unsc-blank"></span><span class="hint">подсказка: болезненный</span></div></div>
+  </div>
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">3</div>
+      <h3 class="exercise-title">Grammar. Complete the sentences.</h3></div>
+    <p class="exercise-instr">Вставь подходящее слово в каждое предложение. Используй слова из рамки. Каждое слово — один раз.</p>
+    <div class="word-bank"><b>Word bank:</b> sore · just · explain · already</div>
+    <ol class="fill-blank-list"><li>I've <span class="blank-line"></span> finished my homework — can I play now?</li><li>The film has <span class="blank-line"></span> started. Hurry up!</li><li>She's <span class="blank-line"></span> had her snack, so she isn't hungry.</li><li>We've <span class="blank-line"></span> seen this cartoon twice.</li><li>My leg is <span class="blank-line"></span>, because I fell over in the race.</li><li>Can you <span class="blank-line"></span> this rule to me again, please?</li></ol>
+  </div>
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">4</div>
+      <h3 class="exercise-title">Grammar practice. Практика грамматики.</h3></div>
+    <p class="exercise-instr">Ответь, используя just и слова в скобках (have/has + V3).</p>
+    <ul class="q-list"><li><span class="question">Would you like some tea? (just / have a cup of tea)</span><span class="write-blank"></span></li><li><span class="question">Let's watch the film! (already / see it)</span><span class="write-blank"></span></li><li><span class="question">Is Kate hungry? (just / have a snack)</span><span class="write-blank"></span></li><li><span class="question">Do your homework! (already / do it)</span><span class="write-blank"></span></li></ul>
+  </div>
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">5</div>
+      <h3 class="exercise-title">Reading. True or False?</h3></div>
+    <p class="exercise-instr">Прочитай текст и отметь, верны ли утверждения: напиши <b>True</b> или <b>False</b>. Если False — исправь предложение (доп. звёздочка!). <span class="tf-hint">Незнакомые слова ищи в Wordlist учебника.</span></p>
+    <div class="reading-text"><div class="rt-title">After the match</div>The football match has just finished. Ben is very happy: his team has won 3:2! «Have you called your dad?» asks Harry. «Yes, I've already told him the news», says Ben. «And I've just drunk a big bottle of water — I'm very thirsty after the game. Let's have a snack in the café!»</div>
+    <ul class="tf-list"><li>The match has just finished.<span class="tf-mark"></span></li><li>Ben's team has won 3:2.<span class="tf-mark"></span></li><li>Ben has already called his dad.<span class="tf-mark"></span></li><li>Ben is hungry, not thirsty.<span class="tf-mark"></span></li></ul>
+  </div>
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">6</div>
+      <h3 class="exercise-title">Writing. Мини-сочинение.</h3></div>
+    <p class="exercise-instr">Напиши 6 предложений о том, что твоя семья уже сделала сегодня (Present perfect с just/already).</p>
+    <div class="writing-plan"><h5>Plan (use these prompts):</h5><ul><li>I have already…</li><li>My mum has just…</li><li>My dad has already…</li><li>We have just…</li></ul></div>
+    <span class="write-blank"></span><span class="write-blank"></span><span class="write-blank"></span><span class="write-blank"></span><span class="write-blank"></span>
+  </div>
+  
+  <div class="exercise">
+    <div class="exercise-header"><div class="exercise-num">7</div>
+      <h3 class="exercise-title">Speaking task. Расскажи о себе (запиши аудио).</h3></div>
+    <p class="exercise-instr">Это устное задание. Подготовь ответ (30–60 секунд), запиши на телефон и отправь преподавателю до следующего занятия.</p>
+    <div class="speaking-plan"><h5>Plan for your speaking (use these prompts):</h5><ul><li>What have you already done today?</li><li>What have you just done?</li><li>What are you going to do after the lesson?</li></ul></div>
+    <div class="speaking-example"><strong>Example:</strong> “Today I have already had breakfast and done my homework. I have just finished reading an interesting book. After the lesson I am going to play football with my friends in the yard.”</div>
+  </div>
+
+  <div class="stars-note"><strong>Звёздочки за выполнение:</strong> ⭐⭐ слова (упр. 1–2) · ⭐⭐ Present perfect (упр. 3–4) · ⭐⭐ чтение (упр. 5) · ⭐⭐ письмо (упр. 6) · ⭐⭐⭐ speaking (упр. 7). Максимум: 11 звёзд. Не забудь отправить аудио преподавателю!</div>
+
+</main>
+
+<footer class="footer">
+  <p>Домашнее задание · Неделя 23 · Unit 8 · Sports day! · Get Ready for Flyers (2nd ed.) · SB стр. 66</p>
+  <p><a href="index.html">← Вернуться к годовому плану</a> · <a href="flashcards.html">Флеш-карточки для повторения</a></p>
+</footer>
+
+<div class="answers-section"><details class="answers"><summary>🔑 Проверить ответы</summary><div class="answers-body"><h5>Ключи к упражнениям</h5><h5>Упр. 1. Match</h5><ul><li>1 — h (already = уже)</li><li>2 — a (just = только что)</li><li>3 — g (end = конец)</li><li>4 — e (explain = объяснять)</li><li>5 — b (knee = колено)</li><li>6 — c (sore = болезненный)</li><li>7 — d (snack = перекус)</li><li>8 — f (golf = гольф)</li></ul><h5>Упр. 2. Unscramble</h5><ul><li>1) already</li><li>2) just</li><li>3) end</li><li>4) explain</li><li>5) knee</li><li>6) sore</li></ul><h5>Упр. 3. Fill in</h5><ul><li>1) already</li><li>2) just</li><li>3) already</li><li>4) already</li><li>5) sore</li><li>6) explain</li></ul><h5>Упр. 4. Grammar</h5><ul><li>1) No, thanks. I've just had a cup of tea.</li><li>2) I've already seen it.</li><li>3) No, she's just had a snack.</li><li>4) I've already done it!</li></ul><h5>Упр. 5. True / False</h5><ul><li>1) True</li><li>2) True</li><li>3) True</li><li>4) False — он хочет пить.</li></ul><h5>Упр. 6. Writing — пример ответа</h5><p>I have already done my homework. My mum has just cooked dinner. My dad has already washed the car. My sister has just woken up. We have already had breakfast. The cat has just fallen asleep on the sofa.</p></div></details></div>
+
+</body>
+</html>

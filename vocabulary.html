@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Полный Wordlist учебника Get Ready for Flyers (стр. 112–117): все 493 слова по разделам с переводом на русский, ключевые слова отмечены звёздочкой, у каждого слова кнопка произношения (Web Speech API). Для печати.">
+<title>Лексика по разделам · Get Ready for Flyers · Wordlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0; --c-card: #ffffff; --c-section: #fdeadf; --c-card-bg: #fbeee4;
+    --c-table-stripe: #fdf0e7; --c-header: #d26b4d; --c-header-2: #bd5c42;
+    --c-border: #f0d5c6; --c-accent: #b8432c; --c-accent-2: #dd714f;
+    --c-text: #2e2320; --c-text-muted: #93796c;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px; --container: 900px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; background: var(--c-bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.65; color: var(--c-text); -webkit-font-smoothing: antialiased; }
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .toolbar-brand { font-weight: 600; font-size: 14px; }
+  .toolbar-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toolbar-actions a, .toolbar-actions button { background: rgba(255,255,255,0.18); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .toolbar-actions a:hover, .toolbar-actions button:hover { background: rgba(255,255,255,0.3); }
+  .toolbar-actions button.primary { background: #fff; color: var(--c-accent); font-weight: 600; }
+  .toolbar-actions button.primary:hover { background: #ffe9dd; }
+
+  .page-header { background: linear-gradient(160deg, #dd7b5e 0%, #d26b4d 55%, #bd5c42 100%); color: #fff; padding: 40px 24px 34px; }
+  .page-header-inner { max-width: var(--container); margin: 0 auto; }
+  .page-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin: 0 0 10px; }
+  .page-title { font-family: 'Noto Serif', Georgia, serif; font-size: 32px; font-weight: 700; margin: 0 0 8px; line-height: 1.2; }
+  .page-title .accent { color: #ffd9c4; }
+  .page-subtitle { font-size: 15px; color: rgba(255,255,255,0.9); margin: 0; max-width: 720px; }
+  .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; max-width: 720px; }
+  .hm { border-left: 2px solid rgba(255,255,255,0.35); padding-left: 12px; }
+  .hm .l { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+  .hm .v { font-size: 14px; font-weight: 600; }
+
+  .container { max-width: var(--container); margin: 0 auto; padding: 32px 24px 60px; }
+  .toc { background: var(--c-card-bg); border-radius: var(--radius); padding: 16px 20px; margin: 0 0 28px; font-size: 14px; }
+  .toc b { color: var(--c-accent); }
+  .toc a { color: var(--c-accent); text-decoration: none; margin-right: 10px; white-space: nowrap; }
+  .toc a:hover { text-decoration: underline; }
+
+  .howto { background: var(--c-card); border-left: 4px solid var(--c-accent-2); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 18px; margin: 0 0 26px; font-size: 13.5px; color: var(--c-text-muted); }
+  .howto b { color: var(--c-accent); }
+
+  .unit { margin: 34px 0 8px; scroll-margin-top: 76px; }
+  .unit-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .unit-num { flex-shrink: 0; width: 34px; height: 34px; border: 2px solid var(--c-accent-2); color: var(--c-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; font-family: 'Noto Serif', serif; background: #fff; }
+  .unit-title { font-family: 'Noto Serif', Georgia, serif; font-size: 21px; font-weight: 700; color: var(--c-accent); margin: 0; }
+  .unit-pages { font-size: 12.5px; color: var(--c-text-muted); margin-left: auto; white-space: nowrap; }
+  .unit-sub { font-size: 13px; color: var(--c-text-muted); margin: 0 0 12px; font-style: italic; }
+
+  h4.block-title { font-size: 14px; letter-spacing: 1px; text-transform: uppercase; color: var(--c-header-2); margin: 18px 0 8px; }
+  .table-wrap { overflow-x: auto; margin: 8px 0 14px; border-radius: var(--radius); box-shadow: 0 1px 4px var(--c-shadow); }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 14px; }
+  thead th { background: var(--c-header); color: #fff; text-align: left; padding: 9px 12px; font-weight: 600; font-size: 12.5px; letter-spacing: 0.3px; }
+  tbody td { padding: 7px 12px; border-top: 1px solid var(--c-border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: var(--c-table-stripe); }
+  td.word, td.word .wtxt { font-family: 'Noto Serif', serif; font-weight: 600; color: var(--c-accent); }
+  td.ru { color: var(--c-text); }
+  .star { color: #e2a23c; margin-left: 5px; font-size: 12px; vertical-align: 1px; }
+
+  /* Кнопка произношения в таблице */
+  .say { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; margin-right: 8px; flex-shrink: 0; border: 1.5px solid var(--c-accent-2); background: #fff; color: var(--c-accent); border-radius: 50%; font-size: 9px; cursor: pointer; vertical-align: -5px; transition: all 0.12s; }
+  .say:hover { background: var(--c-accent-2); color: #fff; }
+  .say.playing { background: #3f8a5c; border-color: #3f8a5c; color: #fff; }
+
+  .wl-hint { font-size: 12.5px; color: var(--c-text-muted); font-style: italic; margin: 6px 0 0; }
+
+  .now-playing { position: sticky; bottom: 20px; background: var(--c-header); color: #fff; padding: 12px 20px; border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: none; align-items: center; gap: 12px; z-index: 50; max-width: var(--container); margin: 0 auto; }
+  .now-playing.show { display: flex; }
+  .now-playing .np-word { font-family: 'Noto Serif', serif; font-size: 16px; font-weight: 600; flex: 1; }
+  .now-playing .np-stop { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 13px; }
+
+  .footer { background: var(--c-header); color: rgba(255,255,255,0.9); padding: 24px; text-align: center; font-size: 13px; margin-top: 40px; }
+  .footer a { color: #ffd9c4; text-decoration: none; }
+
+  @media print {
+    .toolbar, .footer, .say, .now-playing { display: none !important; }
+    body { background: #fff; font-size: 10.5pt; }
+    .page-header { background: #fff !important; color: #000 !important; border-bottom: 3px solid #000; padding: 0 0 12px; }
+    .page-kicker, .page-subtitle { color: #555 !important; }
+    .page-title { color: #000 !important; font-size: 20pt; }
+    .page-title .accent { color: #b8432c !important; }
+    .header-meta { display: none; }
+    .container { padding: 12px 0; max-width: 100%; }
+    .toc, .howto { display: none; }
+    .table-wrap { box-shadow: none; border: 1px solid #ccc; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .unit { margin: 16px 0 4px; }
+  }
+  @media (max-width: 600px) { .container { padding: 24px 16px 40px; } }
+</style>
+</head>
+<body>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand"><span class="dot"></span>Vocabulary · Get Ready for Flyers</div>
+    <div class="toolbar-actions">
+      <a href="index.html">← К плану</a>
+      <a href="audio/index.html">🔊 Аудио-плеер</a>
+      <a href="flashcards.html">Флеш-карточки</a>
+      <button onclick="window.print()" class="primary">🖨 Печать</button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="page-kicker">Wordlist · Get Ready for Flyers 2nd ed. · стр. 112–117</p>
+    <h1 class="page-title">Вся лексика <span class="accent">по разделам</span></h1>
+    <p class="page-subtitle">Все слова из Wordlist учебника (стр. 112–117) с переводом — по каждому разделу, без пропусков. Нажми ▶ рядом со словом, чтобы услышать произношение (Web Speech API).</p>
+    <div class="header-meta">
+      <div class="hm"><div class="l">Всего слов</div><div class="v">493</div></div>
+      <div class="hm"><div class="l">Разделов</div><div class="v">16</div></div>
+      <div class="hm"><div class="l">★ ключевых</div><div class="v">155</div></div>
+      <div class="hm"><div class="l">Источник</div><div class="v">Wordlist, стр. 112–117</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <nav class="toc">
+    <b>Разделы:</b>
+    <a href="#hello">Hello!</a><a href="#u1">U1</a><a href="#u2">U2</a><a href="#u3">U3</a><a href="#u4">U4</a><a href="#rev1">R1</a><a href="#u5">U5</a><a href="#u6">U6</a><a href="#u7">U7</a><a href="#u8">U8</a><a href="#rev2">R2</a><a href="#u9">U9</a><a href="#u10">U10</a><a href="#u11">U11</a><a href="#u12">U12</a><a href="#rev3">R3</a>
+  </nav>
+
+  <div class="howto">
+    <b>Как заниматься:</b> ★ — ключевые слова юнита, их учим в первую очередь (именно они нужны для экзаменационных заданий). Остальные слова Wordlist узнаём и понимаем при чтении и аудировании. Проверяй себя: закрой колонку с переводом листом бумаги и назови слова вслух; кнопка ▶ проверит произношение. Если звука нет — открой страницу в Chrome, Edge или Safari.
+  </div>
+
+  <section class="unit" id="hello">
+    <div class="unit-head"><div class="unit-num">H</div><h2 class="unit-title">Hello! · Знакомство с героями</h2><span class="unit-pages">SB стр. 2–3 · Wordlist стр. 112</span></div>
+    <p class="unit-sub">Семья и family tree, месяцы года, числа до 1000, have got.</p><h4 class="block-title">Wordlist раздела · 29 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="April" title="Прослушать слово" aria-label="Прослушать: April">▶</button>April</td><td class="ru">апрель</td><td class="word"><button class="say" data-word="sister" title="Прослушать слово" aria-label="Прослушать: sister">▶</button>sister</td><td class="ru">сестра</td></tr>
+      <tr><td class="word"><button class="say" data-word="March" title="Прослушать слово" aria-label="Прослушать: March">▶</button>March</td><td class="ru">март</td><td class="word"><button class="say" data-word="February" title="Прослушать слово" aria-label="Прослушать: February">▶</button>February</td><td class="ru">февраль</td></tr>
+      <tr><td class="word"><button class="say" data-word="August" title="Прослушать слово" aria-label="Прослушать: August">▶</button>August</td><td class="ru">август</td><td class="word"><button class="say" data-word="surname" title="Прослушать слово" aria-label="Прослушать: surname">▶</button>surname<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">фамилия</td></tr>
+      <tr><td class="word"><button class="say" data-word="May" title="Прослушать слово" aria-label="Прослушать: May">▶</button>May</td><td class="ru">май</td><td class="word"><button class="say" data-word="grandma" title="Прослушать слово" aria-label="Прослушать: grandma">▶</button>grandma<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">бабушка</td></tr>
+      <tr><td class="word"><button class="say" data-word="aunt" title="Прослушать слово" aria-label="Прослушать: aunt">▶</button>aunt<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">тётя</td><td class="word"><button class="say" data-word="thousand" title="Прослушать слово" aria-label="Прослушать: thousand">▶</button>thousand<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">тысяча</td></tr>
+      <tr><td class="word"><button class="say" data-word="month" title="Прослушать слово" aria-label="Прослушать: month">▶</button>month<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">месяц</td><td class="word"><button class="say" data-word="grandpa" title="Прослушать слово" aria-label="Прослушать: grandpa">▶</button>grandpa<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">дедушка</td></tr>
+      <tr><td class="word"><button class="say" data-word="brother" title="Прослушать слово" aria-label="Прослушать: brother">▶</button>brother</td><td class="ru">брат</td><td class="word"><button class="say" data-word="twins" title="Прослушать слово" aria-label="Прослушать: twins">▶</button>twins<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">близнецы</td></tr>
+      <tr><td class="word"><button class="say" data-word="mum" title="Прослушать слово" aria-label="Прослушать: mum">▶</button>mum</td><td class="ru">мама</td><td class="word"><button class="say" data-word="husband" title="Прослушать слово" aria-label="Прослушать: husband">▶</button>husband<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">муж</td></tr>
+      <tr><td class="word"><button class="say" data-word="cousin" title="Прослушать слово" aria-label="Прослушать: cousin">▶</button>cousin<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">двоюродный брат / сестра</td><td class="word"><button class="say" data-word="uncle" title="Прослушать слово" aria-label="Прослушать: uncle">▶</button>uncle<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">дядя</td></tr>
+      <tr><td class="word"><button class="say" data-word="November" title="Прослушать слово" aria-label="Прослушать: November">▶</button>November</td><td class="ru">ноябрь</td><td class="word"><button class="say" data-word="January" title="Прослушать слово" aria-label="Прослушать: January">▶</button>January</td><td class="ru">январь</td></tr>
+      <tr><td class="word"><button class="say" data-word="dad" title="Прослушать слово" aria-label="Прослушать: dad">▶</button>dad</td><td class="ru">папа</td><td class="word"><button class="say" data-word="way" title="Прослушать слово" aria-label="Прослушать: way">▶</button>way</td><td class="ru">путь, дорога</td></tr>
+      <tr><td class="word"><button class="say" data-word="October" title="Прослушать слово" aria-label="Прослушать: October">▶</button>October</td><td class="ru">октябрь</td><td class="word"><button class="say" data-word="July" title="Прослушать слово" aria-label="Прослушать: July">▶</button>July</td><td class="ru">июль</td></tr>
+      <tr><td class="word"><button class="say" data-word="December" title="Прослушать слово" aria-label="Прослушать: December">▶</button>December</td><td class="ru">декабрь</td><td class="word"><button class="say" data-word="wife" title="Прослушать слово" aria-label="Прослушать: wife">▶</button>wife<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">жена</td></tr>
+      <tr><td class="word"><button class="say" data-word="September" title="Прослушать слово" aria-label="Прослушать: September">▶</button>September</td><td class="ru">сентябрь</td><td class="word"><button class="say" data-word="June" title="Прослушать слово" aria-label="Прослушать: June">▶</button>June</td><td class="ru">июнь</td></tr>
+      <tr><td class="word"><button class="say" data-word="family tree" title="Прослушать слово" aria-label="Прослушать: family tree">▶</button>family tree<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">генеалогическое древо</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+    <p class="wl-hint">Names (стр. 112): девочки — Betty, Emma, Helen, Holly, Katy, Sarah, Sophia; мальчики — David, Frank, George, Harry, Michael, Oliver, Richard, Robert, William. Имена героев учебника: Holly и Harry.</p>
+  </section>
+
+  <section class="unit" id="u1">
+    <div class="unit-head"><div class="unit-num">1</div><h2 class="unit-title">Unit 1 · Our home</h2><span class="unit-pages">SB стр. 4–9 · Wordlist стр. 112–113</span></div>
+    <p class="unit-sub">Грамматика юнита: everyone, something, nowhere, anyone (every-, some-, no-, any-).</p><h4 class="block-title">Wordlist раздела · 79 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="after" title="Прослушать слово" aria-label="Прослушать: after">▶</button>after</td><td class="ru">после, затем</td><td class="word"><button class="say" data-word="cycle" title="Прослушать слово" aria-label="Прослушать: cycle">▶</button>cycle</td><td class="ru">ездить на велосипеде</td></tr>
+      <tr><td class="word"><button class="say" data-word="late" title="Прослушать слово" aria-label="Прослушать: late">▶</button>late</td><td class="ru">поздний; поздно</td><td class="word"><button class="say" data-word="shampoo" title="Прослушать слово" aria-label="Прослушать: shampoo">▶</button>shampoo<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">шампунь</td></tr>
+      <tr><td class="word"><button class="say" data-word="anyone" title="Прослушать слово" aria-label="Прослушать: anyone">▶</button>anyone<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">кто-нибудь, любой</td><td class="word"><button class="say" data-word="dear" title="Прослушать слово" aria-label="Прослушать: dear">▶</button>dear</td><td class="ru">дорогой (обращение в письме)</td></tr>
+      <tr><td class="word"><button class="say" data-word="letter" title="Прослушать слово" aria-label="Прослушать: letter">▶</button>letter</td><td class="ru">письмо</td><td class="word"><button class="say" data-word="shelf" title="Прослушать слово" aria-label="Прослушать: shelf">▶</button>shelf<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">полка</td></tr>
+      <tr><td class="word"><button class="say" data-word="anything" title="Прослушать слово" aria-label="Прослушать: anything">▶</button>anything</td><td class="ru">что-нибудь, что угодно</td><td class="word"><button class="say" data-word="diary" title="Прослушать слово" aria-label="Прослушать: diary">▶</button>diary</td><td class="ru">дневник</td></tr>
+      <tr><td class="word"><button class="say" data-word="little" title="Прослушать слово" aria-label="Прослушать: little">▶</button>little</td><td class="ru">маленький</td><td class="word"><button class="say" data-word="soap" title="Прослушать слово" aria-label="Прослушать: soap">▶</button>soap<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">мыло</td></tr>
+      <tr><td class="word"><button class="say" data-word="anywhere" title="Прослушать слово" aria-label="Прослушать: anywhere">▶</button>anywhere</td><td class="ru">где-нибудь, куда-нибудь</td><td class="word"><button class="say" data-word="drums" title="Прослушать слово" aria-label="Прослушать: drums">▶</button>drums</td><td class="ru">барабаны</td></tr>
+      <tr><td class="word"><button class="say" data-word="lucky" title="Прослушать слово" aria-label="Прослушать: lucky">▶</button>lucky</td><td class="ru">удачливый, везучий</td><td class="word"><button class="say" data-word="somewhere" title="Прослушать слово" aria-label="Прослушать: somewhere">▶</button>somewhere</td><td class="ru">где-то, куда-то</td></tr>
+      <tr><td class="word"><button class="say" data-word="arrive" title="Прослушать слово" aria-label="Прослушать: arrive">▶</button>arrive</td><td class="ru">прибывать, приезжать</td><td class="word"><button class="say" data-word="empty" title="Прослушать слово" aria-label="Прослушать: empty">▶</button>empty<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пустой</td></tr>
+      <tr><td class="word"><button class="say" data-word="meal" title="Прослушать слово" aria-label="Прослушать: meal">▶</button>meal</td><td class="ru">блюдо; приём пищи</td><td class="word"><button class="say" data-word="stamps" title="Прослушать слово" aria-label="Прослушать: stamps">▶</button>stamps</td><td class="ru">марки</td></tr>
+      <tr><td class="word"><button class="say" data-word="away" title="Прослушать слово" aria-label="Прослушать: away">▶</button>away</td><td class="ru">прочь; не дома</td><td class="word"><button class="say" data-word="envelope" title="Прослушать слово" aria-label="Прослушать: envelope">▶</button>envelope</td><td class="ru">конверт</td></tr>
+      <tr><td class="word"><button class="say" data-word="much" title="Прослушать слово" aria-label="Прослушать: much">▶</button>much</td><td class="ru">много</td><td class="word"><button class="say" data-word="take" title="Прослушать слово" aria-label="Прослушать: take">▶</button>take</td><td class="ru">брать</td></tr>
+      <tr><td class="word"><button class="say" data-word="before" title="Прослушать слово" aria-label="Прослушать: before">▶</button>before</td><td class="ru">до, перед</td><td class="word"><button class="say" data-word="everyone" title="Прослушать слово" aria-label="Прослушать: everyone">▶</button>everyone<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">все, каждый</td></tr>
+      <tr><td class="word"><button class="say" data-word="necklace" title="Прослушать слово" aria-label="Прослушать: necklace">▶</button>necklace</td><td class="ru">ожерелье</td><td class="word"><button class="say" data-word="teach" title="Прослушать слово" aria-label="Прослушать: teach">▶</button>teach</td><td class="ru">учить, обучать</td></tr>
+      <tr><td class="word"><button class="say" data-word="bin" title="Прослушать слово" aria-label="Прослушать: bin">▶</button>bin</td><td class="ru">мусорное ведро, бак</td><td class="word"><button class="say" data-word="everything" title="Прослушать слово" aria-label="Прослушать: everything">▶</button>everything</td><td class="ru">всё</td></tr>
+      <tr><td class="word"><button class="say" data-word="news" title="Прослушать слово" aria-label="Прослушать: news">▶</button>news</td><td class="ru">новости</td><td class="word"><button class="say" data-word="tidy" title="Прослушать слово" aria-label="Прослушать: tidy">▶</button>tidy<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">аккуратный; убирать</td></tr>
+      <tr><td class="word"><button class="say" data-word="bit" title="Прослушать слово" aria-label="Прослушать: bit">▶</button>bit</td><td class="ru">кусочек; немного</td><td class="word"><button class="say" data-word="everywhere" title="Прослушать слово" aria-label="Прослушать: everywhere">▶</button>everywhere</td><td class="ru">везде, повсюду</td></tr>
+      <tr><td class="word"><button class="say" data-word="noisy" title="Прослушать слово" aria-label="Прослушать: noisy">▶</button>noisy<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">шумный</td><td class="word"><button class="say" data-word="time" title="Прослушать слово" aria-label="Прослушать: time">▶</button>time</td><td class="ru">время</td></tr>
+      <tr><td class="word"><button class="say" data-word="bored" title="Прослушать слово" aria-label="Прослушать: bored">▶</button>bored</td><td class="ru">которому скучно</td><td class="word"><button class="say" data-word="file" title="Прослушать слово" aria-label="Прослушать: file">▶</button>file</td><td class="ru">папка (для бумаг)</td></tr>
+      <tr><td class="word"><button class="say" data-word="no-one" data-say="no one" title="Прослушать слово" aria-label="Прослушать: no-one">▶</button>no-one</td><td class="ru">никто</td><td class="word"><button class="say" data-word="toothpaste" title="Прослушать слово" aria-label="Прослушать: toothpaste">▶</button>toothpaste<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">зубная паста</td></tr>
+      <tr><td class="word"><button class="say" data-word="borrow" title="Прослушать слово" aria-label="Прослушать: borrow">▶</button>borrow</td><td class="ru">брать (на время), занимать</td><td class="word"><button class="say" data-word="fridge" title="Прослушать слово" aria-label="Прослушать: fridge">▶</button>fridge<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">холодильник</td></tr>
+      <tr><td class="word"><button class="say" data-word="of course" title="Прослушать слово" aria-label="Прослушать: of course">▶</button>of course</td><td class="ru">конечно</td><td class="word"><button class="say" data-word="unfriendly" title="Прослушать слово" aria-label="Прослушать: unfriendly">▶</button>unfriendly</td><td class="ru">недружелюбный</td></tr>
+      <tr><td class="word"><button class="say" data-word="broken" title="Прослушать слово" aria-label="Прослушать: broken">▶</button>broken<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">сломанный</td><td class="word"><button class="say" data-word="friendly" title="Прослушать слово" aria-label="Прослушать: friendly">▶</button>friendly<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">дружелюбный</td></tr>
+      <tr><td class="word"><button class="say" data-word="oven" title="Прослушать слово" aria-label="Прослушать: oven">▶</button>oven<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">духовка</td><td class="word"><button class="say" data-word="unhappy" title="Прослушать слово" aria-label="Прослушать: unhappy">▶</button>unhappy</td><td class="ru">несчастный</td></tr>
+      <tr><td class="word"><button class="say" data-word="brush" title="Прослушать слово" aria-label="Прослушать: brush">▶</button>brush<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">щётка</td><td class="word"><button class="say" data-word="full" title="Прослушать слово" aria-label="Прослушать: full">▶</button>full<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">полный</td></tr>
+      <tr><td class="word"><button class="say" data-word="paper" title="Прослушать слово" aria-label="Прослушать: paper">▶</button>paper</td><td class="ru">бумага</td><td class="word"><button class="say" data-word="unkind" title="Прослушать слово" aria-label="Прослушать: unkind">▶</button>unkind</td><td class="ru">недобрый</td></tr>
+      <tr><td class="word"><button class="say" data-word="channel" title="Прослушать слово" aria-label="Прослушать: channel">▶</button>channel</td><td class="ru">телеканал</td><td class="word"><button class="say" data-word="fun" title="Прослушать слово" aria-label="Прослушать: fun">▶</button>fun</td><td class="ru">веселье, забава</td></tr>
+      <tr><td class="word"><button class="say" data-word="popular" title="Прослушать слово" aria-label="Прослушать: popular">▶</button>popular</td><td class="ru">популярный</td><td class="word"><button class="say" data-word="untidy" title="Прослушать слово" aria-label="Прослушать: untidy">▶</button>untidy<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">неубранный</td></tr>
+      <tr><td class="word"><button class="say" data-word="chat" title="Прослушать слово" aria-label="Прослушать: chat">▶</button>chat</td><td class="ru">болтать; беседа</td><td class="word"><button class="say" data-word="go out" title="Прослушать слово" aria-label="Прослушать: go out">▶</button>go out</td><td class="ru">выходить (из дома)</td></tr>
+      <tr><td class="word"><button class="say" data-word="post" title="Прослушать слово" aria-label="Прослушать: post">▶</button>post</td><td class="ru">отправлять почтой</td><td class="word"><button class="say" data-word="usually" title="Прослушать слово" aria-label="Прослушать: usually">▶</button>usually</td><td class="ru">обычно</td></tr>
+      <tr><td class="word"><button class="say" data-word="chess" title="Прослушать слово" aria-label="Прослушать: chess">▶</button>chess</td><td class="ru">шахматы</td><td class="word"><button class="say" data-word="important" title="Прослушать слово" aria-label="Прослушать: important">▶</button>important</td><td class="ru">важный</td></tr>
+      <tr><td class="word"><button class="say" data-word="postcard" title="Прослушать слово" aria-label="Прослушать: postcard">▶</button>postcard</td><td class="ru">открытка</td><td class="word"><button class="say" data-word="violin" title="Прослушать слово" aria-label="Прослушать: violin">▶</button>violin</td><td class="ru">скрипка</td></tr>
+      <tr><td class="word"><button class="say" data-word="college" title="Прослушать слово" aria-label="Прослушать: college">▶</button>college</td><td class="ru">колледж</td><td class="word"><button class="say" data-word="interesting" title="Прослушать слово" aria-label="Прослушать: interesting">▶</button>interesting</td><td class="ru">интересный</td></tr>
+      <tr><td class="word"><button class="say" data-word="programme" title="Прослушать слово" aria-label="Прослушать: programme">▶</button>programme</td><td class="ru">программа (ТВ)</td><td class="word"><button class="say" data-word="warm" title="Прослушать слово" aria-label="Прослушать: warm">▶</button>warm</td><td class="ru">тёплый</td></tr>
+      <tr><td class="word"><button class="say" data-word="comb" title="Прослушать слово" aria-label="Прослушать: comb">▶</button>comb<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">расчёска</td><td class="word"><button class="say" data-word="keep" title="Прослушать слово" aria-label="Прослушать: keep">▶</button>keep</td><td class="ru">хранить, держать</td></tr>
+      <tr><td class="word"><button class="say" data-word="quiet" title="Прослушать слово" aria-label="Прослушать: quiet">▶</button>quiet<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">тихий</td><td class="word"><button class="say" data-word="wheel" title="Прослушать слово" aria-label="Прослушать: wheel">▶</button>wheel</td><td class="ru">колесо</td></tr>
+      <tr><td class="word"><button class="say" data-word="cooker" title="Прослушать слово" aria-label="Прослушать: cooker">▶</button>cooker<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">плита</td><td class="word"><button class="say" data-word="key" title="Прослушать слово" aria-label="Прослушать: key">▶</button>key</td><td class="ru">ключ</td></tr>
+      <tr><td class="word"><button class="say" data-word="rucksack" title="Прослушать слово" aria-label="Прослушать: rucksack">▶</button>rucksack</td><td class="ru">рюкзак</td><td class="word"><button class="say" data-word="wifi" data-say="wi-fi" title="Прослушать слово" aria-label="Прослушать: wifi">▶</button>wifi</td><td class="ru">вай-фай, беспроводной интернет</td></tr>
+      <tr><td class="word"><button class="say" data-word="cushion" title="Прослушать слово" aria-label="Прослушать: cushion">▶</button>cushion<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">диванная подушка</td><td class="word"><button class="say" data-word="kind" title="Прослушать слово" aria-label="Прослушать: kind">▶</button>kind</td><td class="ru">добрый</td></tr>
+      <tr><td class="word"><button class="say" data-word="search" title="Прослушать слово" aria-label="Прослушать: search">▶</button>search</td><td class="ru">искать</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u2">
+    <div class="unit-head"><div class="unit-num">2</div><h2 class="unit-title">Unit 2 · Going to town</h2><span class="unit-pages">SB стр. 12–17 · Wordlist стр. 113</span></div>
+    <p class="unit-sub">Грамматика юнита: will (вежливые просьбы и обещания) — Will you fetch…?</p><h4 class="block-title">Wordlist раздела · 47 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="across" title="Прослушать слово" aria-label="Прослушать: across">▶</button>across</td><td class="ru">через, поперёк</td><td class="word"><button class="say" data-word="fire engine" title="Прослушать слово" aria-label="Прослушать: fire engine">▶</button>fire engine<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пожарная машина</td></tr>
+      <tr><td class="word"><button class="say" data-word="motorway" title="Прослушать слово" aria-label="Прослушать: motorway">▶</button>motorway</td><td class="ru">автомагистраль</td><td class="word"><button class="say" data-word="right" title="Прослушать слово" aria-label="Прослушать: right">▶</button>right</td><td class="ru">правый; направо</td></tr>
+      <tr><td class="word"><button class="say" data-word="airport" title="Прослушать слово" aria-label="Прослушать: airport">▶</button>airport</td><td class="ru">аэропорт</td><td class="word"><button class="say" data-word="fire station" title="Прослушать слово" aria-label="Прослушать: fire station">▶</button>fire station<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пожарная часть</td></tr>
+      <tr><td class="word"><button class="say" data-word="museum" title="Прослушать слово" aria-label="Прослушать: museum">▶</button>museum</td><td class="ru">музей</td><td class="word"><button class="say" data-word="shorts" title="Прослушать слово" aria-label="Прослушать: shorts">▶</button>shorts</td><td class="ru">шорты</td></tr>
+      <tr><td class="word"><button class="say" data-word="ambulance" title="Прослушать слово" aria-label="Прослушать: ambulance">▶</button>ambulance<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">скорая помощь</td><td class="word"><button class="say" data-word="forget" title="Прослушать слово" aria-label="Прослушать: forget">▶</button>forget<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">забыть</td></tr>
+      <tr><td class="word"><button class="say" data-word="next" title="Прослушать слово" aria-label="Прослушать: next">▶</button>next</td><td class="ru">следующий</td><td class="word"><button class="say" data-word="sky" title="Прослушать слово" aria-label="Прослушать: sky">▶</button>sky</td><td class="ru">небо</td></tr>
+      <tr><td class="word"><button class="say" data-word="bank" title="Прослушать слово" aria-label="Прослушать: bank">▶</button>bank<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">банк</td><td class="word"><button class="say" data-word="front" title="Прослушать слово" aria-label="Прослушать: front">▶</button>front</td><td class="ru">передняя часть, фасад</td></tr>
+      <tr><td class="word"><button class="say" data-word="other" title="Прослушать слово" aria-label="Прослушать: other">▶</button>other</td><td class="ru">другой</td><td class="word"><button class="say" data-word="skyscraper" title="Прослушать слово" aria-label="Прослушать: skyscraper">▶</button>skyscraper<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">небоскрёб</td></tr>
+      <tr><td class="word"><button class="say" data-word="bicycle" title="Прослушать слово" aria-label="Прослушать: bicycle">▶</button>bicycle</td><td class="ru">велосипед</td><td class="word"><button class="say" data-word="get to" title="Прослушать слово" aria-label="Прослушать: get to">▶</button>get to<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">добираться до</td></tr>
+      <tr><td class="word"><button class="say" data-word="over" title="Прослушать слово" aria-label="Прослушать: over">▶</button>over</td><td class="ru">над; через</td><td class="word"><button class="say" data-word="stadium" title="Прослушать слово" aria-label="Прослушать: stadium">▶</button>stadium<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">стадион</td></tr>
+      <tr><td class="word"><button class="say" data-word="bridge" title="Прослушать слово" aria-label="Прослушать: bridge">▶</button>bridge</td><td class="ru">мост</td><td class="word"><button class="say" data-word="hill" title="Прослушать слово" aria-label="Прослушать: hill">▶</button>hill</td><td class="ru">холм</td></tr>
+      <tr><td class="word"><button class="say" data-word="past" title="Прослушать слово" aria-label="Прослушать: past">▶</button>past</td><td class="ru">мимо</td><td class="word"><button class="say" data-word="taxi" title="Прослушать слово" aria-label="Прослушать: taxi">▶</button>taxi</td><td class="ru">такси</td></tr>
+      <tr><td class="word"><button class="say" data-word="castle" title="Прослушать слово" aria-label="Прослушать: castle">▶</button>castle<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">замок</td><td class="word"><button class="say" data-word="hotel" title="Прослушать слово" aria-label="Прослушать: hotel">▶</button>hotel</td><td class="ru">гостиница</td></tr>
+      <tr><td class="word"><button class="say" data-word="police station" title="Прослушать слово" aria-label="Прослушать: police station">▶</button>police station<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">полицейский участок</td><td class="word"><button class="say" data-word="through" title="Прослушать слово" aria-label="Прослушать: through">▶</button>through</td><td class="ru">сквозь, через</td></tr>
+      <tr><td class="word"><button class="say" data-word="chemist&#x27;s" title="Прослушать слово" aria-label="Прослушать: chemist&#x27;s">▶</button>chemist&#x27;s<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">аптека</td><td class="word"><button class="say" data-word="How long" title="Прослушать слово" aria-label="Прослушать: How long">▶</button>How long</td><td class="ru">как долго</td></tr>
+      <tr><td class="word"><button class="say" data-word="post office" title="Прослушать слово" aria-label="Прослушать: post office">▶</button>post office<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">почта</td><td class="word"><button class="say" data-word="traffic" title="Прослушать слово" aria-label="Прослушать: traffic">▶</button>traffic<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">дорожное движение</td></tr>
+      <tr><td class="word"><button class="say" data-word="corner" title="Прослушать слово" aria-label="Прослушать: corner">▶</button>corner<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">угол</td><td class="word"><button class="say" data-word="later" title="Прослушать слово" aria-label="Прослушать: later">▶</button>later</td><td class="ru">позже</td></tr>
+      <tr><td class="word"><button class="say" data-word="pyjamas" title="Прослушать слово" aria-label="Прослушать: pyjamas">▶</button>pyjamas</td><td class="ru">пижама</td><td class="word"><button class="say" data-word="university" title="Прослушать слово" aria-label="Прослушать: university">▶</button>university</td><td class="ru">университет</td></tr>
+      <tr><td class="word"><button class="say" data-word="expensive" title="Прослушать слово" aria-label="Прослушать: expensive">▶</button>expensive</td><td class="ru">дорогой (по цене)</td><td class="word"><button class="say" data-word="left" title="Прослушать слово" aria-label="Прослушать: left">▶</button>left</td><td class="ru">левый; налево</td></tr>
+      <tr><td class="word"><button class="say" data-word="railway station" title="Прослушать слово" aria-label="Прослушать: railway station">▶</button>railway station<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">железнодорожный вокзал</td><td class="word"><button class="say" data-word="will" title="Прослушать слово" aria-label="Прослушать: will">▶</button>will</td><td class="ru">вспом. глагол будущего времени; вежливая просьба</td></tr>
+      <tr><td class="word"><button class="say" data-word="factory" title="Прослушать слово" aria-label="Прослушать: factory">▶</button>factory<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">фабрика, завод</td><td class="word"><button class="say" data-word="middle" title="Прослушать слово" aria-label="Прослушать: middle">▶</button>middle</td><td class="ru">середина</td></tr>
+      <tr><td class="word"><button class="say" data-word="remember" title="Прослушать слово" aria-label="Прослушать: remember">▶</button>remember<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">помнить, вспомнить</td><td class="word"><button class="say" data-word="wood" title="Прослушать слово" aria-label="Прослушать: wood">▶</button>wood</td><td class="ru">лес</td></tr>
+      <tr><td class="word"><button class="say" data-word="fetch" title="Прослушать слово" aria-label="Прослушать: fetch">▶</button>fetch<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">принести, сходить за</td><td class="word"><button class="say" data-word="money" title="Прослушать слово" aria-label="Прослушать: money">▶</button>money</td><td class="ru">деньги</td></tr>
+      <tr><td class="word"><button class="say" data-word="restaurant" title="Прослушать слово" aria-label="Прослушать: restaurant">▶</button>restaurant</td><td class="ru">ресторан</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u3">
+    <div class="unit-head"><div class="unit-num">3</div><h2 class="unit-title">Unit 3 · Eating out</h2><span class="unit-pages">SB стр. 20–25 · Wordlist стр. 113–114</span></div>
+    <p class="unit-sub">Грамматика юнита: be/look/sound/feel/taste/smell like; make somebody + adjective; made of.</p><h4 class="block-title">Wordlist раздела · 42 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="amazing" title="Прослушать слово" aria-label="Прослушать: amazing">▶</button>amazing</td><td class="ru">изумительный</td><td class="word"><button class="say" data-word="sound" title="Прослушать слово" aria-label="Прослушать: sound">▶</button>sound</td><td class="ru">звучать</td></tr>
+      <tr><td class="word"><button class="say" data-word="lovely" title="Прослушать слово" aria-label="Прослушать: lovely">▶</button>lovely</td><td class="ru">милый, прекрасный</td><td class="word"><button class="say" data-word="fork" title="Прослушать слово" aria-label="Прослушать: fork">▶</button>fork<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">вилка</td></tr>
+      <tr><td class="word"><button class="say" data-word="biscuit" title="Прослушать слово" aria-label="Прослушать: biscuit">▶</button>biscuit<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">печенье</td><td class="word"><button class="say" data-word="spend" title="Прослушать слово" aria-label="Прослушать: spend">▶</button>spend</td><td class="ru">проводить (время); тратить</td></tr>
+      <tr><td class="word"><button class="say" data-word="medicine" title="Прослушать слово" aria-label="Прослушать: medicine">▶</button>medicine<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">лекарство</td><td class="word"><button class="say" data-word="frightened" title="Прослушать слово" aria-label="Прослушать: frightened">▶</button>frightened<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">испуганный</td></tr>
+      <tr><td class="word"><button class="say" data-word="bracelet" title="Прослушать слово" aria-label="Прослушать: bracelet">▶</button>bracelet</td><td class="ru">браслет</td><td class="word"><button class="say" data-word="spoon" title="Прослушать слово" aria-label="Прослушать: spoon">▶</button>spoon<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">ложка</td></tr>
+      <tr><td class="word"><button class="say" data-word="mind" title="Прослушать слово" aria-label="Прослушать: mind">▶</button>mind</td><td class="ru">возражать; разум</td><td class="word"><button class="say" data-word="group" title="Прослушать слово" aria-label="Прослушать: group">▶</button>group</td><td class="ru">группа</td></tr>
+      <tr><td class="word"><button class="say" data-word="butter" title="Прослушать слово" aria-label="Прослушать: butter">▶</button>butter<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">сливочное масло</td><td class="word"><button class="say" data-word="strawberry" title="Прослушать слово" aria-label="Прослушать: strawberry">▶</button>strawberry<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">клубника</td></tr>
+      <tr><td class="word"><button class="say" data-word="olives" title="Прослушать слово" aria-label="Прослушать: olives">▶</button>olives<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">оливки</td><td class="word"><button class="say" data-word="hard" title="Прослушать слово" aria-label="Прослушать: hard">▶</button>hard</td><td class="ru">твёрдый; трудный</td></tr>
+      <tr><td class="word"><button class="say" data-word="chopsticks" title="Прослушать слово" aria-label="Прослушать: chopsticks">▶</button>chopsticks<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">палочки для еды</td><td class="word"><button class="say" data-word="sugar" title="Прослушать слово" aria-label="Прослушать: sugar">▶</button>sugar<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">сахар</td></tr>
+      <tr><td class="word"><button class="say" data-word="pepper" title="Прослушать слово" aria-label="Прослушать: pepper">▶</button>pepper<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">перец</td><td class="word"><button class="say" data-word="hear" title="Прослушать слово" aria-label="Прослушать: hear">▶</button>hear</td><td class="ru">слышать</td></tr>
+      <tr><td class="word"><button class="say" data-word="dangerous" title="Прослушать слово" aria-label="Прослушать: dangerous">▶</button>dangerous</td><td class="ru">опасный</td><td class="word"><button class="say" data-word="surprise" title="Прослушать слово" aria-label="Прослушать: surprise">▶</button>surprise<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">сюрприз</td></tr>
+      <tr><td class="word"><button class="say" data-word="piece" title="Прослушать слово" aria-label="Прослушать: piece">▶</button>piece</td><td class="ru">кусок, кусочек</td><td class="word"><button class="say" data-word="honey" title="Прослушать слово" aria-label="Прослушать: honey">▶</button>honey<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">мёд</td></tr>
+      <tr><td class="word"><button class="say" data-word="delicious" title="Прослушать слово" aria-label="Прослушать: delicious">▶</button>delicious<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">очень вкусный</td><td class="word"><button class="say" data-word="tastes" title="Прослушать слово" aria-label="Прослушать: tastes">▶</button>tastes</td><td class="ru">имеет вкус (глагол taste)</td></tr>
+      <tr><td class="word"><button class="say" data-word="pizza" title="Прослушать слово" aria-label="Прослушать: pizza">▶</button>pizza</td><td class="ru">пицца</td><td class="word"><button class="say" data-word="ill" title="Прослушать слово" aria-label="Прослушать: ill">▶</button>ill<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">больной</td></tr>
+      <tr><td class="word"><button class="say" data-word="excited" title="Прослушать слово" aria-label="Прослушать: excited">▶</button>excited<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">взволнованный</td><td class="word"><button class="say" data-word="tortoise" title="Прослушать слово" aria-label="Прослушать: tortoise">▶</button>tortoise</td><td class="ru">черепаха</td></tr>
+      <tr><td class="word"><button class="say" data-word="salt" title="Прослушать слово" aria-label="Прослушать: salt">▶</button>salt<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">соль</td><td class="word"><button class="say" data-word="jam" title="Прослушать слово" aria-label="Прослушать: jam">▶</button>jam<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">джем, варенье</td></tr>
+      <tr><td class="word"><button class="say" data-word="feel" title="Прослушать слово" aria-label="Прослушать: feel">▶</button>feel</td><td class="ru">чувствовать(ся)</td><td class="word"><button class="say" data-word="visit" title="Прослушать слово" aria-label="Прослушать: visit">▶</button>visit</td><td class="ru">посещать</td></tr>
+      <tr><td class="word"><button class="say" data-word="smell" title="Прослушать слово" aria-label="Прослушать: smell">▶</button>smell</td><td class="ru">пахнуть; запах</td><td class="word"><button class="say" data-word="knife" title="Прослушать слово" aria-label="Прослушать: knife">▶</button>knife<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">нож</td></tr>
+      <tr><td class="word"><button class="say" data-word="finish" title="Прослушать слово" aria-label="Прослушать: finish">▶</button>finish</td><td class="ru">заканчивать(ся)</td><td class="word"><button class="say" data-word="wool" title="Прослушать слово" aria-label="Прослушать: wool">▶</button>wool<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">шерсть</td></tr>
+      <tr><td class="word"><button class="say" data-word="soft" title="Прослушать слово" aria-label="Прослушать: soft">▶</button>soft</td><td class="ru">мягкий</td><td class="word"><button class="say" data-word="look like" title="Прослушать слово" aria-label="Прослушать: look like">▶</button>look like</td><td class="ru">выглядеть как, быть похожим на</td></tr>
+      <tr><td class="word"><button class="say" data-word="flour" title="Прослушать слово" aria-label="Прослушать: flour">▶</button>flour<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">мука</td><td class="word"><button class="say" data-word="yoghurt" title="Прослушать слово" aria-label="Прослушать: yoghurt">▶</button>yoghurt<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">йогурт</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u4">
+    <div class="unit-head"><div class="unit-num">4</div><h2 class="unit-title">Unit 4 · At school</h2><span class="unit-pages">SB стр. 28–33 · Wordlist стр. 114</span></div>
+    <p class="unit-sub">Грамматика юнита: What time…? — quarter past/to, half past, midday, midnight, a.m./p.m.</p><h4 class="block-title">Wordlist раздела · 42 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="a.m." data-say="a m" title="Прослушать слово" aria-label="Прослушать: a.m.">▶</button>a.m.</td><td class="ru">до полудня (утра)</td><td class="word"><button class="say" data-word="program" title="Прослушать слово" aria-label="Прослушать: program">▶</button>program</td><td class="ru">программа (амер. написание)</td></tr>
+      <tr><td class="word"><button class="say" data-word="language" title="Прослушать слово" aria-label="Прослушать: language">▶</button>language</td><td class="ru">язык</td><td class="word"><button class="say" data-word="enormous" title="Прослушать слово" aria-label="Прослушать: enormous">▶</button>enormous<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">огромный</td></tr>
+      <tr><td class="word"><button class="say" data-word="actually" title="Прослушать слово" aria-label="Прослушать: actually">▶</button>actually</td><td class="ru">на самом деле, вообще-то</td><td class="word"><button class="say" data-word="quarter" title="Прослушать слово" aria-label="Прослушать: quarter">▶</button>quarter<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">четверть</td></tr>
+      <tr><td class="word"><button class="say" data-word="maths" title="Прослушать слово" aria-label="Прослушать: maths">▶</button>maths<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">математика</td><td class="word"><button class="say" data-word="excellent" title="Прослушать слово" aria-label="Прослушать: excellent">▶</button>excellent<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">отличный, превосходный</td></tr>
+      <tr><td class="word"><button class="say" data-word="agree" title="Прослушать слово" aria-label="Прослушать: agree">▶</button>agree</td><td class="ru">соглашаться</td><td class="word"><button class="say" data-word="repeat" title="Прослушать слово" aria-label="Прослушать: repeat">▶</button>repeat</td><td class="ru">повторять</td></tr>
+      <tr><td class="word"><button class="say" data-word="metal" title="Прослушать слово" aria-label="Прослушать: metal">▶</button>metal</td><td class="ru">металл</td><td class="word"><button class="say" data-word="geography" title="Прослушать слово" aria-label="Прослушать: geography">▶</button>geography<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">география</td></tr>
+      <tr><td class="word"><button class="say" data-word="art" title="Прослушать слово" aria-label="Прослушать: art">▶</button>art<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">изобразительное искусство (ИЗО)</td><td class="word"><button class="say" data-word="same" title="Прослушать слово" aria-label="Прослушать: same">▶</button>same</td><td class="ru">тот же, такой же</td></tr>
+      <tr><td class="word"><button class="say" data-word="midday" title="Прослушать слово" aria-label="Прослушать: midday">▶</button>midday<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">полдень</td><td class="word"><button class="say" data-word="half" title="Прослушать слово" aria-label="Прослушать: half">▶</button>half<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">половина</td></tr>
+      <tr><td class="word"><button class="say" data-word="beetle" title="Прослушать слово" aria-label="Прослушать: beetle">▶</button>beetle</td><td class="ru">жук</td><td class="word"><button class="say" data-word="save" title="Прослушать слово" aria-label="Прослушать: save">▶</button>save</td><td class="ru">спасать; копить, экономить</td></tr>
+      <tr><td class="word"><button class="say" data-word="midnight" title="Прослушать слово" aria-label="Прослушать: midnight">▶</button>midnight<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">полночь</td><td class="word"><button class="say" data-word="history" title="Прослушать слово" aria-label="Прослушать: history">▶</button>history<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">история</td></tr>
+      <tr><td class="word"><button class="say" data-word="card" title="Прослушать слово" aria-label="Прослушать: card">▶</button>card</td><td class="ru">карточка; открытка</td><td class="word"><button class="say" data-word="science" title="Прослушать слово" aria-label="Прослушать: science">▶</button>science<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">естествознание, наука</td></tr>
+      <tr><td class="word"><button class="say" data-word="music" title="Прослушать слово" aria-label="Прослушать: music">▶</button>music</td><td class="ru">музыка</td><td class="word"><button class="say" data-word="improve" title="Прослушать слово" aria-label="Прослушать: improve">▶</button>improve<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">улучшать(ся)</td></tr>
+      <tr><td class="word"><button class="say" data-word="club" title="Прослушать слово" aria-label="Прослушать: club">▶</button>club<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">кружок, клуб</td><td class="word"><button class="say" data-word="study" title="Прослушать слово" aria-label="Прослушать: study">▶</button>study</td><td class="ru">учиться, изучать</td></tr>
+      <tr><td class="word"><button class="say" data-word="o&#x27;clock" data-say="o&#x27;clock" title="Прослушать слово" aria-label="Прослушать: o&#x27;clock">▶</button>o&#x27;clock</td><td class="ru">ровно (о времени)</td><td class="word"><button class="say" data-word="information" title="Прослушать слово" aria-label="Прослушать: information">▶</button>information</td><td class="ru">информация</td></tr>
+      <tr><td class="word"><button class="say" data-word="cut" title="Прослушать слово" aria-label="Прослушать: cut">▶</button>cut</td><td class="ru">резать</td><td class="word"><button class="say" data-word="subject" title="Прослушать слово" aria-label="Прослушать: subject">▶</button>subject<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">школьный предмет</td></tr>
+      <tr><td class="word"><button class="say" data-word="p.m." data-say="p m" title="Прослушать слово" aria-label="Прослушать: p.m.">▶</button>p.m.</td><td class="ru">после полудня (дня)</td><td class="word"><button class="say" data-word="invitation" title="Прослушать слово" aria-label="Прослушать: invitation">▶</button>invitation</td><td class="ru">приглашение</td></tr>
+      <tr><td class="word"><button class="say" data-word="dictionary" title="Прослушать слово" aria-label="Прослушать: dictionary">▶</button>dictionary<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">словарь</td><td class="word"><button class="say" data-word="sure" title="Прослушать слово" aria-label="Прослушать: sure">▶</button>sure</td><td class="ru">уверенный</td></tr>
+      <tr><td class="word"><button class="say" data-word="plastic" title="Прослушать слово" aria-label="Прослушать: plastic">▶</button>plastic</td><td class="ru">пластик, пластиковый</td><td class="word"><button class="say" data-word="IT" title="Прослушать слово" aria-label="Прослушать: IT">▶</button>IT<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">информатика</td></tr>
+      <tr><td class="word"><button class="say" data-word="disappear" title="Прослушать слово" aria-label="Прослушать: disappear">▶</button>disappear</td><td class="ru">исчезать</td><td class="word"><button class="say" data-word="timetable" title="Прослушать слово" aria-label="Прослушать: timetable">▶</button>timetable<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">расписание</td></tr>
+      <tr><td class="word"><button class="say" data-word="platform" title="Прослушать слово" aria-label="Прослушать: platform">▶</button>platform</td><td class="ru">платформа, перрон</td><td class="word"><button class="say" data-word="join" title="Прослушать слово" aria-label="Прослушать: join">▶</button>join</td><td class="ru">присоединяться, вступать</td></tr>
+      <tr><td class="word"><button class="say" data-word="during" title="Прослушать слово" aria-label="Прослушать: during">▶</button>during</td><td class="ru">во время</td><td class="word"><button class="say" data-word="quiz" title="Прослушать слово" aria-label="Прослушать: quiz">▶</button>quiz<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">викторина</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="rev1">
+    <div class="unit-head"><div class="unit-num">R1</div><h2 class="unit-title">Revision 1 · Review Units 1–4</h2><span class="unit-pages">SB стр. 36–39 · Wordlist стр. 114</span></div>
+    <p class="unit-sub">Повторение Units 1–4: дом, город, еда, школа. SB стр. 36–39.</p><h4 class="block-title">Wordlist раздела · 6 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="believe" title="Прослушать слово" aria-label="Прослушать: believe">▶</button>believe</td><td class="ru">верить</td><td class="word"><button class="say" data-word="until" title="Прослушать слово" aria-label="Прослушать: until">▶</button>until</td><td class="ru">до (какого-то момента)</td></tr>
+      <tr><td class="word"><button class="say" data-word="turn on" title="Прослушать слово" aria-label="Прослушать: turn on">▶</button>turn on</td><td class="ru">включать</td><td class="word"><button class="say" data-word="mix" title="Прослушать слово" aria-label="Прослушать: mix">▶</button>mix</td><td class="ru">смешивать</td></tr>
+      <tr><td class="word"><button class="say" data-word="minute" title="Прослушать слово" aria-label="Прослушать: minute">▶</button>minute</td><td class="ru">минута</td><td class="word"><button class="say" data-word="without" title="Прослушать слово" aria-label="Прослушать: without">▶</button>without</td><td class="ru">без</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u5">
+    <div class="unit-head"><div class="unit-num">5</div><h2 class="unit-title">Unit 5 · A day out</h2><span class="unit-pages">SB стр. 40–45 · Wordlist стр. 115</span></div>
+    <p class="unit-sub">Грамматика юнита: be going to — планы и намерения.</p><h4 class="block-title">Wordlist раздела · 42 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="act" title="Прослушать слово" aria-label="Прослушать: act">▶</button>act</td><td class="ru">играть (в спектакле)</td><td class="word"><button class="say" data-word="several" title="Прослушать слово" aria-label="Прослушать: several">▶</button>several</td><td class="ru">несколько</td></tr>
+      <tr><td class="word"><button class="say" data-word="hour" title="Прослушать слово" aria-label="Прослушать: hour">▶</button>hour</td><td class="ru">час</td><td class="word"><button class="say" data-word="circus" title="Прослушать слово" aria-label="Прослушать: circus">▶</button>circus<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">цирк</td></tr>
+      <tr><td class="word"><button class="say" data-word="actor" title="Прослушать слово" aria-label="Прослушать: actor">▶</button>actor</td><td class="ru">актёр</td><td class="word"><button class="say" data-word="special" title="Прослушать слово" aria-label="Прослушать: special">▶</button>special</td><td class="ru">особенный</td></tr>
+      <tr><td class="word"><button class="say" data-word="million" title="Прослушать слово" aria-label="Прослушать: million">▶</button>million</td><td class="ru">миллион</td><td class="word"><button class="say" data-word="clown" title="Прослушать слово" aria-label="Прослушать: clown">▶</button>clown<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">клоун</td></tr>
+      <tr><td class="word"><button class="say" data-word="ago" title="Прослушать слово" aria-label="Прослушать: ago">▶</button>ago</td><td class="ru">тому назад</td><td class="word"><button class="say" data-word="stage" title="Прослушать слово" aria-label="Прослушать: stage">▶</button>stage<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">сцена</td></tr>
+      <tr><td class="word"><button class="say" data-word="museum" title="Прослушать слово" aria-label="Прослушать: museum">▶</button>museum</td><td class="ru">музей</td><td class="word"><button class="say" data-word="dinosaurs" title="Прослушать слово" aria-label="Прослушать: dinosaurs">▶</button>dinosaurs<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">динозавры</td></tr>
+      <tr><td class="word"><button class="say" data-word="air" title="Прослушать слово" aria-label="Прослушать: air">▶</button>air</td><td class="ru">воздух</td><td class="word"><button class="say" data-word="stay" title="Прослушать слово" aria-label="Прослушать: stay">▶</button>stay</td><td class="ru">оставаться; останавливаться</td></tr>
+      <tr><td class="word"><button class="say" data-word="ocean" title="Прослушать слово" aria-label="Прослушать: ocean">▶</button>ocean</td><td class="ru">океан</td><td class="word"><button class="say" data-word="extinct" title="Прослушать слово" aria-label="Прослушать: extinct">▶</button>extinct<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">вымерший</td></tr>
+      <tr><td class="word"><button class="say" data-word="also" title="Прослушать слово" aria-label="Прослушать: also">▶</button>also</td><td class="ru">тоже, также</td><td class="word"><button class="say" data-word="swing" title="Прослушать слово" aria-label="Прослушать: swing">▶</button>swing</td><td class="ru">качели; качаться</td></tr>
+      <tr><td class="word"><button class="say" data-word="pleased" title="Прослушать слово" aria-label="Прослушать: pleased">▶</button>pleased</td><td class="ru">довольный</td><td class="word"><button class="say" data-word="find out" title="Прослушать слово" aria-label="Прослушать: find out">▶</button>find out</td><td class="ru">выяснять, узнавать</td></tr>
+      <tr><td class="word"><button class="say" data-word="brave" title="Прослушать слово" aria-label="Прослушать: brave">▶</button>brave</td><td class="ru">смелый</td><td class="word"><button class="say" data-word="telephone" title="Прослушать слово" aria-label="Прослушать: telephone">▶</button>telephone</td><td class="ru">телефон</td></tr>
+      <tr><td class="word"><button class="say" data-word="project" title="Прослушать слово" aria-label="Прослушать: project">▶</button>project</td><td class="ru">проект</td><td class="word"><button class="say" data-word="frightening" title="Прослушать слово" aria-label="Прослушать: frightening">▶</button>frightening</td><td class="ru">пугающий</td></tr>
+      <tr><td class="word"><button class="say" data-word="cage" title="Прослушать слово" aria-label="Прослушать: cage">▶</button>cage<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">клетка</td><td class="word"><button class="say" data-word="theatre" title="Прослушать слово" aria-label="Прослушать: theatre">▶</button>theatre<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">театр</td></tr>
+      <tr><td class="word"><button class="say" data-word="pyramids" title="Прослушать слово" aria-label="Прослушать: pyramids">▶</button>pyramids</td><td class="ru">пирамиды</td><td class="word"><button class="say" data-word="gym" title="Прослушать слово" aria-label="Прослушать: gym">▶</button>gym</td><td class="ru">спортивный зал</td></tr>
+      <tr><td class="word"><button class="say" data-word="cartoon" title="Прослушать слово" aria-label="Прослушать: cartoon">▶</button>cartoon</td><td class="ru">мультфильм</td><td class="word"><button class="say" data-word="tomorrow" title="Прослушать слово" aria-label="Прослушать: tomorrow">▶</button>tomorrow</td><td class="ru">завтра</td></tr>
+      <tr><td class="word"><button class="say" data-word="screen" title="Прослушать слово" aria-label="Прослушать: screen">▶</button>screen</td><td class="ru">экран</td><td class="word"><button class="say" data-word="hate" title="Прослушать слово" aria-label="Прослушать: hate">▶</button>hate</td><td class="ru">ненавидеть</td></tr>
+      <tr><td class="word"><button class="say" data-word="cereal" title="Прослушать слово" aria-label="Прослушать: cereal">▶</button>cereal</td><td class="ru">хлопья (с молоком)</td><td class="word"><button class="say" data-word="tune" title="Прослушать слово" aria-label="Прослушать: tune">▶</button>tune</td><td class="ru">мелодия</td></tr>
+      <tr><td class="word"><button class="say" data-word="seat" title="Прослушать слово" aria-label="Прослушать: seat">▶</button>seat</td><td class="ru">место (сиденье)</td><td class="word"><button class="say" data-word="high" title="Прослушать слово" aria-label="Прослушать: high">▶</button>high</td><td class="ru">высокий</td></tr>
+      <tr><td class="word"><button class="say" data-word="cheap" title="Прослушать слово" aria-label="Прослушать: cheap">▶</button>cheap</td><td class="ru">дешёвый</td><td class="word"><button class="say" data-word="wild" title="Прослушать слово" aria-label="Прослушать: wild">▶</button>wild</td><td class="ru">дикий</td></tr>
+      <tr><td class="word"><button class="say" data-word="sell" title="Прослушать слово" aria-label="Прослушать: sell">▶</button>sell</td><td class="ru">продавать</td><td class="word"><button class="say" data-word="hole" title="Прослушать слово" aria-label="Прослушать: hole">▶</button>hole</td><td class="ru">дыра, нора</td></tr>
+      <tr><td class="word"><button class="say" data-word="cinema" title="Прослушать слово" aria-label="Прослушать: cinema">▶</button>cinema<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">кинотеатр</td><td class="word"><button class="say" data-word="zoo" title="Прослушать слово" aria-label="Прослушать: zoo">▶</button>zoo</td><td class="ru">зоопарк</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u6">
+    <div class="unit-head"><div class="unit-num">6</div><h2 class="unit-title">Unit 6 · Dream jobs</h2><span class="unit-pages">SB стр. 48–53 · Wordlist стр. 115</span></div>
+    <p class="unit-sub">Грамматика юнита: could / would like to — умения и мечты.</p><h4 class="block-title">Wordlist раздела · 35 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="artist" title="Прослушать слово" aria-label="Прослушать: artist">▶</button>artist</td><td class="ru">художник</td><td class="word"><button class="say" data-word="each" title="Прослушать слово" aria-label="Прослушать: each">▶</button>each</td><td class="ru">каждый (по отдельности)</td></tr>
+      <tr><td class="word"><button class="say" data-word="look after" title="Прослушать слово" aria-label="Прослушать: look after">▶</button>look after</td><td class="ru">заботиться (о ком-то)</td><td class="word"><button class="say" data-word="pilot" title="Прослушать слово" aria-label="Прослушать: pilot">▶</button>pilot<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пилот</td></tr>
+      <tr><td class="word"><button class="say" data-word="astronaut" title="Прослушать слово" aria-label="Прослушать: astronaut">▶</button>astronaut</td><td class="ru">космонавт</td><td class="word"><button class="say" data-word="early" title="Прослушать слово" aria-label="Прослушать: early">▶</button>early</td><td class="ru">ранний; рано</td></tr>
+      <tr><td class="word"><button class="say" data-word="manager" title="Прослушать слово" aria-label="Прослушать: manager">▶</button>manager</td><td class="ru">менеджер, управляющий</td><td class="word"><button class="say" data-word="police officer" title="Прослушать слово" aria-label="Прослушать: police officer">▶</button>police officer</td><td class="ru">полицейский</td></tr>
+      <tr><td class="word"><button class="say" data-word="bandage" title="Прослушать слово" aria-label="Прослушать: bandage">▶</button>bandage</td><td class="ru">бинт, повязка</td><td class="word"><button class="say" data-word="engineer" title="Прослушать слово" aria-label="Прослушать: engineer">▶</button>engineer<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">инженер</td></tr>
+      <tr><td class="word"><button class="say" data-word="mechanic" title="Прослушать слово" aria-label="Прослушать: mechanic">▶</button>mechanic<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">механик</td><td class="word"><button class="say" data-word="poor" title="Прослушать слово" aria-label="Прослушать: poor">▶</button>poor</td><td class="ru">бедный</td></tr>
+      <tr><td class="word"><button class="say" data-word="begin" title="Прослушать слово" aria-label="Прослушать: begin">▶</button>begin</td><td class="ru">начинать</td><td class="word"><button class="say" data-word="fast" title="Прослушать слово" aria-label="Прослушать: fast">▶</button>fast</td><td class="ru">быстрый; быстро</td></tr>
+      <tr><td class="word"><button class="say" data-word="meeting" title="Прослушать слово" aria-label="Прослушать: meeting">▶</button>meeting</td><td class="ru">встреча; собрание</td><td class="word"><button class="say" data-word="rich" title="Прослушать слово" aria-label="Прослушать: rich">▶</button>rich</td><td class="ru">богатый</td></tr>
+      <tr><td class="word"><button class="say" data-word="businessman/woman" data-say="businessman businesswoman" title="Прослушать слово" aria-label="Прослушать: businessman/woman">▶</button>businessman/woman</td><td class="ru">бизнесмен / деловая женщина</td><td class="word"><button class="say" data-word="fire fighter" title="Прослушать слово" aria-label="Прослушать: fire fighter">▶</button>fire fighter<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пожарный</td></tr>
+      <tr><td class="word"><button class="say" data-word="nowhere" title="Прослушать слово" aria-label="Прослушать: nowhere">▶</button>nowhere</td><td class="ru">нигде, никуда</td><td class="word"><button class="say" data-word="singer" title="Прослушать слово" aria-label="Прослушать: singer">▶</button>singer</td><td class="ru">певец, певица</td></tr>
+      <tr><td class="word"><button class="say" data-word="cook" title="Прослушать слово" aria-label="Прослушать: cook">▶</button>cook</td><td class="ru">повар; готовить</td><td class="word"><button class="say" data-word="happen" title="Прослушать слово" aria-label="Прослушать: happen">▶</button>happen</td><td class="ru">случаться, происходить</td></tr>
+      <tr><td class="word"><button class="say" data-word="nurse" title="Прослушать слово" aria-label="Прослушать: nurse">▶</button>nurse</td><td class="ru">медсестра</td><td class="word"><button class="say" data-word="teacher" title="Прослушать слово" aria-label="Прослушать: teacher">▶</button>teacher</td><td class="ru">учитель</td></tr>
+      <tr><td class="word"><button class="say" data-word="dentist" title="Прослушать слово" aria-label="Прослушать: dentist">▶</button>dentist<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">стоматолог</td><td class="word"><button class="say" data-word="job" title="Прослушать слово" aria-label="Прослушать: job">▶</button>job</td><td class="ru">работа</td></tr>
+      <tr><td class="word"><button class="say" data-word="office" title="Прослушать слово" aria-label="Прослушать: office">▶</button>office</td><td class="ru">офис</td><td class="word"><button class="say" data-word="tennis player" title="Прослушать слово" aria-label="Прослушать: tennis player">▶</button>tennis player</td><td class="ru">теннисист</td></tr>
+      <tr><td class="word"><button class="say" data-word="designer" title="Прослушать слово" aria-label="Прослушать: designer">▶</button>designer</td><td class="ru">дизайнер</td><td class="word"><button class="say" data-word="journalist" title="Прослушать слово" aria-label="Прослушать: journalist">▶</button>journalist<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">журналист</td></tr>
+      <tr><td class="word"><button class="say" data-word="perhaps" title="Прослушать слово" aria-label="Прослушать: perhaps">▶</button>perhaps</td><td class="ru">может быть, возможно</td><td class="word"><button class="say" data-word="waiter" title="Прослушать слово" aria-label="Прослушать: waiter">▶</button>waiter<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">официант</td></tr>
+      <tr><td class="word"><button class="say" data-word="doctor" title="Прослушать слово" aria-label="Прослушать: doctor">▶</button>doctor</td><td class="ru">врач</td><td class="word"><button class="say" data-word="lazy" title="Прослушать слово" aria-label="Прослушать: lazy">▶</button>lazy</td><td class="ru">ленивый</td></tr>
+      <tr><td class="word"><button class="say" data-word="photographer" title="Прослушать слово" aria-label="Прослушать: photographer">▶</button>photographer<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">фотограф</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u7">
+    <div class="unit-head"><div class="unit-num">7</div><h2 class="unit-title">Unit 7 · At the castle</h2><span class="unit-pages">SB стр. 56–61 · Wordlist стр. 115–116</span></div>
+    <p class="unit-sub">Грамматика юнита: might (вероятность); go past, go east.</p><h4 class="block-title">Wordlist раздела · 46 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="appear" title="Прослушать слово" aria-label="Прослушать: appear">▶</button>appear</td><td class="ru">появляться</td><td class="word"><button class="say" data-word="south" title="Прослушать слово" aria-label="Прослушать: south">▶</button>south</td><td class="ru">юг</td></tr>
+      <tr><td class="word"><button class="say" data-word="journey" title="Прослушать слово" aria-label="Прослушать: journey">▶</button>journey</td><td class="ru">путешествие, поездка</td><td class="word"><button class="say" data-word="entrance" title="Прослушать слово" aria-label="Прослушать: entrance">▶</button>entrance<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">вход</td></tr>
+      <tr><td class="word"><button class="say" data-word="bridge" title="Прослушать слово" aria-label="Прослушать: bridge">▶</button>bridge</td><td class="ru">мост</td><td class="word"><button class="say" data-word="steps" title="Прослушать слово" aria-label="Прослушать: steps">▶</button>steps</td><td class="ru">ступеньки; крыльцо</td></tr>
+      <tr><td class="word"><button class="say" data-word="king" title="Прослушать слово" aria-label="Прослушать: king">▶</button>king<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">король</td><td class="word"><button class="say" data-word="exit" title="Прослушать слово" aria-label="Прослушать: exit">▶</button>exit</td><td class="ru">выход</td></tr>
+      <tr><td class="word"><button class="say" data-word="building" title="Прослушать слово" aria-label="Прослушать: building">▶</button>building</td><td class="ru">здание</td><td class="word"><button class="say" data-word="still" title="Прослушать слово" aria-label="Прослушать: still">▶</button>still</td><td class="ru">всё ещё</td></tr>
+      <tr><td class="word"><button class="say" data-word="leave" title="Прослушать слово" aria-label="Прослушать: leave">▶</button>leave</td><td class="ru">покидать, оставлять</td><td class="word"><button class="say" data-word="festival" title="Прослушать слово" aria-label="Прослушать: festival">▶</button>festival</td><td class="ru">фестиваль</td></tr>
+      <tr><td class="word"><button class="say" data-word="butterfly" title="Прослушать слово" aria-label="Прослушать: butterfly">▶</button>butterfly</td><td class="ru">бабочка</td><td class="word"><button class="say" data-word="swan" title="Прослушать слово" aria-label="Прослушать: swan">▶</button>swan<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">лебедь</td></tr>
+      <tr><td class="word"><button class="say" data-word="make sure" title="Прослушать слово" aria-label="Прослушать: make sure">▶</button>make sure</td><td class="ru">убедиться, проверить</td><td class="word"><button class="say" data-word="finger" title="Прослушать слово" aria-label="Прослушать: finger">▶</button>finger</td><td class="ru">палец (на руке)</td></tr>
+      <tr><td class="word"><button class="say" data-word="century" title="Прослушать слово" aria-label="Прослушать: century">▶</button>century</td><td class="ru">век, столетие</td><td class="word"><button class="say" data-word="swing" title="Прослушать слово" aria-label="Прослушать: swing">▶</button>swing</td><td class="ru">качели; качаться</td></tr>
+      <tr><td class="word"><button class="say" data-word="might" title="Прослушать слово" aria-label="Прослушать: might">▶</button>might</td><td class="ru">может быть (о вероятности)</td><td class="word"><button class="say" data-word="flag" title="Прослушать слово" aria-label="Прослушать: flag">▶</button>flag</td><td class="ru">флаг</td></tr>
+      <tr><td class="word"><button class="say" data-word="conversation" title="Прослушать слово" aria-label="Прослушать: conversation">▶</button>conversation</td><td class="ru">разговор, беседа</td><td class="word"><button class="say" data-word="touch" title="Прослушать слово" aria-label="Прослушать: touch">▶</button>touch</td><td class="ru">трогать</td></tr>
+      <tr><td class="word"><button class="say" data-word="north" title="Прослушать слово" aria-label="Прослушать: north">▶</button>north</td><td class="ru">север</td><td class="word"><button class="say" data-word="follow" title="Прослушать слово" aria-label="Прослушать: follow">▶</button>follow</td><td class="ru">следовать (за)</td></tr>
+      <tr><td class="word"><button class="say" data-word="costume" title="Прослушать слово" aria-label="Прослушать: costume">▶</button>costume</td><td class="ru">костюм</td><td class="word"><button class="say" data-word="tour" title="Прослушать слово" aria-label="Прослушать: tour">▶</button>tour</td><td class="ru">экскурсия; тур</td></tr>
+      <tr><td class="word"><button class="say" data-word="postcard" title="Прослушать слово" aria-label="Прослушать: postcard">▶</button>postcard</td><td class="ru">открытка</td><td class="word"><button class="say" data-word="gate" title="Прослушать слово" aria-label="Прослушать: gate">▶</button>gate<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">ворота, калитка</td></tr>
+      <tr><td class="word"><button class="say" data-word="creature" title="Прослушать слово" aria-label="Прослушать: creature">▶</button>creature</td><td class="ru">существо</td><td class="word"><button class="say" data-word="unusual" title="Прослушать слово" aria-label="Прослушать: unusual">▶</button>unusual</td><td class="ru">необычный</td></tr>
+      <tr><td class="word"><button class="say" data-word="queen" title="Прослушать слово" aria-label="Прослушать: queen">▶</button>queen<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">королева</td><td class="word"><button class="say" data-word="glass" title="Прослушать слово" aria-label="Прослушать: glass">▶</button>glass</td><td class="ru">стекло; стакан</td></tr>
+      <tr><td class="word"><button class="say" data-word="crown" title="Прослушать слово" aria-label="Прослушать: crown">▶</button>crown<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">корона</td><td class="word"><button class="say" data-word="view" title="Прослушать слово" aria-label="Прослушать: view">▶</button>view</td><td class="ru">вид (из окна)</td></tr>
+      <tr><td class="word"><button class="say" data-word="ring" title="Прослушать слово" aria-label="Прослушать: ring">▶</button>ring</td><td class="ru">кольцо</td><td class="word"><button class="say" data-word="gold" title="Прослушать слово" aria-label="Прослушать: gold">▶</button>gold<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">золото</td></tr>
+      <tr><td class="word"><button class="say" data-word="date" title="Прослушать слово" aria-label="Прослушать: date">▶</button>date</td><td class="ru">дата</td><td class="word"><button class="say" data-word="west" title="Прослушать слово" aria-label="Прослушать: west">▶</button>west</td><td class="ru">запад</td></tr>
+      <tr><td class="word"><button class="say" data-word="send" title="Прослушать слово" aria-label="Прослушать: send">▶</button>send</td><td class="ru">отправлять</td><td class="word"><button class="say" data-word="insect" title="Прослушать слово" aria-label="Прослушать: insect">▶</button>insect</td><td class="ru">насекомое</td></tr>
+      <tr><td class="word"><button class="say" data-word="design" title="Прослушать слово" aria-label="Прослушать: design">▶</button>design</td><td class="ru">дизайн; проектировать</td><td class="word"><button class="say" data-word="wild" title="Прослушать слово" aria-label="Прослушать: wild">▶</button>wild</td><td class="ru">дикий</td></tr>
+      <tr><td class="word"><button class="say" data-word="silver" title="Прослушать слово" aria-label="Прослушать: silver">▶</button>silver<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">серебро</td><td class="word"><button class="say" data-word="interested" title="Прослушать слово" aria-label="Прослушать: interested">▶</button>interested</td><td class="ru">заинтересованный</td></tr>
+      <tr><td class="word"><button class="say" data-word="east" title="Прослушать слово" aria-label="Прослушать: east">▶</button>east</td><td class="ru">восток</td><td class="word"><button class="say" data-word="wonderful" title="Прослушать слово" aria-label="Прослушать: wonderful">▶</button>wonderful</td><td class="ru">замечательный</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u8">
+    <div class="unit-head"><div class="unit-num">8</div><h2 class="unit-title">Unit 8 · Sports day!</h2><span class="unit-pages">SB стр. 64–69 · Wordlist стр. 116</span></div>
+    <p class="unit-sub">Грамматика юнита: Present perfect с just, already, yet.</p><h4 class="block-title">Wordlist раздела · 19 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="already" title="Прослушать слово" aria-label="Прослушать: already">▶</button>already<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">уже</td><td class="word"><button class="say" data-word="goal" title="Прослушать слово" aria-label="Прослушать: goal">▶</button>goal<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">гол; ворота</td></tr>
+      <tr><td class="word"><button class="say" data-word="prize" title="Прослушать слово" aria-label="Прослушать: prize">▶</button>prize<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">приз</td><td class="word"><button class="say" data-word="team" title="Прослушать слово" aria-label="Прослушать: team">▶</button>team<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">команда</td></tr>
+      <tr><td class="word"><button class="say" data-word="competition" title="Прослушать слово" aria-label="Прослушать: competition">▶</button>competition<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">соревнование</td><td class="word"><button class="say" data-word="golf" title="Прослушать слово" aria-label="Прослушать: golf">▶</button>golf</td><td class="ru">гольф</td></tr>
+      <tr><td class="word"><button class="say" data-word="race" title="Прослушать слово" aria-label="Прослушать: race">▶</button>race<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">гонка, забег</td><td class="word"><button class="say" data-word="volleyball" title="Прослушать слово" aria-label="Прослушать: volleyball">▶</button>volleyball</td><td class="ru">волейбол</td></tr>
+      <tr><td class="word"><button class="say" data-word="end" title="Прослушать слово" aria-label="Прослушать: end">▶</button>end</td><td class="ru">конец; заканчивать(ся)</td><td class="word"><button class="say" data-word="just" title="Прослушать слово" aria-label="Прослушать: just">▶</button>just</td><td class="ru">только что</td></tr>
+      <tr><td class="word"><button class="say" data-word="score" title="Прослушать слово" aria-label="Прослушать: score">▶</button>score</td><td class="ru">счёт в игре; забивать</td><td class="word"><button class="say" data-word="winner" title="Прослушать слово" aria-label="Прослушать: winner">▶</button>winner<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">победитель</td></tr>
+      <tr><td class="word"><button class="say" data-word="explain" title="Прослушать слово" aria-label="Прослушать: explain">▶</button>explain</td><td class="ru">объяснять</td><td class="word"><button class="say" data-word="knee" title="Прослушать слово" aria-label="Прослушать: knee">▶</button>knee</td><td class="ru">колено</td></tr>
+      <tr><td class="word"><button class="say" data-word="snack" title="Прослушать слово" aria-label="Прослушать: snack">▶</button>snack</td><td class="ru">перекус, лёгкая закуска</td><td class="word"><button class="say" data-word="yet" title="Прослушать слово" aria-label="Прослушать: yet">▶</button>yet</td><td class="ru">ещё (не); уже (в вопросах)</td></tr>
+      <tr><td class="word"><button class="say" data-word="fall over" title="Прослушать слово" aria-label="Прослушать: fall over">▶</button>fall over</td><td class="ru">падать, упасть</td><td class="word"><button class="say" data-word="match" title="Прослушать слово" aria-label="Прослушать: match">▶</button>match<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">матч</td></tr>
+      <tr><td class="word"><button class="say" data-word="sore" title="Прослушать слово" aria-label="Прослушать: sore">▶</button>sore</td><td class="ru">воспалённый, больной (sore knee)</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="rev2">
+    <div class="unit-head"><div class="unit-num">R2</div><h2 class="unit-title">Revision 2 · Review Units 5–8</h2><span class="unit-pages">SB стр. 72–75 · Wordlist стр. 116</span></div>
+    <p class="unit-sub">Повторение Units 5–8: выходной, профессии, замок, спорт. SB стр. 72–75.</p><h4 class="block-title">Wordlist раздела · 6 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="engine" title="Прослушать слово" aria-label="Прослушать: engine">▶</button>engine</td><td class="ru">двигатель, мотор</td><td class="word"><button class="say" data-word="suddenly" title="Прослушать слово" aria-label="Прослушать: suddenly">▶</button>suddenly</td><td class="ru">вдруг</td></tr>
+      <tr><td class="word"><button class="say" data-word="repair" title="Прослушать слово" aria-label="Прослушать: repair">▶</button>repair</td><td class="ru">ремонтировать</td><td class="word"><button class="say" data-word="racing car" title="Прослушать слово" aria-label="Прослушать: racing car">▶</button>racing car</td><td class="ru">гоночная машина</td></tr>
+      <tr><td class="word"><button class="say" data-word="invent" title="Прослушать слово" aria-label="Прослушать: invent">▶</button>invent</td><td class="ru">изобретать</td><td class="word"><button class="say" data-word="win" title="Прослушать слово" aria-label="Прослушать: win">▶</button>win</td><td class="ru">выигрывать, побеждать</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u9">
+    <div class="unit-head"><div class="unit-num">9</div><h2 class="unit-title">Unit 9 · Our camping adventure</h2><span class="unit-pages">SB стр. 76–81 · Wordlist стр. 116–117</span></div>
+    <p class="unit-sub">Грамматика юнита: Past continuous — was/were + -ing.</p><h4 class="block-title">Wordlist раздела · 40 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="alone" title="Прослушать слово" aria-label="Прослушать: alone">▶</button>alone</td><td class="ru">один, самостоятельно</td><td class="word"><button class="say" data-word="elbow" title="Прослушать слово" aria-label="Прослушать: elbow">▶</button>elbow</td><td class="ru">локоть</td></tr>
+      <tr><td class="word"><button class="say" data-word="magazine" title="Прослушать слово" aria-label="Прослушать: magazine">▶</button>magazine</td><td class="ru">журнал</td><td class="word"><button class="say" data-word="strange" title="Прослушать слово" aria-label="Прослушать: strange">▶</button>strange</td><td class="ru">странный</td></tr>
+      <tr><td class="word"><button class="say" data-word="belt" title="Прослушать слово" aria-label="Прослушать: belt">▶</button>belt</td><td class="ru">ремень</td><td class="word"><button class="say" data-word="explore" title="Прослушать слово" aria-label="Прослушать: explore">▶</button>explore</td><td class="ru">исследовать</td></tr>
+      <tr><td class="word"><button class="say" data-word="missing" title="Прослушать слово" aria-label="Прослушать: missing">▶</button>missing</td><td class="ru">пропавший; отсутствующий</td><td class="word"><button class="say" data-word="tent" title="Прослушать слово" aria-label="Прослушать: tent">▶</button>tent<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">палатка</td></tr>
+      <tr><td class="word"><button class="say" data-word="biscuits" title="Прослушать слово" aria-label="Прослушать: biscuits">▶</button>biscuits</td><td class="ru">печенье</td><td class="word"><button class="say" data-word="fire" title="Прослушать слово" aria-label="Прослушать: fire">▶</button>fire</td><td class="ru">огонь; пожар</td></tr>
+      <tr><td class="word"><button class="say" data-word="nest" title="Прослушать слово" aria-label="Прослушать: nest">▶</button>nest</td><td class="ru">гнездо</td><td class="word"><button class="say" data-word="together" title="Прослушать слово" aria-label="Прослушать: together">▶</button>together</td><td class="ru">вместе</td></tr>
+      <tr><td class="word"><button class="say" data-word="burn" title="Прослушать слово" aria-label="Прослушать: burn">▶</button>burn</td><td class="ru">гореть; обжечься</td><td class="word"><button class="say" data-word="fur" title="Прослушать слово" aria-label="Прослушать: fur">▶</button>fur</td><td class="ru">мех</td></tr>
+      <tr><td class="word"><button class="say" data-word="newspaper" title="Прослушать слово" aria-label="Прослушать: newspaper">▶</button>newspaper</td><td class="ru">газета</td><td class="word"><button class="say" data-word="torch" title="Прослушать слово" aria-label="Прослушать: torch">▶</button>torch<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">фонарик</td></tr>
+      <tr><td class="word"><button class="say" data-word="camp" title="Прослушать слово" aria-label="Прослушать: camp">▶</button>camp<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">лагерь; разбить лагерь</td><td class="word"><button class="say" data-word="furry" title="Прослушать слово" aria-label="Прослушать: furry">▶</button>furry</td><td class="ru">пушистый, в мехах</td></tr>
+      <tr><td class="word"><button class="say" data-word="path" title="Прослушать слово" aria-label="Прослушать: path">▶</button>path<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">тропинка</td><td class="word"><button class="say" data-word="tyre" title="Прослушать слово" aria-label="Прослушать: tyre">▶</button>tyre</td><td class="ru">шина, покрышка</td></tr>
+      <tr><td class="word"><button class="say" data-word="cave" title="Прослушать слово" aria-label="Прослушать: cave">▶</button>cave<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пещера</td><td class="word"><button class="say" data-word="heavy" title="Прослушать слово" aria-label="Прослушать: heavy">▶</button>heavy</td><td class="ru">тяжёлый</td></tr>
+      <tr><td class="word"><button class="say" data-word="pocket" title="Прослушать слово" aria-label="Прослушать: pocket">▶</button>pocket</td><td class="ru">карман</td><td class="word"><button class="say" data-word="umbrella" title="Прослушать слово" aria-label="Прослушать: umbrella">▶</button>umbrella</td><td class="ru">зонт</td></tr>
+      <tr><td class="word"><button class="say" data-word="dark" title="Прослушать слово" aria-label="Прослушать: dark">▶</button>dark<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">тёмный</td><td class="word"><button class="say" data-word="hill" title="Прослушать слово" aria-label="Прослушать: hill">▶</button>hill</td><td class="ru">холм</td></tr>
+      <tr><td class="word"><button class="say" data-word="rock" title="Прослушать слово" aria-label="Прослушать: rock">▶</button>rock<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">скала; камень</td><td class="word"><button class="say" data-word="whisper" title="Прослушать слово" aria-label="Прослушать: whisper">▶</button>whisper<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">шептать; шёпот</td></tr>
+      <tr><td class="word"><button class="say" data-word="decide" title="Прослушать слово" aria-label="Прослушать: decide">▶</button>decide</td><td class="ru">решать</td><td class="word"><button class="say" data-word="horrible" title="Прослушать слово" aria-label="Прослушать: horrible">▶</button>horrible</td><td class="ru">ужасный, отвратительный</td></tr>
+      <tr><td class="word"><button class="say" data-word="soft" title="Прослушать слово" aria-label="Прослушать: soft">▶</button>soft</td><td class="ru">мягкий</td><td class="word"><button class="say" data-word="whistle" title="Прослушать слово" aria-label="Прослушать: whistle">▶</button>whistle</td><td class="ru">свистеть; свисток</td></tr>
+      <tr><td class="word"><button class="say" data-word="deep" title="Прослушать слово" aria-label="Прослушать: deep">▶</button>deep</td><td class="ru">глубокий</td><td class="word"><button class="say" data-word="kilometre" title="Прослушать слово" aria-label="Прослушать: kilometre">▶</button>kilometre</td><td class="ru">километр</td></tr>
+      <tr><td class="word"><button class="say" data-word="stars" title="Прослушать слово" aria-label="Прослушать: stars">▶</button>stars<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">звёзды</td><td class="word"><button class="say" data-word="wing" title="Прослушать слово" aria-label="Прослушать: wing">▶</button>wing</td><td class="ru">крыло</td></tr>
+      <tr><td class="word"><button class="say" data-word="Earth" title="Прослушать слово" aria-label="Прослушать: Earth">▶</button>Earth</td><td class="ru">Земля (планета)</td><td class="word"><button class="say" data-word="large" title="Прослушать слово" aria-label="Прослушать: large">▶</button>large</td><td class="ru">большой</td></tr>
+      <tr><td class="word"><button class="say" data-word="stone" title="Прослушать слово" aria-label="Прослушать: stone">▶</button>stone</td><td class="ru">камень</td><td class="word"><button class="say" data-word="wood" title="Прослушать слово" aria-label="Прослушать: wood">▶</button>wood</td><td class="ru">лес</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u10">
+    <div class="unit-head"><div class="unit-num">10</div><h2 class="unit-title">Unit 10 · A good year!</h2><span class="unit-pages">SB стр. 84–89 · Wordlist стр. 117</span></div>
+    <p class="unit-sub">Грамматика юнита: if-условия (If it rains…); Shall we…? — предложения.</p><h4 class="block-title">Wordlist раздела · 18 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="autumn" title="Прослушать слово" aria-label="Прослушать: autumn">▶</button>autumn<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">осень</td><td class="word"><button class="say" data-word="summer" title="Прослушать слово" aria-label="Прослушать: summer">▶</button>summer</td><td class="ru">лето</td></tr>
+      <tr><td class="word"><button class="say" data-word="snowball" title="Прослушать слово" aria-label="Прослушать: snowball">▶</button>snowball<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">снежок</td><td class="word"><button class="say" data-word="lie" title="Прослушать слово" aria-label="Прослушать: lie">▶</button>lie</td><td class="ru">лежать</td></tr>
+      <tr><td class="word"><button class="say" data-word="collect" title="Прослушать слово" aria-label="Прослушать: collect">▶</button>collect</td><td class="ru">собирать (коллекцию)</td><td class="word"><button class="say" data-word="trip" title="Прослушать слово" aria-label="Прослушать: trip">▶</button>trip</td><td class="ru">поездка, экскурсия</td></tr>
+      <tr><td class="word"><button class="say" data-word="snowboard" title="Прослушать слово" aria-label="Прослушать: snowboard">▶</button>snowboard</td><td class="ru">сноуборд; кататься на сноуборде</td><td class="word"><button class="say" data-word="pull" title="Прослушать слово" aria-label="Прослушать: pull">▶</button>pull</td><td class="ru">тянуть (на себя)</td></tr>
+      <tr><td class="word"><button class="say" data-word="enter" title="Прослушать слово" aria-label="Прослушать: enter">▶</button>enter</td><td class="ru">входить (в); участвовать</td><td class="word"><button class="say" data-word="winter" title="Прослушать слово" aria-label="Прослушать: winter">▶</button>winter</td><td class="ru">зима</td></tr>
+      <tr><td class="word"><button class="say" data-word="snowman" title="Прослушать слово" aria-label="Прослушать: snowman">▶</button>snowman<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">снеговик</td><td class="word"><button class="say" data-word="push" title="Прослушать слово" aria-label="Прослушать: push">▶</button>push</td><td class="ru">толкать (от себя)</td></tr>
+      <tr><td class="word"><button class="say" data-word="grow" title="Прослушать слово" aria-label="Прослушать: grow">▶</button>grow</td><td class="ru">расти; выращивать</td><td class="word"><button class="say" data-word="wish" title="Прослушать слово" aria-label="Прослушать: wish">▶</button>wish<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">желание; загадывать</td></tr>
+      <tr><td class="word"><button class="say" data-word="spring" title="Прослушать слово" aria-label="Прослушать: spring">▶</button>spring<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">весна</td><td class="word"><button class="say" data-word="sledge" title="Прослушать слово" aria-label="Прослушать: sledge">▶</button>sledge<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">санки; кататься на санках</td></tr>
+      <tr><td class="word"><button class="say" data-word="leaf" title="Прослушать слово" aria-label="Прослушать: leaf">▶</button>leaf</td><td class="ru">лист (дерева)</td><td class="word"><button class="say" data-word="x-ray" data-say="x-ray" title="Прослушать слово" aria-label="Прослушать: x-ray">▶</button>x-ray</td><td class="ru">рентген; рентгеновский снимок</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u11">
+    <div class="unit-head"><div class="unit-num">11</div><h2 class="unit-title">Unit 11 · Our summer holidays</h2><span class="unit-pages">SB стр. 92–97 · Wordlist стр. 117</span></div>
+    <p class="unit-sub">Грамматика юнита: Present perfect — Have you ever…? (flown, seen, ridden).</p><h4 class="block-title">Wordlist раздела · 23 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="camel" title="Прослушать слово" aria-label="Прослушать: camel">▶</button>camel<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">верблюд</td><td class="word"><button class="say" data-word="lift" title="Прослушать слово" aria-label="Прослушать: lift">▶</button>lift</td><td class="ru">лифт; подвезти</td></tr>
+      <tr><td class="word"><button class="say" data-word="rock music" title="Прослушать слово" aria-label="Прослушать: rock music">▶</button>rock music</td><td class="ru">рок-музыка</td><td class="word"><button class="say" data-word="suitcase" title="Прослушать слово" aria-label="Прослушать: suitcase">▶</button>suitcase<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">чемодан</td></tr>
+      <tr><td class="word"><button class="say" data-word="desert" title="Прослушать слово" aria-label="Прослушать: desert">▶</button>desert<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">пустыня</td><td class="word"><button class="say" data-word="London" title="Прослушать слово" aria-label="Прослушать: London">▶</button>London</td><td class="ru">Лондон</td></tr>
+      <tr><td class="word"><button class="say" data-word="should" title="Прослушать слово" aria-label="Прослушать: should">▶</button>should<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">следует, стоит</td><td class="word"><button class="say" data-word="sunglasses" title="Прослушать слово" aria-label="Прослушать: sunglasses">▶</button>sunglasses<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">солнечные очки</td></tr>
+      <tr><td class="word"><button class="say" data-word="environment" title="Прослушать слово" aria-label="Прослушать: environment">▶</button>environment</td><td class="ru">окружающая среда</td><td class="word"><button class="say" data-word="meet" title="Прослушать слово" aria-label="Прослушать: meet">▶</button>meet</td><td class="ru">встречать; познакомиться</td></tr>
+      <tr><td class="word"><button class="say" data-word="snowing" title="Прослушать слово" aria-label="Прослушать: snowing">▶</button>snowing</td><td class="ru">идёт снег (о погоде)</td><td class="word"><button class="say" data-word="sunny" title="Прослушать слово" aria-label="Прослушать: sunny">▶</button>sunny</td><td class="ru">солнечный</td></tr>
+      <tr><td class="word"><button class="say" data-word="ever" title="Прослушать слово" aria-label="Прослушать: ever">▶</button>ever<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">когда-либо</td><td class="word"><button class="say" data-word="octopus" title="Прослушать слово" aria-label="Прослушать: octopus">▶</button>octopus<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">осьминог</td></tr>
+      <tr><td class="word"><button class="say" data-word="spotted" title="Прослушать слово" aria-label="Прослушать: spotted">▶</button>spotted</td><td class="ru">в пятнах, пятнистый</td><td class="word"><button class="say" data-word="toe" title="Прослушать слово" aria-label="Прослушать: toe">▶</button>toe</td><td class="ru">палец (на ноге)</td></tr>
+      <tr><td class="word"><button class="say" data-word="foggy" title="Прослушать слово" aria-label="Прослушать: foggy">▶</button>foggy<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">туманный</td><td class="word"><button class="say" data-word="pop music" title="Прослушать слово" aria-label="Прослушать: pop music">▶</button>pop music</td><td class="ru">поп-музыка</td></tr>
+      <tr><td class="word"><button class="say" data-word="storm" title="Прослушать слово" aria-label="Прослушать: storm">▶</button>storm</td><td class="ru">гроза, буря</td><td class="word"><button class="say" data-word="trainers" title="Прослушать слово" aria-label="Прослушать: trainers">▶</button>trainers<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">кроссовки</td></tr>
+      <tr><td class="word"><button class="say" data-word="gloves" title="Прослушать слово" aria-label="Прослушать: gloves">▶</button>gloves<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">перчатки</td><td class="word"><button class="say" data-word="raining" title="Прослушать слово" aria-label="Прослушать: raining">▶</button>raining</td><td class="ru">идёт дождь (о погоде)</td></tr>
+      <tr><td class="word"><button class="say" data-word="striped" title="Прослушать слово" aria-label="Прослушать: striped">▶</button>striped</td><td class="ru">в полоску, полосатый</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="u12">
+    <div class="unit-head"><div class="unit-num">12</div><h2 class="unit-title">Unit 12 · Past and future</h2><span class="unit-pages">SB стр. 100–105 · Wordlist стр. 117</span></div>
+    <p class="unit-sub">Грамматика юнита: Past simple + be going to / will (прошлое и планы).</p><h4 class="block-title">Wordlist раздела · 18 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="calendar" title="Прослушать слово" aria-label="Прослушать: calendar">▶</button>calendar<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">календарь</td><td class="word"><button class="say" data-word="ski" title="Прослушать слово" aria-label="Прослушать: ski">▶</button>ski</td><td class="ru">лыжи; кататься на лыжах</td></tr>
+      <tr><td class="word"><button class="say" data-word="pond" title="Прослушать слово" aria-label="Прослушать: pond">▶</button>pond</td><td class="ru">пруд</td><td class="word"><button class="say" data-word="hope" title="Прослушать слово" aria-label="Прослушать: hope">▶</button>hope<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">надеяться; надежда</td></tr>
+      <tr><td class="word"><button class="say" data-word="eagle" title="Прослушать слово" aria-label="Прослушать: eagle">▶</button>eagle</td><td class="ru">орёл</td><td class="word"><button class="say" data-word="space" title="Прослушать слово" aria-label="Прослушать: space">▶</button>space</td><td class="ru">космос; место</td></tr>
+      <tr><td class="word"><button class="say" data-word="racing bike" title="Прослушать слово" aria-label="Прослушать: racing bike">▶</button>racing bike</td><td class="ru">гоночный велосипед</td><td class="word"><button class="say" data-word="land" title="Прослушать слово" aria-label="Прослушать: land">▶</button>land</td><td class="ru">приземляться; земля, суша</td></tr>
+      <tr><td class="word"><button class="say" data-word="enough" title="Прослушать слово" aria-label="Прослушать: enough">▶</button>enough</td><td class="ru">достаточно</td><td class="word"><button class="say" data-word="spaceship" title="Прослушать слово" aria-label="Прослушать: spaceship">▶</button>spaceship<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">космический корабль</td></tr>
+      <tr><td class="word"><button class="say" data-word="ready" title="Прослушать слово" aria-label="Прослушать: ready">▶</button>ready</td><td class="ru">готовый</td><td class="word"><button class="say" data-word="past" title="Прослушать слово" aria-label="Прослушать: past">▶</button>past</td><td class="ru">прошлое; прошедший</td></tr>
+      <tr><td class="word"><button class="say" data-word="future" title="Прослушать слово" aria-label="Прослушать: future">▶</button>future<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">будущее</td><td class="word"><button class="say" data-word="steam" title="Прослушать слово" aria-label="Прослушать: steam">▶</button>steam</td><td class="ru">пар</td></tr>
+      <tr><td class="word"><button class="say" data-word="rocket" title="Прослушать слово" aria-label="Прослушать: rocket">▶</button>rocket<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">ракета</td><td class="word"><button class="say" data-word="planet" title="Прослушать слово" aria-label="Прослушать: planet">▶</button>planet<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">планета</td></tr>
+      <tr><td class="word"><button class="say" data-word="guess" title="Прослушать слово" aria-label="Прослушать: guess">▶</button>guess<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">угадывать; догадываться</td><td class="word"><button class="say" data-word="worried" title="Прослушать слово" aria-label="Прослушать: worried">▶</button>worried<span class="star" title="Ключевое слово юнита">★</span></td><td class="ru">обеспокоенный, который волнуется</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="unit" id="rev3">
+    <div class="unit-head"><div class="unit-num">R3</div><h2 class="unit-title">Revision 3 · Review Units 9–12 + весь курс</h2><span class="unit-pages">SB стр. 108–111 · Wordlist стр. 117</span></div>
+    <p class="unit-sub">Итоговое повторение всего курса. SB стр. 108–111.</p><h4 class="block-title">Wordlist раздела · 1 слов</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Word ★ = ключевое</th><th>Перевод</th><th>Word</th><th>Перевод</th></tr></thead>
+      <tbody>
+      <tr><td class="word"><button class="say" data-word="ice" title="Прослушать слово" aria-label="Прослушать: ice">▶</button>ice</td><td class="ru">лёд</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <div class="now-playing" id="nowPlaying">
+    <span class="np-icon">🔊</span>
+    <span class="np-word" id="npWord">…</span>
+    <button class="np-stop" onclick="stopAllTTS()">⏹ Стоп</button>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>Get Ready for Flyers · Wordlist (стр. 112–117) · Web Speech API</p>
+  <p><a href="index.html">← Годовой план</a> · <a href="audio/index.html">Аудио-плеер</a> · <a href="flashcards.html">Флеш-карточки</a> · <a href="grammar.html">Грамматика</a> · <a href="irregular-verbs.html">Неправильные глаголы</a></p>
+</footer>
+
+<script>
+// ══ Web Speech API · надёжное ядро озвучки (по образцу audio.html) ══
+// Общий код для всех страниц курса. Страницы определяют: ttsRate(), pickVoiceUI(),
+// onVoicesLoaded(), showNP(text), hideNP(), clearPlaying() — при необходимости.
+
+var synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+var VOICES = [];
+var currentBtn = null;
+var playQueue = [];
+var queueMode = false;
+
+function scoreVoice(v) {
+  var s = 0, name = v.name || '';
+  if (/Google UK English Male/i.test(name)) s = 10;
+  else if (/Google UK English/i.test(name)) s = 9;
+  else if (/Google US English/i.test(name)) s = 8;
+  else if (/Microsoft George/i.test(name)) s = 8;
+  else if (/Microsoft Sonia|Microsoft Hazel|Microsoft Ryan/i.test(name)) s = 7;
+  else if (/Daniel|Arthur|Kate|Serena|Karen|Moira|Oliver|Libby|Ryan/i.test(name)) s = 6;
+  else if (/^en-GB/i.test(v.lang || '')) s = 5;
+  else if (/^en[-_]US/i.test(v.lang || '')) s = 4;
+  else if (/^en/i.test(v.lang || '')) s = 3;
+  if (s === 0) s = -1; // не-английский голос — берём только если нет других
+  return s;
+}
+
+function loadVoices() {
+  if (!synth) return false;
+  var all = [];
+  try { all = synth.getVoices() || []; } catch (e) { all = []; }
+  var en = all.filter(function(v) { return /^en/i.test(v.lang || ''); });
+  if (en.length) { VOICES = en; return true; }
+  if (all.length) { VOICES = all; return true; } // крайний случай: языка en нет — берём все
+  return false;
+}
+
+function autoBestVoice() {
+  if (!VOICES.length) loadVoices();
+  var best = null, bs = -99;
+  VOICES.forEach(function(v) {
+    var s = scoreVoice(v);
+    if (s > bs) { bs = s; best = v; }
+  });
+  return best;
+}
+
+function pickVoiceUI() { return null; } // переопределяется на страницах с выбором голоса
+function ttsRate() { return 0.85; }     // переопределяется на страницах со слайдером
+function onVoicesLoaded() {}            // переопределяется при необходимости
+function showNP(text) {}
+function hideNP() {}
+function clearPlaying() {}
+
+function makeUtter(text) {
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB'; // ВСЕГДА английский, иначе браузер берёт голос языка страницы (ru) — отсюда «странный» звук
+  u.rate = ttsRate();
+  u.pitch = 1.0;
+  var v = pickVoiceUI() || autoBestVoice();
+  if (v) u.voice = v;
+  return u;
+}
+
+function speakText(text, btn, chained) {
+  if (!synth) {
+    alert('Ваш браузер не поддерживает синтез речи (Web Speech API).\n\nОткройте этот файл в Google Chrome, Microsoft Edge или Safari — там звук работает.');
+    return;
+  }
+  if (!chained) {
+    synth.cancel();
+    clearPlaying();
+  }
+  var u = makeUtter(text);
+  if (btn) {
+    btn.classList.add('playing');
+    currentBtn = btn;
+    showNP(text);
+  }
+  u.onend = function() {
+    if (btn) btn.classList.remove('playing');
+    if (currentBtn === btn) currentBtn = null;
+    if (queueMode) { playNext(); } else { hideNP(); }
+  };
+  u.onerror = function(e) {
+    if (btn) btn.classList.remove('playing');
+    if (currentBtn === btn) currentBtn = null;
+    if (!queueMode) hideNP();
+    if (e && (e.error === 'not-allowed' || e.error === 'service-not-allowed')) {
+      alert('Браузер заблокировал звук.\n\nРазрешите автозапуск звука для этого файла или откройте страницу в Chrome / Edge / Safari.');
+    }
+  };
+  try { if (synth.paused) synth.resume(); } catch (e) {}
+  if (chained) {
+    synth.speak(u);
+  } else {
+    // Обход бага Chrome: speak() сразу после cancel() может быть «проглочен»
+    setTimeout(function() { try { synth.speak(u); } catch (e) {} }, 30);
+  }
+}
+
+function playNext() {
+  if (!queueMode || !playQueue.length) { stopAllTTS(); return; }
+  var b = playQueue.shift();
+  var w = b.getAttribute('data-say') || b.getAttribute('data-word');
+  speakText(w, b, true);
+}
+
+function playButtons(btns) {
+  stopAllTTS();
+  playQueue = Array.prototype.slice.call(btns);
+  if (!playQueue.length) return false;
+  queueMode = true;
+  playNext();
+  return true;
+}
+
+function stopAllTTS() {
+  queueMode = false;
+  playQueue = [];
+  if (synth) synth.cancel();
+  clearPlaying();
+  hideNP();
+}
+
+// Голоса в Chrome подгружаются асинхронно — опрашиваем до появления
+if (synth) {
+  var _onVoices = function() {
+    if (loadVoices()) onVoicesLoaded();
+  };
+  if (typeof synth.addEventListener === 'function') synth.addEventListener('voiceschanged', _onVoices);
+  else if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = _onVoices;
+  loadVoices();
+  var _voicePoll = setInterval(function() {
+    if (loadVoices()) { clearInterval(_voicePoll); onVoicesLoaded(); }
+  }, 250);
+  setTimeout(function() { clearInterval(_voicePoll); }, 8000);
+}
+
+
+// ── Специфика страницы словаря ──
+function showNP(text) {
+  document.getElementById('npWord').textContent = text;
+  document.getElementById('nowPlaying').classList.add('show');
+}
+function hideNP() { document.getElementById('nowPlaying').classList.remove('show'); }
+function clearPlaying() {
+  document.querySelectorAll('.say.playing').forEach(function(b) { b.classList.remove('playing'); });
+}
+
+// Клик по ▶ рядом со словом (апострофы chemist's, o'clock безопасны — читаем data-атрибуты)
+document.addEventListener('click', function(e) {
+  var b = e.target.closest('button.say');
+  if (b) speakText(b.getAttribute('data-say') || b.getAttribute('data-word'), b, false);
+});
+</script>
+
+</body>
+</html>

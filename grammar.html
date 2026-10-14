@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Вся грамматика учебника Get Ready for Flyers по разделам: every-/some-/any-, will, be going to, could, might, Present perfect, Past continuous, if clauses. Справочник для печати.">
+<title>Грамматика по разделам · Get Ready for Flyers · Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #fdf6f0; --c-card: #ffffff; --c-section: #fdeadf; --c-card-bg: #fbeee4;
+    --c-table-stripe: #fdf0e7; --c-header: #d26b4d; --c-header-2: #bd5c42;
+    --c-border: #f0d5c6; --c-accent: #b8432c; --c-accent-2: #dd714f;
+    --c-text: #2e2320; --c-text-muted: #93796c;
+    --c-shadow: rgba(190, 85, 45, 0.10);
+    --radius: 8px; --container: 900px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; background: var(--c-bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.65; color: var(--c-text); -webkit-font-smoothing: antialiased; }
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--c-header); color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar-inner { max-width: var(--container); margin: 0 auto; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .toolbar-brand { font-weight: 600; font-size: 14px; }
+  .toolbar-brand .dot { display: inline-block; width: 8px; height: 8px; background: #fff; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toolbar-actions a, .toolbar-actions button { background: rgba(255,255,255,0.18); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .toolbar-actions a:hover, .toolbar-actions button:hover { background: rgba(255,255,255,0.3); }
+  .toolbar-actions button.primary { background: #fff; color: var(--c-accent); font-weight: 600; }
+  .toolbar-actions button.primary:hover { background: #ffe9dd; }
+  .page-header { background: linear-gradient(160deg, #dd7b5e 0%, #d26b4d 55%, #bd5c42 100%); color: #fff; padding: 40px 24px 34px; }
+  .page-header-inner { max-width: var(--container); margin: 0 auto; }
+  .page-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin: 0 0 10px; }
+  .page-title { font-family: 'Noto Serif', Georgia, serif; font-size: 32px; font-weight: 700; margin: 0 0 8px; line-height: 1.2; }
+  .page-title .accent { color: #ffd9c4; }
+  .page-subtitle { font-size: 15px; color: rgba(255,255,255,0.9); margin: 0; max-width: 660px; }
+  .container { max-width: var(--container); margin: 0 auto; padding: 32px 24px 60px; }
+  .toc { background: var(--c-card-bg); border-radius: var(--radius); padding: 16px 20px; margin: 0 0 28px; font-size: 14px; }
+  .toc b { color: var(--c-accent); }
+  .toc a { color: var(--c-accent); text-decoration: none; margin-right: 10px; white-space: nowrap; }
+  .toc a:hover { text-decoration: underline; }
+  .unit { margin: 34px 0 8px; scroll-margin-top: 76px; }
+  .unit-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .unit-num { flex-shrink: 0; width: 34px; height: 34px; border: 2px solid var(--c-accent-2); color: var(--c-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; font-family: 'Noto Serif', serif; background: #fff; }
+  .unit-title { font-family: 'Noto Serif', Georgia, serif; font-size: 21px; font-weight: 700; color: var(--c-accent); margin: 0; }
+  .unit-pages { font-size: 12.5px; color: var(--c-text-muted); margin-left: auto; white-space: nowrap; }
+  h4.gram-title { font-family: 'Noto Serif', Georgia, serif; font-size: 16px; color: var(--c-header-2); margin: 18px 0 6px; text-decoration: underline; text-decoration-color: var(--c-accent-2); text-underline-offset: 4px; }
+  .gram-rule { font-size: 13.5px; color: var(--c-text-muted); margin: 4px 0 8px; }
+  .gram-rule b { color: var(--c-text); }
+  .table-wrap { overflow-x: auto; margin: 8px 0 14px; border-radius: var(--radius); box-shadow: 0 1px 4px var(--c-shadow); }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 14px; }
+  thead th { background: var(--c-header); color: #fff; text-align: left; padding: 9px 12px; font-weight: 600; font-size: 12.5px; letter-spacing: 0.3px; }
+  tbody td { padding: 7px 12px; border-top: 1px solid var(--c-border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: var(--c-table-stripe); }
+  .form { font-family: 'Noto Serif', serif; font-weight: 600; color: var(--c-accent); }
+  .form b { color: var(--c-header-2); }
+  .ex { font-family: 'Noto Serif', serif; }
+  .footer { background: var(--c-header); color: rgba(255,255,255,0.9); padding: 24px; text-align: center; font-size: 13px; margin-top: 40px; }
+  .footer a { color: #ffd9c4; text-decoration: none; }
+  @media print {
+    .toolbar, .footer, .toc { display: none !important; }
+    body { background: #fff; font-size: 10.5pt; }
+    .page-header { background: #fff !important; color: #000 !important; border-bottom: 3px solid #000; padding: 0 0 12px; }
+    .page-kicker, .page-subtitle { color: #555 !important; }
+    .page-title { color: #000 !important; font-size: 20pt; }
+    .page-title .accent { color: #b8432c !important; }
+    .container { padding: 12px 0; max-width: 100%; }
+    .unit { break-inside: avoid-page; page-break-inside: avoid; margin: 16px 0 4px; }
+    .table-wrap { box-shadow: none; border: 1px solid #ccc; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media (max-width: 600px) { .container { padding: 24px 16px 40px; } }
+</style>
+</head>
+<body>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand"><span class="dot"></span>Grammar · Get Ready for Flyers</div>
+    <div class="toolbar-actions">
+      <a href="index.html">← К плану</a>
+      <a href="vocabulary.html">Лексика</a>
+      <a href="irregular-verbs.html">Неправильные глаголы</a>
+      <button onclick="window.print()" class="primary">🖨 Печать</button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="page-kicker">Grammar reference · Get Ready for Flyers 2nd ed. · стр. 118–119</p>
+    <h1 class="page-title">Вся грамматика <span class="accent">по разделам</span></h1>
+    <p class="page-subtitle">Все грамматические темы курса с формулами и примерами из учебника. Примеры совпадают со справочником на стр. 118–119 — сверяйся с ними при подготовке к тестам.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <nav class="toc">
+    <b>Разделы:</b>
+    <a href="#g-hello">Hello!</a><a href="#g-u1">U1</a><a href="#g-u2">U2</a><a href="#g-u3">U3</a><a href="#g-u4">U4</a><a href="#g-u5">U5</a><a href="#g-u6">U6</a><a href="#g-u7">U7</a><a href="#g-u8">U8</a><a href="#g-u9">U9</a><a href="#g-u10">U10</a><a href="#g-u11">U11</a><a href="#g-u12">U12</a>
+  </nav>
+
+  <!-- ═══ HELLO ═══ -->
+  <section class="unit" id="g-hello">
+    <div class="unit-head"><div class="unit-num">H</div><h2 class="unit-title">Hello! · Have got, месяцы, числа</h2><span class="unit-pages">SB стр. 2–3</span></div>
+    <h4 class="gram-title">Have got</h4>
+    <p class="gram-rule"><b>Формула:</b> I / you / we / they + have got · he / she / it + has got. Вопрос: <b>Have</b> you <b>got</b>…? Краткие ответы: Yes, I have. / No, I haven't.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Утверждение</td><td class="ex">I've got a big family. She <b>has got</b> two cousins.</td></tr>
+        <tr><td class="form">Отрицание</td><td class="ex">I <b>haven't got</b> a brother. He <b>hasn't got</b> a pet.</td></tr>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>Have</b> you <b>got</b> any cousins? — Yes, I have. / No, I haven't.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Числа и месяцы</h4>
+    <p class="gram-rule">Числа до 1000: 356 — <b>three hundred and fifty-six</b>; 1000 — <b>one thousand</b>. Месяцы пишутся с заглавной буквы: <b>January, February…</b>. Порядковые: 1st first, 2nd second, 3rd third, 4th fourth, 5th fifth.</p>
+  </section>
+  <!-- ═══ UNIT 1 ═══ -->
+  <section class="unit" id="g-u1">
+    <div class="unit-head"><div class="unit-num">1</div><h2 class="unit-title">Unit 1 · Our home</h2><span class="unit-pages">SB стр. 4–9</span></div>
+    <h4 class="gram-title">Местоимения с every-, some-, no-, any-</h4>
+    <p class="gram-rule"><b>Правило:</b> -body / -one (люди), -thing (предметы), -where (места). Глагол после them — единственного числа: <b>Everyone is</b> here. Some- — в утверждениях; any- — в вопросах и отрицаниях; no- — в отрицательных по смыслу утверждениях.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">every- (все)</td><td class="ex"><b>Everyone</b> is in the garden. I looked <b>everywhere</b>.</td></tr>
+        <tr><td class="form">some- (что-то)</td><td class="ex">There is <b>something</b> in my pocket. <b>Someone</b> is at the door.</td></tr>
+        <tr><td class="form">any- (что-нибудь)</td><td class="ex">Is there <b>anything</b> in the fridge? I can't find it <b>anywhere</b>.</td></tr>
+        <tr><td class="form">no- (ничего)</td><td class="ex">The house is empty — <b>nobody</b> is at home. I saw <b>nothing</b> = I didn't see anything.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 2 ═══ -->
+  <section class="unit" id="g-u2">
+    <div class="unit-head"><div class="unit-num">2</div><h2 class="unit-title">Unit 2 · Going to town</h2><span class="unit-pages">SB стр. 12–17</span></div>
+    <h4 class="gram-title">Will (просьбы и обещания)</h4>
+    <p class="gram-rule"><b>Формула:</b> Will + подлежащее + глагол (без to). Отрицание: won't = will not. После will — начальная форма глагола.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Просьба</td><td class="ex"><b>Will</b> you <b>fetch</b> the key for me, please?</td></tr>
+        <tr><td class="form">Обещание</td><td class="ex">I <b>will</b> (I'll) post it today. I <b>won't</b> forget!</td></tr>
+        <tr><td class="form">Отказ / причина</td><td class="ex">I <b>won't</b> go to town because it's raining.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Before и After clauses</h4>
+    <p class="gram-rule"><b>Правило:</b> after — после того как; before — перед тем как. Внутри обеих частей — настоящее время.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Союз</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">after</td><td class="ex"><b>After</b> lunch I had my music lesson.</td></tr>
+        <tr><td class="form">before</td><td class="ex">You put stamps on a letter <b>before</b> you post it.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 3 ═══ -->
+  <section class="unit" id="g-u3">
+    <div class="unit-head"><div class="unit-num">3</div><h2 class="unit-title">Unit 3 · Eating out</h2><span class="unit-pages">SB стр. 20–25</span></div>
+    <h4 class="gram-title">Be, look, sound, feel, taste, smell + like</h4>
+    <p class="gram-rule"><b>Правило:</b> like — «похож на, имеет вид/вкус/запах чего-то». What's … like? — «Какой он/она?»</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">be like</td><td class="ex"><b>What's</b> your new house <b>like</b>? — It's big and light.</td></tr>
+        <tr><td class="form">look like</td><td class="ex">George <b>looks like</b> his brother.</td></tr>
+        <tr><td class="form">sound like</td><td class="ex">That <b>sounds like</b> your telephone ringing.</td></tr>
+        <tr><td class="form">smell like</td><td class="ex">That <b>smells like</b> pizza cooking.</td></tr>
+        <tr><td class="form">taste like</td><td class="ex">This <b>tastes like</b> banana ice cream.</td></tr>
+        <tr><td class="form">feel like</td><td class="ex">This table <b>feels like</b> wood, but it's plastic.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Make somebody / something + adjective</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">make + me + adj</td><td class="ex">That smell <b>makes me hungry</b>!</td></tr>
+        <tr><td class="form">make + sb + adj</td><td class="ex">Loud music <b>makes her tired</b>. Games <b>make children happy</b>.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Made of (из чего сделано)</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">is/are made of</td><td class="ex">The chopsticks <b>are made of</b> wood. The fork <b>is made of</b> metal.</td></tr>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>What is</b> the scarf <b>made of</b>? — It's made of wool.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 4 ═══ -->
+  <section class="unit" id="g-u4">
+    <div class="unit-head"><div class="unit-num">4</div><h2 class="unit-title">Unit 4 · At school</h2><span class="unit-pages">SB стр. 28–33</span></div>
+    <h4 class="gram-title">What time…? и время суток</h4>
+    <p class="gram-rule"><b>Как сказать время:</b> 7:00 — seven o'clock · 7:15 — quarter past seven · 7:30 — half past seven · 7:45 — quarter to eight · 12:00 день — midday · 12:00 ночь — midnight. a.m. — до полудня, p.m. — после полудня.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>What time</b> does art club start? <b>What time</b> is morning break?</td></tr>
+        <tr><td class="form">Ответ</td><td class="ex">It starts <b>at quarter past four</b>. Break is <b>at half past ten</b>.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 5 ═══ -->
+  <section class="unit" id="g-u5">
+    <div class="unit-head"><div class="unit-num">5</div><h2 class="unit-title">Unit 5 · A day out</h2><span class="unit-pages">SB стр. 40–45</span></div>
+    <h4 class="gram-title">Be going to (планы)</h4>
+    <p class="gram-rule"><b>Формула:</b> am / is / are + going to + глагол. Используем для планов и намерений на будущее.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Утверждение</td><td class="ex">I<b>'m going to go</b> to Egypt. He<b>'s going to go</b> on an aeroplane. I<b>'m going to ride</b> my bike every day.</td></tr>
+        <tr><td class="form">Отрицание</td><td class="ex">I<b>'m not going to eat</b> octopus. He <b>isn't going to go</b> to the beach.</td></tr>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>What are you going to do</b> next week? <b>Is he going to walk</b> to school? — No, he isn't.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">As … as (сравнение)</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">not as … as</td><td class="ex">An elephant isn't <b>as big as</b> a dinosaur.</td></tr>
+        <tr><td class="form">as … as?</td><td class="ex">Is that bracelet <b>as expensive as</b> the necklace?</td></tr>
+        <tr><td class="form">as … as</td><td class="ex">Do that <b>as quickly as</b> you can!</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 6 ═══ -->
+  <section class="unit" id="g-u6">
+    <div class="unit-head"><div class="unit-num">6</div><h2 class="unit-title">Unit 6 · Dream jobs</h2><span class="unit-pages">SB стр. 48–53</span></div>
+    <h4 class="gram-title">Could (мог бы)</h4>
+    <p class="gram-rule"><b>Формула:</b> could + глагол (без to). Не меняется по лицам: I could, she could, they could.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Возможность</td><td class="ex">I <b>could visit</b> the museum. They <b>could go</b> to the playground.</td></tr>
+        <tr><td class="form">Предложение</td><td class="ex">She <b>could buy</b> soap at the chemist's.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Would like to (хотел бы)</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Утверждение</td><td class="ex">I <b>would like to be</b> a pilot. She <b>would like to visit</b> the museum.</td></tr>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>Would you like to</b> fly a plane? — Yes, I would!</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <!-- ═══ UNIT 7 ═══ -->
+  <section class="unit" id="g-u7">
+    <div class="unit-head"><div class="unit-num">7</div><h2 class="unit-title">Unit 7 · At the castle</h2><span class="unit-pages">SB стр. 56–61</span></div>
+    <h4 class="gram-title">Might (возможно)</h4>
+    <p class="gram-rule"><b>Формула:</b> might + глагол (без to). Выражает неуверенное предположение: «может быть».</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Предположение</td><td class="ex">You <b>might need</b> your coat today.</td></tr>
+        <tr><td class="form">План «может быть»</td><td class="ex">We <b>might go</b> to the beach tomorrow.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Be going to в вопросах</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>Is he going to walk</b> to school? — No, he isn't. <b>What are you going to do</b>?</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Направления</h4>
+    <p class="gram-rule"><b>Слова:</b> north (север), south (юг), east (восток), west (запад) · go past (идти мимо), turn left/right (повернуть налево/направо), go straight on (идти прямо), across (через), through (сквозь).</p>
+  </section>
+
+  <!-- ═══ UNIT 8 ═══ -->
+  <section class="unit" id="g-u8">
+    <div class="unit-head"><div class="unit-num">8</div><h2 class="unit-title">Unit 8 · Sports day!</h2><span class="unit-pages">SB стр. 64–69</span></div>
+    <h4 class="gram-title">Present perfect: just, already, yet</h4>
+    <p class="gram-rule"><b>Формула:</b> have / has + V3 (третья форма глагола). just — только что · already — уже (утверждения) · yet — ещё (не) / уже (ли) — в отрицаниях и вопросах, в конце предложения.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">just</td><td class="ex">I<b>'ve just had</b> my lunch.</td></tr>
+        <tr><td class="form">already</td><td class="ex">I<b>'ve already had</b> my lunch. You <b>have already done</b> your homework.</td></tr>
+        <tr><td class="form">yet (–)</td><td class="ex">The children <b>haven't had</b> their snack <b>yet</b>. The competition <b>hasn't started yet</b>.</td></tr>
+        <tr><td class="form">yet (?)</td><td class="ex"><b>Have</b> you finished <b>yet</b>?</td></tr>
+        <tr><td class="form">been</td><td class="ex">She<b>'s been</b> to the cinema this week. We <b>haven't finished</b> reading the book.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 9 ═══ -->
+  <section class="unit" id="g-u9">
+    <div class="unit-head"><div class="unit-num">9</div><h2 class="unit-title">Unit 9 · Our camping adventure</h2><span class="unit-pages">SB стр. 76–81</span></div>
+    <h4 class="gram-title">Past continuous</h4>
+    <p class="gram-rule"><b>Формула:</b> was / were + V-ing. Длительное действие в прошлом: was — I/he/she/it, were — you/we/they.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">was + V-ing</td><td class="ex">I <b>was feeling</b> happy. The sun <b>was shining</b> brightly. The teacher <b>was explaining</b> the homework.</td></tr>
+        <tr><td class="form">were + V-ing</td><td class="ex">The children <b>were walking</b> to school.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">While</h4>
+    <p class="gram-rule"><b>Правило:</b> while — «в то время как»: в части с while — Past continuous, во второй части часто Past simple.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">while</td><td class="ex"><b>While</b> Harry <b>was walking</b> through the woods, he <b>hurt</b> his foot.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 10 ═══ -->
+  <section class="unit" id="g-u10">
+    <div class="unit-head"><div class="unit-num">10</div><h2 class="unit-title">Unit 10 · A good year!</h2><span class="unit-pages">SB стр. 84–89</span></div>
+    <h4 class="gram-title">If clauses (условные предложения)</h4>
+    <p class="gram-rule"><b>Правило:</b> if — «если». После if — настоящее время (даже про будущее).</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">If + present</td><td class="ex"><b>If</b> it<b>'s</b> cold, I <b>put on</b> a coat. <b>If</b> it<b>'s</b> sunny, they <b>go</b> to the beach.</td></tr>
+        <tr><td class="form">If + storm</td><td class="ex"><b>If</b> there<b>'s</b> a storm, she<b>'s</b> frightened.</td></tr>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>What do you do if</b> it<b>'s</b> foggy?</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Shall we…? (предложение)</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Предложение</td><td class="ex"><b>Shall we go</b> to the cinema this afternoon?</td></tr>
+        <tr><td class="form">Вопрос о плане</td><td class="ex"><b>What shall we have</b> for dinner?</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 11 ═══ -->
+  <section class="unit" id="g-u11">
+    <div class="unit-head"><div class="unit-num">11</div><h2 class="unit-title">Unit 11 · Our summer holidays</h2><span class="unit-pages">SB стр. 92–97</span></div>
+    <h4 class="gram-title">Present perfect: Have you ever…?</h4>
+    <p class="gram-rule"><b>Правило:</b> ever — «когда-либо». В ответе: Yes, I have. / No, I haven't. V3 неправильных глаголов: fly–flown, see–seen, ride–ridden, eat–eaten, be–been, swim–swum.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>Have</b> you <b>ever flown</b> in a plane? <b>Have</b> you <b>ever seen</b> the pyramids?</td></tr>
+        <tr><td class="form">Ответ</td><td class="ex">Yes, I <b>have</b> — twice! / No, I <b>haven't</b>, but I <b>have ridden</b> an elephant!</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Should / shouldn't (советы)</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">should</td><td class="ex">You <b>should take</b> your books on holiday. We <b>should wear</b> sunglasses today.</td></tr>
+        <tr><td class="form">shouldn't</td><td class="ex">You <b>shouldn't put</b> all your money in your rucksack.</td></tr>
+        <tr><td class="form">Вопрос</td><td class="ex"><b>Should we take</b> our hats and gloves when we go skiing?</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══ UNIT 12 ═══ -->
+  <section class="unit" id="g-u12">
+    <div class="unit-head"><div class="unit-num">12</div><h2 class="unit-title">Unit 12 · Past and future</h2><span class="unit-pages">SB стр. 100–105</span></div>
+    <h4 class="gram-title">Past simple (повторение) + будущее</h4>
+    <p class="gram-rule"><b>Правило:</b> прошедшее — V2 / didn't + V1 (100 years ago people <b>lived</b>, they <b>didn't have</b> computers). Будущее: be going to — планы, will — предсказания и обещания.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">Past simple</td><td class="ex">People <b>lived</b> 100 years ago. They <b>didn't have</b> computers.</td></tr>
+        <tr><td class="form">be going to</td><td class="ex">I <b>am going to ride</b> my bike every day. (план)</td></tr>
+        <tr><td class="form">will</td><td class="ex">Maybe people <b>will live</b> on other planets one day. I <b>won't</b> go to town because it's raining. (прогноз / обещание)</td></tr>
+        <tr><td class="form">Present perfect + yet</td><td class="ex">I <b>haven't finished</b> my project <b>yet</b>.</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Tag questions (вопросы с хвостиком)</h4>
+    <p class="gram-rule"><b>Правило:</b> утверждение → хвостик отрицательный; отрицание → хвостик положительный.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">can → can't…?</td><td class="ex">She can run fast, <b>can't she</b>?</td></tr>
+        <tr><td class="form">do → don't…?</td><td class="ex">They play football very well, <b>don't they</b>?</td></tr>
+        <tr><td class="form">isn't → is…?</td><td class="ex">It isn't very warm today, <b>is it</b>?</td></tr>
+        <tr><td class="form">aren't → are…?</td><td class="ex">You aren't going to be late, <b>are you</b>?</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="gram-title">Where clauses</h4>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Форма</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="form">where</td><td class="ex">Here's a map of the town <b>where</b> we live.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>Грамматика по разделам · Get Ready for Flyers (2nd ed.) · Grammar стр. 118–119</p>
+  <p><a href="index.html">← Годовой план</a> · <a href="vocabulary.html">Лексика по разделам</a> · <a href="irregular-verbs.html">Неправильные глаголы</a> · <a href="flashcards.html">Флеш-карточки</a></p>
+</footer>
+
+</body>
+</html>
